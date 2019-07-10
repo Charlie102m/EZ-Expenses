@@ -19,6 +19,15 @@ export default {
   addTrip(trip) {
     return apiClient.post('/trips', trip)
   },
+  getTrip(tripId) {
+    return apiClient.get('/trips/' + tripId)
+  },
+  updateTrip(trip) {
+    return apiClient.put('/trips/' + trip.id, trip)
+  },
+  deleteTrip(trip) {
+    return apiClient.delete('/trips/' + trip.id)
+  },
   loadDashboard() {
     return apiClient.get('/')
   }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form v-on:submit.prevent="addTrip">
+        <form v-on:submit.prevent="updateTrip">
             <input 
             type="text"
             v-model="trip.originName"
@@ -19,8 +19,7 @@
             required>
             <input 
             type="text"
-            v-model="trip.reason"
-            required>
+            v-model="trip.reason">
             <input type="submit"
             required>
         </form>
@@ -31,7 +30,7 @@
             <p>Destination Address: {{ trip.destinationAddress }}</p>
             <p>Reason: {{ trip.reason }}</p>
             <p>Trip Distance: {{ trip.distance ? trip.distance : 0 }} miles</p>
-            <p>Trip Duration: {{ trip.duration ? trip.duration / 60 : 0}} mins</p>
+            <p>Trip Duration: {{ trip.duration ? trip.duration / 60 : 0}} mins</p>  
         <div class="message-container" v-show="message">{{ message ? message : ""}}</div>
     </div>
 </template>
@@ -39,6 +38,7 @@
 <script>
 import HttpService from '@/services/HttpService.js'
 export default {
+    props: ['tripId'],
     data (){
         return {
             directionsResponse: null,
@@ -62,7 +62,6 @@ export default {
                 origin: this.trip.originName,
                 destination: this.trip.destinationName
             }
-            console.log(waypoints);
             HttpService.getDirections(waypoints)
                 .then((response) => {
                     this.trip.originAddress = response.data.routes[0].legs[0].start_address
@@ -73,25 +72,42 @@ export default {
                 })
                 .catch(error => this.message = error)
         },
-        addTrip () {
-            HttpService.addTrip(this.trip)
-                .then(() => this.message = "Trip added successfully!")
+        updateTrip () {
+            HttpService.updateTrip(this.trip)
+                .then(() => this.message = 'Trip updated successfully!')
                 .catch(error => this.message = error)
         }
+    },
+    created() {
+        HttpService.getTrip(this.tripId)
+            .then(response => {
+                this.trip.id = response.data.id
+                this.trip.tripDate = response.data.tripDate
+                this.trip.originName = response.data.originName
+                this.trip.originAddress = response.data.originAddress
+                this.trip.destinationName = response.data.destinationName
+                this.trip.destinationAddress = response.data.destinationAddress
+                this.trip.reason = response.data.reason
+                this.trip.distance = response.data.distance
+                this.trip.duration = response.data.duration
+                this.trip.userId = response.data.userId
+
+            })
+            .catch(error => console.log(error))
     }
 }
 </script>
 
 <style>
-    input[type="text"] {
-        width: 300px;
-    }
-    .message-container {
-        line-height: 30px;
-        width: 25%;
-        border: 1px solid #ddd;
-        text-align: center;
-        border-radius: 3px;
-        box-shadow: 3px 3px 10px #ddd;
-    }
+input[type="text"] {
+    width: 300px;
+}
+.message-container {
+    line-height: 30px;
+    width: 25%;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 3px 3px 10px #ddd;
+}
 </style>

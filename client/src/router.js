@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
 import Trips from './views/Trips.vue'
 import NewTrip from './views/NewTrip.vue'
+import EditTrip from './views/EditTrip.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,12 @@ export default new Router({
       path: '/trips/new',
       name: 'newtrip',
       component: NewTrip
+    },
+    {
+      path: '/trips/edit/:tripId',
+      name: 'editTrip',
+      component: EditTrip,
+      props: true
     }
   ]
 })
