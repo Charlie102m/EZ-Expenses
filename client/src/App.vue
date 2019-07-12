@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Dashboard</router-link> |
-      <router-link to="/trips">Trips</router-link> | 
-      <router-link to="/trips/new">New Trip</router-link>
-    </div>
-    <router-view/>
+      <v-layout fill-height>
+        <v-flex>
+          <SideNav/>
+        </v-flex>
+        <v-flex xs12 ma-2>
+          <router-view/>
+        </v-flex>
+      </v-layout>
   </div>
 </template>
 
-<style lang="scss">
+<script>
+import SideNav from '@/components/SideNav.vue'
+export default {
+    components: {
+    SideNav
+  },
+}
+</script>
 
+
+<style lang="scss">
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  }
 </style>

@@ -1,6 +1,7 @@
 const express = require('express'),
     request = require('request'),
-    api_key = 'AIzaSyDnJgJ47aAzdam5S4F5X6PNhQt_MW5MJvM'
+    api_key = 'AIzaSyDnJgJ47aAzdam5S4F5X6PNhQt_MW5MJvM',
+    fs = require('fs')
     
 const controller = {
     getDirections: (req, res) => {
@@ -14,6 +15,10 @@ const controller = {
         }
         request(options, (error, response, body) => {
             if (error) res.send(error)
+            fs.writeFileSync('apiExample.json', body, (err) => {
+                if (err) throw err
+                console.log('File created successfully!');
+            })
             res.send(body)
         })
     }
