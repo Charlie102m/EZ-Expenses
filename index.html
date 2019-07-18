@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            flex-direction: row;
+        }
+
+        nav {
+            background: #2f303c;
+            color: white;
+            width: 80px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            transition: all .35s ease-in-out;
+        }
+
+        .material-icons {
+            font-size: 60px;
+            margin: 20px 0;
+            transition: all .35s ease-in-out;
+            transform-origin: right;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        body div {
+            flex-basis: 100%;
+        }
+
+        header {
+            height: 60px;
+        }
+
+        main {
+            background: blue;
+            height: calc(100vh - 60px);
+        }
+
+
+        nav:hover  {
+            width: 200px;
+        }
+
+        nav:hover > .icon-text {
+            color: #316F83;
+        }
+
+        .material-icons:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+            color: #316F83;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="top">
+            <i class="material-icons">home</i>
+        </div>
+        <div class="middle">
+            <i class="material-icons">home</i><span class="icon-text">Home</span>
+            <i class="material-icons">directions_car</i><span class="icon-text">Trips</span>
+            <i class="material-icons">payment</i><span class="icon-text">Exppenses</span>
+            <i class="material-icons">attach_money</i><span class="icon-text">Claims</span>
+        </div>
+        <div class="bottom">
+            <i class="material-icons">settings</i>
+        </div>
+    </nav>
+    <div>
+        <header>This is the header</header>
+        <main>This is the main</main>
+    </div>
+
+</body>
+
+</html>

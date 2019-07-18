@@ -14,7 +14,7 @@ const controller = {
             method: 'GET'
         }
         request(options, (error, response, body) => {
-            if (error) res.send(error)
+            if (error) throw error
             fs.writeFileSync('apiExample.json', body, (err) => {
                 if (err) throw err
                 console.log('File created successfully!');

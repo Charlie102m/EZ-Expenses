@@ -7,9 +7,12 @@ const controller = {
         let query =     `SELECT id,
                             DATE_FORMAT(tripDate, '%d/%m/%Y') AS tripDate,
                             originName,
+                            originAddress,
                             destinationName,
+                            destinationAddress,
                             distance,
-                            duration
+                            duration,
+                            value
                         FROM trips`
         connection.query(query, (error, results, fields) => {
             if (error) throw error

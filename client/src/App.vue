@@ -1,13 +1,27 @@
 <template>
   <div id="app">
-      <v-layout fill-height>
-        <v-flex>
+    <!-- <v-app> -->
+      <v-app>
+        <v-navigation-drawer>
           <SideNav/>
+        </v-navigation-drawer>
+        <v-toolbar app></v-toolbar>
+        <v-content>
+          <v-container fluid>
+            <router-view></router-view>
+          </v-container>
+        </v-content>
+        <v-footer app></v-footer>
+      </v-app>
+      <!-- <v-layout fill-height>
+        <v-flex>
+          
         </v-flex>
         <v-flex xs12 ma-2>
           <router-view/>
         </v-flex>
       </v-layout>
+    </v-app> -->
   </div>
 </template>
 

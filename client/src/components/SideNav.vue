@@ -1,8 +1,10 @@
 <template>
     <nav>
-        <router-link to="/"><i class="fas fa-home"></i></router-link>
-      <router-link to="/trips"><i class="fas fa-th"></i></router-link>
-      <router-link to="/trips/new"><i class="fas fa-car"></i></router-link>
+        <router-link to="/"><i class="material-icons">home</i></router-link>
+        <router-link to="/trips"><i class="material-icons">directions_car</i></router-link>
+        <router-link to="/trips"><i class="material-icons">payment</i></router-link>
+        <router-link to="/trips/new"><i class="material-icons">attach_money</i></router-link>
+        <router-link to="/trips/new"><i class="material-icons">attach_money</i></router-link>
     </nav>
 </template>
 
@@ -14,17 +16,13 @@ name: 'SideNav',
 
 <style>
     nav {
-        background-color: black;
-        height: 100vh;
-        padding: 50px 0px;
-        width: 80px;
+        background-color: #2F303C;
+        /* height: 100vh; */
+        /* width: 100px; */
     }
-    nav a {
-        display: block;
-        font-size: 50px;
-        color: rgb(255, 255, 255);
-        margin-top: 30px;
-        text-align: center;
+    .material-icons {
+        color: white;
+        font-size: 70px;
     }
 
 </style>
