@@ -1,23 +1,27 @@
-const express = require('express'),
-    router = express.Router(),
-    Controller = require('../controllers/controllers.js'),
-    ApiController = require('../controllers/ApiController.js'),
-    MapsApiController = require('../controllers/MapsApiController.js'),
-    TripsController = require('../controllers/TripsController.js');
+const   express = require('express'),
+        router = express.Router(),
+        AuthController = require('../controllers/AuthController.js'),
+        IndexController = require('../controllers/IndexController.js'),
+        ProfileController = require('../controllers/ProfileController.js'),
+        TripsController = require('../controllers/TripsController.js'),
+        ApiController = require('../controllers/ApiController.js'),
+        ExpensesController = require('../controllers/ExpensesController.js'),
+        ClaimsController = require('../controllers/ClaimsController.js')
+    
+// AUTH - AuthController
+// Implement me for register, de-register, login & logout
 
-// INDEX
+// INDEX - IndexController
+// Implement index API for dashboard data
 router.route('/') 
-    .get(Controller.loadDashboard)
+    .get(IndexController.loadDashboard)
 
-// GOOGLE API - get directions between origin & destination utilising google directions api
-router.route('/api/directions')
-    .post(ApiController.getDirections)
 
-// GOOGLE MAPS API - get directions and render on map
-router.route('/api/maps')
-    .post(MapsApiController.getDirections)
+// PROFILE/SETTINGS - ProfileController
+// Implement Profile & Settings
 
-// TRIPS
+
+// TRIPS - TripsController
 router.route('/trips')
     .get(TripsController.getTrips)
     .post(TripsController.addTrip)
@@ -26,5 +30,17 @@ router.route('/trips/:tripId')
     .get(TripsController.getTrip)
     .put(TripsController.updateTrip)
     .delete(TripsController.deleteTrip)
+
+// GOOGLE DIRECTIONS API - ApiController
+router.route('/api/directions')
+    .post(ApiController.getDirections)
+
+// EXPENSES - ExpensesController
+// Implement full CRUD for Expenses
+
+
+// CLAIMS - ClaimsController
+// Implement full CRUD for Claims
+
 
 module.exports = router;

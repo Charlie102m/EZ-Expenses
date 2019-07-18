@@ -1,8 +1,8 @@
-const express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    routes = require('./routes/routes.js'),
-    port = process.env.PORT || 3000;
+const   express = require('express'),
+        app = express(),
+        bodyParser = require('body-parser'),
+        routes = require('./routes/routes.js'),
+        port = process.env.PORT || 3000;
 
 // CONFIG
 app.use(function (req, res, next) {

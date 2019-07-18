@@ -14,44 +14,7 @@
             margin: 0;
             padding: 0;
             flex-direction: row;
-        }
-
-        nav {
-            background: #2f303c;
-            color: white;
-            width: 80px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            transition: all .35s ease-in-out;
-        }
-
-        .material-icons {
-            font-size: 60px;
-            margin: 20px 0;
-            transition: all .35s ease-in-out;
-            transform-origin: right;
-        }
-
-        .top {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .middle {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .bottom {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            font-family: sans-serif;
         }
 
         body div {
@@ -67,19 +30,81 @@
             height: calc(100vh - 60px);
         }
 
+        nav {
+            background: #2f303c;
+            color: white;
+            width: 80px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            transition: all .5s ease-in-out;
+        }
+
+        .top, .middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .material-icons {
+            font-size: 60px;
+            margin: 20px 0;
+            transition: all .5s ease-in-out;
+            opacity: 0.8;
+        }
+
+        .icon-text {
+            display: fixed;
+            transition: all .5s ease-in-out;
+            transform-origin: left;
+            position: relative;
+            top: -53px;
+            left: 30px;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        a {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: flex-start;
+            text-decoration: none;
+            color: white;
+        }
+
+
 
         nav:hover  {
             width: 200px;
         }
 
-        nav:hover > .icon-text {
-            color: #316F83;
+        nav:hover > .middle > a > .material-icons, 
+        nav:hover > .top > a > .material-icons, 
+        nav:hover > .bottom > a > .material-icons  {
+            transform: translateX(-40px);
         }
 
-        .material-icons:hover {
+        nav:hover > .middle > a > .icon-text, 
+        nav:hover > .bottom > a > .icon-text, 
+        nav:hover > .top > a > .icon-text {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        a:hover > .material-icons, 
+        a:hover > .icon-text {
             cursor: pointer;
-            transform: scale(1.1);
-            color: #316F83;
+            opacity: 1;
         }
 
     </style>
@@ -88,16 +113,33 @@
 <body>
     <nav>
         <div class="top">
-            <i class="material-icons">home</i>
+            <a href="#">
+                <i class="material-icons">person</i>
+            </a>
         </div>
         <div class="middle">
-            <i class="material-icons">home</i><span class="icon-text">Home</span>
-            <i class="material-icons">directions_car</i><span class="icon-text">Trips</span>
-            <i class="material-icons">payment</i><span class="icon-text">Exppenses</span>
-            <i class="material-icons">attach_money</i><span class="icon-text">Claims</span>
+            <a href="#">
+                <i class="material-icons">home</i>
+                <span class="icon-text">Home</span>
+            </a>
+            <a href="#">
+                <i class="material-icons">home</i>
+                <span class="icon-text">Trips</span>
+            </a>
+            <a href="#">
+                <i class="material-icons">home</i>
+                <span class="icon-text">Expenses</span>
+            </a>
+            <a href="#">
+                <i class="material-icons">attach_money</i>
+                <span class="icon-text">Claims</span>
+            </a>
         </div>
         <div class="bottom">
-            <i class="material-icons">settings</i>
+            <a href="#">
+                <i class="material-icons">settings</i>
+                <span class="icon-text">Settings</span>
+            </a>
         </div>
     </nav>
     <div>
