@@ -12,8 +12,10 @@ const controller = {
                             destinationAddress,
                             distance,
                             duration,
+                            status,
                             value
-                        FROM trips`
+                        FROM trips 
+                        ORDER BY createdAt DESC`
         connection.query(query, (error, results, fields) => {
             if (error) throw error
             res.send(results)
@@ -21,7 +23,6 @@ const controller = {
     },
     // CREATE trip
     addTrip: (req, res) => {
-        console.log(req.body);
         connection.query('INSERT INTO trips SET ?', req.body, (error, results, fields) => {
             if (error) throw error
             res.send(results)

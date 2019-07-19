@@ -1,76 +1,104 @@
 <template>
     <div>
         <v-form v-on:submit.prevent="addTrip">
-            <v-container fill-height>
-                <v-layout row wrap>
-                    <v-flex md4>
-                        <v-date-picker v-model="trip.tripDate" :landscape="landscape" color="green lighten-1" no-title></v-date-picker>
-                    </v-flex>
-                    <v-flex md8 mt-4 class="get-directions-fields">
+            <v-container>
+                <v-layout align-top justify-center row wrap>
+                    <v-flex md6 text-xs-right class="get-directions-fields">
                         <input
                         v-on:keypress.enter.stop.prevent=""
                         ref="autocomplete" 
-                        placeholder="Where are you traveling to?" 
+                        placeholder="Where was this trip from?" 
                         class="search-location" 
                         v-model="temp.origin"
                         type="text"/>
-                    
-                    <v-flex>
                         <input
                         v-on:keypress.enter.stop.prevent=""
                         ref="autocomplete2" 
-                        placeholder="Where are you traveling to?" 
+                        placeholder="Where was this trip to?" 
                         class="search-location" 
                         v-model="temp.destination"
                         type="text"/>
-                    </v-flex >
-                        <v-flex xs12>
-                            <v-card >
-                                <v-card-text v-show="trip.distance" class="text-xs-left">
-                                    <v-layout row wrap class="summary-header">
-                                    <v-flex xs6>
-                                        <div>Via: <strong>{{ summary ? summary : ''}}</strong></div>
-                                    </v-flex>
-                                    <v-flex xs6 class="text-xs-right">
-                                        <div>
-                                            <p>
-                                                <strong>{{ trip.distance ? trip.distance.toFixed(1) : 0 }}</strong> miles
-                                            </p>
-                                            <p>
-                                                <strong>{{ trip.duration ? trip.duration : 0}}</strong> mins
-                                            </p>
-                                        </div>
-                                    </v-flex>
-                                    <v-flex xs6>
-                                        <p><strong>From:</strong></p>
-                                        <p><em>{{trip.originName}}</em></p>
-                                        <p>{{ trip.originAddress }}</p>
-                                    </v-flex>
-                                    <v-flex xs6>
-                                        <p><strong>To:</strong></p>
-                                        <p><em>{{trip.destinationName}}</em></p>
-                                        <p>{{ trip.destinationAddress }}</p>
-                                    </v-flex>
+                        <v-btn 
+                        round color="teal lighten-1" 
+                        dark 
+                        v-on:click.prevent="getDirections" 
+                        v-show="!trip.distance">
+                            <v-icon class="mr-2" dark>directions</v-icon><span>Calculate Route</span>
+                        </v-btn>
+                        <v-flex xs12 v-show="trip.distance">
+                            <v-card 
+                            color="teal lighten-1">
+                                <v-card-title>
+                                    <v-layout row wrap align-top>
+                                        <v-flex xs6 class="text-xs-left white--text">
+                                            <h3 class="font-weight-light headline">Via: <strong class="font-weight-medium">{{ summary ? summary : ''}}</strong></h3>
+                                        </v-flex>
+                                        <v-flex class="text-xs-right" xs6>
+                                            <v-btn fab dark small flat color="white" v-on:click.prevent="closeResults">
+                                                <v-icon dark>close</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-title>
+                                <v-card-text class="text-xs-left white--text font-weight-light pt-0">
+                                    <v-layout row wrap align-center>
+                                        <v-flex lg6 mb-4 grow text-md-left text-xs-right>
+                                            <h3 class="font-weight-light display-2">
+                                                <strong class="font-weight-medium">{{ trip.distance ? trip.distance.toFixed(1) : 0 }}</strong> miles
+                                            </h3>
+                                        </v-flex>
+                                        <v-flex md6 mb-4 grow text-md-left text-xs-right>
+                                            <h3 class="font-weight-light display-2">
+                                                <strong class="font-weight-medium">{{ trip.duration ? trip.duration : 0}}</strong> mins
+                                            </h3>
+                                        </v-flex>
+                                    </v-layout>
+                                    <v-layout row wrap align-top>
+                                        <v-flex md6>
+                                            <p><strong class="font-weight-medium">From:</strong></p>
+                                            <p><em>{{trip.originName}}</em></p>
+                                            <p>{{ trip.originAddress }}</p>
+                                        </v-flex>
+                                        <v-flex md6>
+                                            <p><strong class="font-weight-medium">To:</strong></p>
+                                            <p><em>{{trip.destinationName}}</em></p>
+                                            <p>{{ trip.destinationAddress }}</p>
+                                        </v-flex>
                                     </v-layout>
                                 </v-card-text>
                             </v-card>
-                            <v-btn v-on:click.prevent="getDirections" v-show="!trip.distance">Calculate Trip</v-btn>
                         </v-flex>
+                    </v-flex >
+                    <v-flex lg6 text-xs-center>
+                        <v-date-picker v-show="trip.distance" v-model="trip.tripDate" :landscape="landscape" color="teal lighten-1"></v-date-picker>
+                        <v-layout align-top justify-center row wrap mt-3 v-show="trip.distance">
+                            <v-flex md5 mr-2>
+                                <input
+                                type="text"
+                                v-show="!defualtMilageToggle"
+                                v-model="trip.milageRate"
+                                placeholder="What is the reason for your trip?"
+                                required/>
+                                <v-switch v-model="defualtMilageToggle" v-show="defualtMilageToggle" label="Use default milage rate?" color="teal lighten-1"></v-switch>
+                            </v-flex>
+                            <v-flex md5>
+                                <v-switch v-model="autoReturn" label="Auto create return trip?" color="teal lighten-1"></v-switch>
+                            </v-flex>
+                            <v-flex xs10>
+                                <input
+                                type="text"
+                                v-model="trip.reason"
+                                placeholder="What is the reason for your trip?"
+                                required/>
+                            </v-flex>
+                            <v-flex xs12 class="text-xs-right" mt-3 v-show="trip.reason">
+                                <v-btn type="submit" round color="teal lighten-1" dark>
+                                    <v-icon class="mr-2" dark>send</v-icon>Submit
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
                     </v-flex>
-                    <v-flex xs12 v-show="trip.distance">
-                            <input
-                            type="text"
-                            v-model="trip.reason"
-                            placeholder="What is the reason for your trip?"
-                            required/>
-                        <v-flex class="text-xs-right">
-                            <v-btn type="submit"
-                            required>Submit</v-btn>
-                        </v-flex>
-                    </v-flex>
-
                 </v-layout>
-
             </v-container>
         </v-form>
         <div class="message-container" v-show="message">{{ message ? message : ""}}</div>
@@ -78,13 +106,16 @@
 </template>
 
 <script>
+// import $Scriptjs from 'scriptjs'
 import HttpService from '@/services/HttpService.js'
 export default {
     data (){
         return {
-            landscape: false,
+            landscape: true,
             directionsResponse: null,
             summary: null,
+            defualtMilageToggle: true,
+            autoReturn: false,
             temp: {
                 origin: null,
                 destination: null
@@ -100,13 +131,12 @@ export default {
                 duration: null,
                 milageRate: 0.45,
                 value: null,
-                createdBy: 1
+                createdBy: 1,
             },
             message: null
         }
     },
-      mounted() {
-        // mount autocomplete fields
+    mounted () {
         this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete));
         this.autocomplete2 = new google.maps.places.Autocomplete((this.$refs.autocomplete2));
         // parse auto complete response for origin field
@@ -129,8 +159,8 @@ export default {
     methods: {
         getDirections () {
             let waypoints = {
-                origin: this.trip.originName,
-                destination: this.trip.destinationName
+                origin: this.trip.originAddress,
+                destination: this.trip.destinationAddress
             }
             HttpService.getDirections(waypoints)
                 .then((response) => {
@@ -139,41 +169,62 @@ export default {
                     this.trip.destinationAddress = response.data.routes[0].legs[0].end_address
                     this.trip.distance = response.data.routes[0].legs[0].distance.value / 1609.34
                     this.trip.duration = (response.data.routes[0].legs[0].duration.value / 60).toFixed(0)
-                    this.trip.value = this.trip.milageRate * this.trip.distance
                     this.summary = response.data.routes[0].summary
                     this.message = null
                 })
                 .catch(error => this.message = error)
         },
         addTrip () {
+            this.trip.value = this.trip.milageRate * this.trip.duration
             HttpService.addTrip(this.trip)
+                .then(() => {
+                    if (this.autoReturn === true) {
+                        let newWaypoints = {
+                            originName: this.trip.destinationName,
+                            originAddress: this.trip.destinationAddress,
+                            destinationName: this.trip.originName,
+                            destinationAddress: this.trip.originAddress
+                        }
+                        this.trip.originName = newWaypoints.originName
+                        this.trip.originAddress = newWaypoints.originAddress
+                        this.trip.destinationName = newWaypoints.destinationName
+                        this.trip.destinationAddress = newWaypoints.destinationAddress
+                        this.autoReturn = false
+                        return this.addTrip()
+                    }
+                })
                 .then(() => this.$router.push("/trips"))
                 .catch(error => this.message = error)
+        },
+        closeResults () {
+            this.trip.distance = null
+            return;
         }
     }
 }
 </script>
 
 <style>
+
     input[type="text"] {
         width: 100% !important;
         line-height: 16px;
         font-size: 16px;
-        border: 2px solid rgba(0,0,0,.54);
+        border-bottom: 2px solid rgba(0,0,0,.54);
         padding: 0 12px;
-        margin: 10px;
-        border-radius: 10px;
+        margin-bottom: 10px;
         background: transparent!important;
-        border-radius: 4px;
         align-items: stretch;
         min-height: 56px;
+        transition: all 0.2s ease-in;
     }
+
     input[type="text"]:focus {
         outline: none;
+        border-bottom: 2px solid #26A69A;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
     }
-    .summary-header div * {
-        margin-bottom: 15px;
-    }
+    
     .message-container {
         line-height: 30px;
         width: 25%;
@@ -182,4 +233,13 @@ export default {
         border-radius: 3px;
         box-shadow: 3px 3px 10px #ddd;
     }
+
+    .dismissButton {
+        background-color: red;
+        padding: 5px;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+    }
+
 </style>
