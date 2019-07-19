@@ -8,14 +8,12 @@ const controller = {
             origin: req.body.origin,
             destination: req.body.destination
         }
-        console.log('waypoints: ', waypoints);
         const options = {
             uri: `https://maps.googleapis.com/maps/api/directions/json?origin=${waypoints.origin}&destination=${waypoints.destination}&units=imperial&key=${api_key}`,
             method: 'GET'
         }
         request(options, (error, response, body) => {
             if (error) throw error
-            console.log(body);
             res.send(body)
         })
     }
