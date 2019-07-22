@@ -10,7 +10,11 @@ const   express = require('express'),
     
 // AUTH - AuthController
 // Implement me for register, de-register, login & logout
+router.route('/register')
+    .post(AuthController.register)
 
+router.route('/login')
+    .post(AuthController.login)
 // INDEX - IndexController
 // Implement index API for dashboard data
 router.route('/') 

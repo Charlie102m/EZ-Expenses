@@ -30,5 +30,11 @@ export default {
   },
   loadDashboard() {
     return apiClient.get('/')
+  },
+  register(credentials) {
+    return apiClient.post('/register', credentials)
+  },
+  login(credentials) {
+    return apiClient.post('/login', credentials)
   }
 }

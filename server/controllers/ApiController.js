@@ -9,7 +9,7 @@ const controller = {
             destination: req.body.destination
         }
         const options = {
-            uri: `https://maps.googleapis.com/maps/api/directions/json?origin=${waypoints.origin}&destination=${waypoints.destination}&units=imperial&key=${api_key}`,
+            uri: `https://maps.googleapis.com/maps/api/directions/json?origin=${waypoints.origin}&destination=${waypoints.destination}&units=imperial&key=${api_key}&alternatives=true`,
             method: 'GET'
         }
         request(options, (error, response, body) => {

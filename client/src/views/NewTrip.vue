@@ -142,7 +142,6 @@ export default {
         // parse auto complete response for origin field
         this.autocomplete.addListener('place_changed', () => {
             let origin = this.autocomplete.getPlace()
-            console.log('origin: ', origin);
             this.trip.originName = origin.name
             this.temp.origin = origin.name + ' - ' + origin.formatted_address
             this.trip.originAddress = origin.formatted_address
@@ -150,7 +149,6 @@ export default {
         // parse auto complete response for destination field
         this.autocomplete2.addListener('place_changed', () => {
             let destination = this.autocomplete2.getPlace()
-            console.log('place: ', destination);
             this.trip.destinationName = destination.name
             this.temp.destination = destination.name + ' - ' + destination.formatted_address
             this.trip.destinationAddress = destination.formatted_address
@@ -164,7 +162,7 @@ export default {
             }
             HttpService.getDirections(waypoints)
                 .then((response) => {
-                    console.log(waypoints)
+                    console.log(response)
                     this.trip.originAddress = response.data.routes[0].legs[0].start_address
                     this.trip.destinationAddress = response.data.routes[0].legs[0].end_address
                     this.trip.distance = response.data.routes[0].legs[0].distance.value / 1609.34
@@ -204,27 +202,7 @@ export default {
 }
 </script>
 
-<style>
-
-    input[type="text"] {
-        width: 100% !important;
-        line-height: 16px;
-        font-size: 16px;
-        border-bottom: 2px solid rgba(0,0,0,.54);
-        padding: 0 12px;
-        margin-bottom: 10px;
-        background: transparent!important;
-        align-items: stretch;
-        min-height: 56px;
-        transition: all 0.2s ease-in;
-    }
-
-    input[type="text"]:focus {
-        outline: none;
-        border-bottom: 2px solid #26A69A;
-        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-    }
-    
+<style>    
     .message-container {
         line-height: 30px;
         width: 25%;
@@ -233,13 +211,4 @@ export default {
         border-radius: 3px;
         box-shadow: 3px 3px 10px #ddd;
     }
-
-    .dismissButton {
-        background-color: red;
-        padding: 5px;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-    }
-
 </style>

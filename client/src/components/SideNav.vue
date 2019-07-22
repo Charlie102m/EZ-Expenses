@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="nav-head">
-            <router-link to="#"><i class="material-icons">person</i></router-link>
+            <router-link to="/register"><i class="material-icons">person</i></router-link>
         </div>
         <div class="nav-body">
             <router-link to="/"><i class="material-icons">home</i></router-link>

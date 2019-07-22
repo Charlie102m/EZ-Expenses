@@ -4,6 +4,8 @@ import Dashboard from './views/Dashboard.vue'
 import Trips from './views/Trips.vue'
 import NewTrip from './views/NewTrip.vue'
 import EditTrip from './views/EditTrip.vue'
+import Register from './views/Register.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -31,6 +33,16 @@ export default new Router({
       name: 'editTrip',
       component: EditTrip,
       props: true
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })
