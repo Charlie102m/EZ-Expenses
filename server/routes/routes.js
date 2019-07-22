@@ -20,7 +20,6 @@ router.route('/login')
 router.route('/') 
     .get(IndexController.loadDashboard)
 
-
 // PROFILE/SETTINGS - ProfileController
 // Implement Profile & Settings
 
@@ -41,7 +40,14 @@ router.route('/api/directions')
 
 // EXPENSES - ExpensesController
 // Implement full CRUD for Expenses
+router.route('/expenses')
+    .get(ExpensesController.getExpenses)
+    .post(ExpensesController.addExpense)
 
+router.route('/expenses/:expenseId')
+    .get(ExpensesController.getExpense)
+    .put(ExpensesController.updateExpense)
+    .delete(ExpensesController.deleteExpense)
 
 // CLAIMS - ClaimsController
 // Implement full CRUD for Claims
