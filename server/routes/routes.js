@@ -15,6 +15,7 @@ router.route('/register')
 
 router.route('/login')
     .post(AuthController.login)
+    
 // INDEX - IndexController
 // Implement index API for dashboard data
 router.route('/') 
