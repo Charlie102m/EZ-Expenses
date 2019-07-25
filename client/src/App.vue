@@ -16,12 +16,15 @@
 <script>
 import SideNav from '@/components/SideNav.vue'
 export default {
-    components: {
-    SideNav
+  name: 'App',
+  components: {
+    SideNav,
   },
+  data: () => ({
+    //
+  }),
 }
 </script>
-
 
 <style lang="scss">
   body {

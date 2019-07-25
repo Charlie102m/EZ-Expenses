@@ -10,7 +10,7 @@
         v-model="credentials.password"
         placeholder="Create a password"
         type="password">
-        <v-btn type="submit" round color="teal lighten-1" dark>
+        <v-btn type="submit" rounded color="teal lighten-1" dark>
             <v-icon class="mr-2" dark>send</v-icon>Register
         </v-btn>
     </v-form>

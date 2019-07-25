@@ -19,7 +19,7 @@
                         v-model="temp.destination"
                         type="text"/>
                         <v-btn 
-                        round color="teal lighten-1" 
+                        rounded color="teal lighten-1" 
                         dark 
                         v-on:click.prevent="getDirections" 
                         v-show="!trip.distance">
@@ -93,7 +93,7 @@
                                 required/>
                             </v-flex>
                             <v-flex xs12 class="text-xs-right" mt-3 v-show="trip.reason">
-                                <v-btn type="submit" round color="teal lighten-1" dark>
+                                <v-btn type="submit" rounded color="teal lighten-1" dark>
                                     <v-icon class="mr-2" dark>send</v-icon>Submit
                                 </v-btn>
                             </v-flex>

@@ -15,7 +15,7 @@
       </v-flex>
       <v-flex text-xs-right>
         <router-link to="/trips/new">
-            <v-btn round color="teal lighten-1" dark>
+            <v-btn rounded color="teal lighten-1" dark>
               <v-icon class="mr-2" dark>add_circle</v-icon>New Trip
             </v-btn>
         </router-link>
@@ -26,9 +26,8 @@
         :headers="headers"
         :items="trips"
         class="table"
-        hide-actions
+        hide-defualt-footer
         no-data-text="There are no trips to display"
-        disable-initial-sort
         >
           <template v-slot:items="props">
             <td>{{ props.item.tripDate }}</td>
@@ -44,17 +43,20 @@
             <td class="text-xs-left">{{ props.item.distance }} miles</td>
             <td class="text-xs-left">£{{ props.item.value }}</td>
             <td class="text-xs-center">
-            <router-link :to="{ name: 'editTrip', params: { tripId: props.item.id}}">
-              <v-btn fab dark small flat color="primary">
-                <v-icon dark>edit</v-icon>
-              </v-btn>
-            </router-link>
+              <router-link :to="{ name: 'editTrip', params: { tripId: props.item.id}}">edit trip
+                <!-- <v-btn fab dark small flat color="primary"> -->
+                  <!-- <v-icon>edit</v-icon> -->
+                <!-- </v-btn> -->
+              </router-link>
                 <v-btn fab dark small flat color="red lighten-1" v-on:click="deleteTrip(props.item)">
                   <v-icon dark>delete</v-icon>
                 </v-btn>
             </td>
           </template>
         </v-data-table>
+           <v-btn class="ma-2" outlined small fab color="indigo">
+      <v-icon>edit</v-icon>
+    </v-btn>
     </v-flex>
 
   </v-layout>
