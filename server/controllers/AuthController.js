@@ -10,10 +10,10 @@ const controller = {
                 email: req.body.email,
                 password: hash
             }
-                connection.query('INSERT INTO users SET ?', credentials, (error, results, fields) => {
-                    if (error) res.status(403).send(error)
-                    res.send(results)
-                })
+            connection.query('INSERT INTO users SET ?', credentials, (error, results, fields) => {
+                if (error) throw error
+                res.send(results)
+            })
         })
     },
     login: (req, res) => {
