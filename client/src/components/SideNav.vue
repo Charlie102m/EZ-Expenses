@@ -1,5 +1,6 @@
 <template>
-    <nav>
+<nav class="nav">
+    <v-layout align-center justify-space-between column fill-height text-center>
         <div class="nav-head">
             <router-link to="/register"><i class="material-icons">person</i></router-link>
         </div>
@@ -12,7 +13,8 @@
         <div class="nav-footer">
             <router-link to="#"><i class="material-icons">settings</i></router-link>
         </div>
-    </nav>
+    </v-layout>
+</nav>
 </template>
 
 <script>
@@ -24,19 +26,9 @@ name: 'SideNav',
 <style>
 
     nav {
-        background-color: #2F303C;
+        background-color: #263238;
         width: 100px;
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .nav-head, .nav-body, .nav-footer {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
     }
 
     nav .nav-body {

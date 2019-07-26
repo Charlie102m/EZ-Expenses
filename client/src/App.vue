@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <v-app>
-      <v-layout fill-height>
-        <v-flex>
-          <SideNav/>
-        </v-flex>
-        <v-flex xs12 ma-2 pa-5>
-          <router-view/>
-        </v-flex>
-      </v-layout>
+      <v-container fluid pa-0 fill-height :class="className">
+        <v-layout>
+          <v-flex xs1 grow-shrink-0 v-show="showMenu">
+            <SideNav v-show="showMenu"/>
+          </v-flex>
+          <v-flex mx-5 pa-5 shrink xs11>
+            <router-view/>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-app>
   </div>
 </template>
@@ -20,9 +22,15 @@ export default {
   components: {
     SideNav,
   },
-  data: () => ({
-    //
-  }),
+  computed: {
+    showMenu () {
+      return this.$route.name !== 'login' && this.$route.name !== 'register';
+    },
+    className () {
+      if(this.$route.name === 'login' || this.$route.name === 'register')
+      return 'body'
+    }
+  }
 }
 </script>
 
@@ -30,6 +38,14 @@ export default {
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
   }
+
+  .body {
+    background-image: url('./assets/dark-background.png');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   a {
     text-decoration: none;
     color: inherit;

@@ -13,7 +13,7 @@ const controller = {
             method: 'GET'
         }
         request(options, (error, response, body) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(body)
         })
     }

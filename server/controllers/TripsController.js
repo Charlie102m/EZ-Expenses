@@ -17,14 +17,14 @@ const controller = {
                         FROM trips 
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results)
         })
     },
     // CREATE trip
     addTrip: (req, res) => {
         connection.query('INSERT INTO trips SET ?', req.body, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results)
         })
     },
@@ -32,7 +32,7 @@ const controller = {
     getTrip: (req, res) => {
         let query = `SELECT *, DATE_FORMAT(tripDate, '%Y-%m-%d') AS tripDate FROM trips WHERE id = ${req.params.tripId} LIMIT 1`
         connection.query(query, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results[0])
         })
     },
@@ -43,14 +43,14 @@ const controller = {
                         WHERE id = ?`
         let data = [req.body, req.params.tripId]
         connection.query(query, data, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results)
         })
     },
     // DELETE trip
     deleteTrip: (req, res) => {
         connection.query('DELETE FROM trips WHERE id = ?', req.params.tripId, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results)
         })
     }

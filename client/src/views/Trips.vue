@@ -1,68 +1,46 @@
 <template>
 <div>
-  <v-layout row wrap>
-    <v-flex xs12>
       <h1 class="page-title font-weight-light">
         <i class="material-icons">directions_car</i>
         Trips
       </h1>
-    </v-flex>
-    <v-layout align-center justify-space-between row fill-height mb-3>
-      <v-flex>
+    <v-layout align-center justify-space-around row>
+      <v-flex ma-5>
         <h3 class="font-weight-light">
           You have <strong class="red--text text--lighten-1">{{ unclaimedTrips ? unclaimedTrips : 0 }}</strong> unclaimed trips!
         </h3>
       </v-flex>
-      <v-flex text-xs-right>
+      <v-flex text-right ma-5>
         <router-link to="/trips/new">
             <v-btn rounded color="teal lighten-1" dark>
               <v-icon class="mr-2" dark>add_circle</v-icon>New Trip
             </v-btn>
         </router-link>
       </v-flex>
-    </v-layout>
     <v-flex xs12 class="table-container elevation-1 ">
         <v-data-table
         :headers="headers"
         :items="trips"
+        loading-text="Loading... Please wait"
+        hide-default-footer
         class="table"
-        hide-defualt-footer
-        no-data-text="There are no trips to display"
-        >
-          <template v-slot:items="props">
-            <td>{{ props.item.tripDate }}</td>
-            <td class="text-xs-left">
-              <strong>{{ props.item.originName }}</strong><br>
-              <span class="">{{ props.item.originAddress }}</span>
-            </td>
-            <td class="text-xs-left">
-              <strong>{{ props.item.destinationName }}</strong><br>
-              <span class="">{{ props.item.destinationAddress }}</span>
-            </td>
-            <td class="text-xs-left">{{ props.item.duration }} mins</td>
-            <td class="text-xs-left">{{ props.item.distance }} miles</td>
-            <td class="text-xs-left">£{{ props.item.value }}</td>
-            <td class="text-xs-center">
-              <router-link :to="{ name: 'editTrip', params: { tripId: props.item.id}}">edit trip
-                <!-- <v-btn fab dark small flat color="primary"> -->
-                  <!-- <v-icon>edit</v-icon> -->
-                <!-- </v-btn> -->
-              </router-link>
-                <v-btn fab dark small flat color="red lighten-1" v-on:click="deleteTrip(props.item)">
-                  <v-icon dark>delete</v-icon>
-                </v-btn>
-            </td>
-          </template>
+        no-data-text="There are no trips to display">
+        <template v-slot:item.action="{ item }">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editTrip(item)">
+              edit
+            </v-icon>
+          <v-icon
+            small
+            @click="deleteTrip(item)">
+            delete
+          </v-icon>
+        </template>
         </v-data-table>
-           <v-btn class="ma-2" outlined small fab color="indigo">
-      <v-icon>edit</v-icon>
-    </v-btn>
     </v-flex>
-
   </v-layout>
-
-  
-
   <div class="message-container" v-show="message">{{ message ? message : ""}}</div>
 </div>
 </template>
@@ -79,7 +57,7 @@ export default {
         {text: 'Duration', value: 'duration'},
         {text: 'Distance', value: 'distance'},
         {text: 'Value', value: 'value'},
-        {text: 'Actions', sortable: false, align: 'center', width: '160px' }
+        {text: 'Actions', value: 'action' }
       ],
       trips: [],
       unclaimedTrips: null,
@@ -106,6 +84,10 @@ export default {
             .catch(error => console.log(error))
         })
         .catch(error => console.log(error))
+    },
+    editTrip (trip) {
+      console.log(trip);
+      this.$router.push({name: "editTrip", params: { tripId: trip.id}})
     }
   }
 }

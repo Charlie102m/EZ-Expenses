@@ -11,8 +11,8 @@ const controller = {
                 password: hash
             }
             connection.query('INSERT INTO users SET ?', credentials, (error, results, fields) => {
-                if (error) throw error
-                res.send(results)
+                if (error) return res.status(403).send(error)
+                return res.status(200).send(results)
             })
         })
     },

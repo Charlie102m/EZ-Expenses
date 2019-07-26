@@ -34,7 +34,7 @@
                                             <h3 class="font-weight-light headline">Via: <strong class="font-weight-medium">{{ summary ? summary : ''}}</strong></h3>
                                         </v-flex>
                                         <v-flex class="text-xs-right" xs6>
-                                            <v-btn fab dark small flat color="white" v-on:click.prevent="closeResults">
+                                            <v-btn fab small color="" v-on:click.prevent="closeResults">
                                                 <v-icon dark>close</v-icon>
                                             </v-btn>
                                         </v-flex>

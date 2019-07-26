@@ -9,7 +9,7 @@ const controller =  {
                                 SUM(duration) AS totalTime
                         FROM trips`
         connection.query(query, (error, results, fields) => {
-            if (error) throw error
+            if (error) return res.status(403).send(error)
             res.send(results)
         })
     }
