@@ -4,22 +4,26 @@ const express = require('express'),
 
 const controller =  {
     addExpense: (req, res) => {
-        // let expense = {
-        //     expenseDate: Date,
-        //     expenseType: 'Travel, Accomodation, Sustinence, Other',
-        //     status: 'unclaimed',
-        //     net: 10.00,
-        //     vat: 2.00,
-        //     total: 12.00,
-        //     createdBy: 5
-        // }
         connection.query(`INSERT INTO expenses SET ?`, req.body, (error, results) => {
             if (error) return res.status(403).send(error)
             return res.send(results)
         })
     },
     getExpenses: (req, res) => {
-        connection.query(`SELECT * FROM expenses`, (error, results) => {
+        let query =     `SELECT id,
+                            DATE_FORMAT(expenseDate, '%d/%m/%Y') AS expenseDate,
+                            expenseType,
+                            status,
+                            net,
+                            vat,
+                            total,
+                            createdBy,
+                            status,
+                            createdAt,
+                            comment
+                        FROM expenses 
+                        ORDER BY createdAt DESC`
+        connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error)
             return res.send(results)
         })

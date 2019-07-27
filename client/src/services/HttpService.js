@@ -36,5 +36,14 @@ export default {
   },
   login(credentials) {
     return apiClient.post('/login', credentials)
-  }
+  },
+  getExpenses() {
+    return apiClient.get('/expenses')
+  },
+  addExpense(expense) {
+    return apiClient.post('/expenses', expense)
+  },
+  deleteExpense(expense) {
+    return apiClient.delete('/expenses/' + expense.id)
+  },
 }

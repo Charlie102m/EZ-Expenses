@@ -182,7 +182,9 @@ export default {
         // }
     },
     mounted () {
+        // eslint-disable-next-line
         this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete));
+        // eslint-disable-next-line
         this.autocomplete2 = new google.maps.places.Autocomplete((this.$refs.autocomplete2));
         // parse auto complete response for origin field
         this.autocomplete.addListener('place_changed', () => {

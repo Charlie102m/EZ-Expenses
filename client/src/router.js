@@ -6,6 +6,8 @@ import NewTrip from './views/NewTrip.vue'
 import EditTrip from './views/EditTrip.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
+import Expenses from './views/Expenses.vue'
+import NewExpense from './views/NewExpense.vue'
 
 Vue.use(Router)
 
@@ -25,7 +27,7 @@ export default new Router({
     },
     {
       path: '/trips/new',
-      name: 'newtrip',
+      name: 'newTrip',
       component: NewTrip
     },
     {
@@ -43,6 +45,16 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/expenses',
+      name: 'expenses',
+      component: Expenses
+    },
+    {
+      path: '/expenses/new',
+      name: 'newExpense',
+      component: NewExpense
     }
   ]
 })

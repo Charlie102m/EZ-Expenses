@@ -25,6 +25,15 @@
         hide-default-footer
         class="table"
         no-data-text="There are no trips to display">
+    <template v-slot:item.duration="{ item }">
+      {{ item.duration }} mins
+    </template>
+    <template v-slot:item.distance="{ item }">
+      {{ item.distance }} miles
+    </template>
+    <template v-slot:item.value="{ item }">
+      £{{ item.value.toFixed(2) }}
+    </template>
         <template v-slot:item.action="{ item }">
             <v-icon
               small
@@ -57,7 +66,7 @@ export default {
         {text: 'Duration', value: 'duration'},
         {text: 'Distance', value: 'distance'},
         {text: 'Value', value: 'value'},
-        {text: 'Actions', value: 'action' }
+        {text: 'Actions', value: 'action', sortable: false }
       ],
       trips: [],
       unclaimedTrips: null,
@@ -67,7 +76,6 @@ export default {
   created() {
     HttpService.getTrips()
       .then(response => this.trips = response.data)
-      .then(() => console.log(this.trips))
       .then(() => {
         this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
       })
@@ -81,6 +89,9 @@ export default {
           this.message = 'Trip deleted successfully'
           HttpService.getTrips()
             .then(response => this.trips = response.data)
+            .then(() => {
+              this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
+            })
             .catch(error => console.log(error))
         })
         .catch(error => console.log(error))
@@ -113,17 +124,6 @@ export default {
       text-align: center;
       border-radius: 3px;
       box-shadow: 3px 3px 10px #ddd;
-  }
-
-  .page-title i {
-    font-size: 50px;
-  }
-
-  .page-title {
-    vertical-align: center;
-    color: #2F303C;
-    margin-bottom: 50px;
-    font-size: 70px;
   }
 
   .table-container {
