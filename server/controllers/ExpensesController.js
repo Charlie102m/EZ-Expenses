@@ -28,6 +28,26 @@ const controller =  {
             return res.send(results)
         })
     },
+    getExpensesByStatus: (req, res) => {
+        let query =     `SELECT id,
+                            DATE_FORMAT(expenseDate, '%d/%m/%Y') AS expenseDate,
+                            expenseType,
+                            status,
+                            net,
+                            vat,
+                            total,
+                            createdBy,
+                            status,
+                            createdAt,
+                            comment
+                        FROM expenses
+                        WHERE status = '${req.params.status}'
+                        ORDER BY createdAt DESC`
+        connection.query(query, (error, results) => {
+            if (error) return res.status(403).send(error)
+            return res.send(results)
+        })
+    },
     getExpense: (req, res) => {
         let query = `SELECT * FROM expenses WHERE id = ${req.params.expenseId}`
         connection.query(query, (error, results) => {

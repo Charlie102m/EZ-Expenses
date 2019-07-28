@@ -47,6 +47,9 @@ router.route('/expenses')
     .get(ExpensesController.getExpenses)
     .post(ExpensesController.addExpense)
 
+router.route('/expenses/status/:status')
+    .get(ExpensesController.getExpensesByStatus)
+
 router.route('/expenses/:expenseId')
     .get(ExpensesController.getExpense)
     .put(ExpensesController.updateExpense)

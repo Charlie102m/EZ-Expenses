@@ -71,6 +71,12 @@ export default {
         HttpService.getClaims()
             .then(response => this.claims = response.data)
             .catch(error => console.log(error))
+        HttpService.getTripsByStatus('unclaimed')
+            .then(response => this.unclaimedTrips = response.data.length)
+            .catch(error => console.log(error))
+        HttpService.getExpensesByStatus('unclaimed')
+            .then(response => this.unclaimedExpenses = response.data.length)
+            .catch(error => console.log(error))
     }
 }
 </script>

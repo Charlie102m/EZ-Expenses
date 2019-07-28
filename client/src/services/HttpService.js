@@ -43,6 +43,9 @@ export default {
   getExpenses() {
     return apiClient.get('/expenses')
   },
+  getExpensesByStatus(status) {
+    return apiClient.get('/expenses/status/' + status)
+  },
   addExpense(expense) {
     return apiClient.post('/expenses', expense)
   },

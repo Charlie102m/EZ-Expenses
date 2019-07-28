@@ -53,7 +53,7 @@ export default {
             landscape: true,
             includeTax: true,
             expense: {
-                expenseDate: null,
+                expenseDate: new Date().toISOString().substr(0, 10),
                 expenseType: null,
                 comment: null,
                 net: 0,
