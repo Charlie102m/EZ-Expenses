@@ -28,6 +28,9 @@ router.route('/')
 router.route('/trips')
     .get(TripsController.getTrips)
     .post(TripsController.addTrip)
+
+router.route('/trips/status/:status')
+    .get(TripsController.getTripsByStatus)
     
 router.route('/trips/:tripId')
     .get(TripsController.getTrip)
@@ -51,6 +54,8 @@ router.route('/expenses/:expenseId')
 
 // CLAIMS - ClaimsController
 // Implement full CRUD for Claims
-
+router.route('/claims')
+    .get(ClaimsController.getClaims)
+    .post(ClaimsController.addClaim)
 
 module.exports = router;

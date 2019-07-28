@@ -8,7 +8,7 @@
             <router-link to="/"><i class="material-icons">home</i></router-link>
             <router-link to="/trips"><i class="material-icons">directions_car</i></router-link>
             <router-link to="/expenses"><i class="material-icons">payment</i></router-link>
-            <router-link to="#"><i class="material-icons">attach_money</i></router-link>
+            <router-link to="/claims"><i class="material-icons">attach_money</i></router-link>
         </div>
         <div class="nav-footer">
             <router-link to="#"><i class="material-icons">settings</i></router-link>

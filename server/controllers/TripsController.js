@@ -21,6 +21,26 @@ const controller = {
             res.send(results)
         })
     },
+    getTripsByStatus: (req, res) => {
+        let status = req.params.status
+        let query =     `SELECT id,
+                            DATE_FORMAT(tripDate, '%d/%m/%Y') AS tripDate,
+                            originName,
+                            originAddress,
+                            destinationName,
+                            destinationAddress,
+                            distance,
+                            duration,
+                            status,
+                            value
+                        FROM trips
+                        WHERE status = '${status}'
+                        ORDER BY createdAt DESC`
+        connection.query(query, (error, results, fields) => {
+            if (error) return res.status(403).send(error)
+            res.send(results)
+        })
+    },
     // CREATE trip
     addTrip: (req, res) => {
         connection.query('INSERT INTO trips SET ?', req.body, (error, results, fields) => {

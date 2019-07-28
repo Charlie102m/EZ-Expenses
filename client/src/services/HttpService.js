@@ -16,6 +16,9 @@ export default {
   getTrips() {
     return apiClient.get('/trips')
   },
+  getTripsByStatus(status) {
+    return apiClient.get('/trips/status/' + status)
+  },
   addTrip(trip) {
     return apiClient.post('/trips', trip)
   },
@@ -46,4 +49,10 @@ export default {
   deleteExpense(expense) {
     return apiClient.delete('/expenses/' + expense.id)
   },
+  getClaims() {
+    return apiClient.get('/claims')
+  },
+  addClaim(payload) {
+    return apiClient.post('/claims', payload)
+  }
 }

@@ -8,6 +8,8 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import Expenses from './views/Expenses.vue'
 import NewExpense from './views/NewExpense.vue'
+import Claims from './views/Claims.vue'
+import NewClaim from './views/NewClaim.vue'
 
 Vue.use(Router)
 
@@ -55,6 +57,16 @@ export default new Router({
       path: '/expenses/new',
       name: 'newExpense',
       component: NewExpense
+    },
+    {
+      path: '/claims',
+      name: 'claims',
+      component: Claims
+    },
+    {
+      path: '/claims/new',
+      name: 'newClaim',
+      component: NewClaim
     }
   ]
 })

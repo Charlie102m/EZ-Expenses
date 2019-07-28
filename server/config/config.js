@@ -5,6 +5,7 @@ module.exports = {
         host: 'localhost',
         user: 'nodeuser',
         password: 'nodeuser',
-        database: 'the_expenses_app'
+        database: 'the_expenses_app',
+        multipleStatements: true
     })
 }

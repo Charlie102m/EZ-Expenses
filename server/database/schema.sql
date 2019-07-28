@@ -56,12 +56,14 @@ CREATE TABLE `expenses`
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `expenseDate` DATE NOT NULL,
   `expenseType` VARCHAR(255) NOT NULL,
+  `comment` VARCHAR(255) NOT NULL,
   `status` VARCHAR(255) NOT NULL DEFAULT 'unclaimed',
   `net` DECIMAL(10,2) NOT NULL,
   `vat` DECIMAL(10,2),
   `total` DECIMAL(10,2) NOT NULL,
   `createdBy` INT NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT NOW(),
+
   FOREIGN KEY (`createdBy`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 

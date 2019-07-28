@@ -1,7 +1,7 @@
 <template>
     <v-form v-on:submit.prevent="addTrip">
-        <v-layout align-top justify-center row wrap>
-            <v-flex lg6 class="get-directions-fields">
+        <v-layout align-top justify-space-around row wrap>
+            <v-flex lg5 class="get-directions-fields">
                 <input
                 v-on:keypress.enter.stop.prevent=""
                 ref="autocomplete" 
@@ -16,8 +16,7 @@
                 class="search-location" 
                 v-model="temp.destination"
                 type="text"/>
-            <v-layout align-top justify-end row wrap>
-                <v-flex xs4 grow>
+                <v-flex text-right grow mt-3>
                     <v-btn 
                     rounded color="teal lighten-1" 
                     dark 
@@ -26,7 +25,6 @@
                         <v-icon class="mr-2" dark>directions</v-icon><span>Calculate Route</span>
                     </v-btn>
                 </v-flex>
-            </v-layout>
                 <v-flex grow v-show="trip.distance">
                     <v-card 
                     color="teal lighten-1"
@@ -72,7 +70,7 @@
                     </v-card>
                 </v-flex>
             </v-flex>
-            <v-flex lg6>
+            <v-flex lg5>
                 <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
                     <v-date-picker v-show="trip.distance" v-model="trip.tripDate" :landscape="landscape" color="teal lighten-1"></v-date-picker>
                 </v-layout>
@@ -88,16 +86,14 @@
                     <v-flex xs4>
                         <v-switch v-model="autoReturn" label="Auto create return trip?" color="teal lighten-1"></v-switch>
                     </v-flex>
-                    <v-flex xs10>
+                    <v-flex xs12>
                         <input
                         type="text"
                         v-model="trip.reason"
                         placeholder="What is the reason for your trip?"
                         required/>
                     </v-flex>
-                </v-layout>
-                <v-layout justify-end row wrap>
-                    <v-flex xs3 class="text-xs-right" mt-3 v-show="trip.reason">
+                    <v-flex text-right mt-3 v-show="trip.reason">
                         <v-btn type="submit" rounded color="teal lighten-1" dark>
                             <v-icon class="mr-2" dark>send</v-icon>Submit
                         </v-btn>
