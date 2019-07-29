@@ -31,7 +31,6 @@
                         v-model="expense.comment"
                         type="text"/>
                     </v-flex>
-                    <!-- <v-layout justify-end row> -->
                     <v-flex text-right mt-3>
                         <v-btn type="submit" 
                         rounded color="teal lighten-1" 
@@ -39,7 +38,6 @@
                             <v-icon class="mr-2" dark>send</v-icon>Submit
                         </v-btn>
                     </v-flex>
-                <!-- </v-layout> -->
             </v-layout>
         </v-form>
     </div>

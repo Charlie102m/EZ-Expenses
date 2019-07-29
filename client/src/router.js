@@ -10,32 +10,37 @@ import Expenses from './views/Expenses.vue'
 import NewExpense from './views/NewExpense.vue'
 import Claims from './views/Claims.vue'
 import NewClaim from './views/NewClaim.vue'
+import Playgrounds from './views/Playgrounds.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: { requiresAuth: true }
     },
     {
       path: '/trips',
       name: 'trips',
-      component: Trips
+      component: Trips,
+      meta: { requiresAuth: true }
     },
     {
       path: '/trips/new',
       name: 'newTrip',
-      component: NewTrip
+      component: NewTrip,
+      meta: { requiresAuth: true }
     },
     {
       path: '/trips/edit/:tripId',
       name: 'editTrip',
       component: EditTrip,
+      meta: { requiresAuth: true },
       props: true
     },
     {
@@ -51,22 +56,41 @@ export default new Router({
     {
       path: '/expenses',
       name: 'expenses',
-      component: Expenses
+      component: Expenses,
+      meta: { requiresAuth: true }
     },
     {
       path: '/expenses/new',
       name: 'newExpense',
-      component: NewExpense
+      component: NewExpense,
+      meta: { requiresAuth: true }
     },
     {
       path: '/claims',
       name: 'claims',
-      component: Claims
+      component: Claims,
+      meta: { requiresAuth: true }
     },
     {
       path: '/claims/new',
       name: 'newClaim',
-      component: NewClaim
+      component: NewClaim,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/playgrounds',
+      name: 'playgrounds',
+      component: Playgrounds
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem('user')
+  if(to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+    next('/login')
+  }
+  next()
+})
+
+export default router

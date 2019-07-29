@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
 export default {
     data () {
         return {
@@ -56,13 +55,10 @@ export default {
     },
     methods: {
         register () {
-            HttpService.register(this.credentials)
-                .then((response) => {
-                    if (response.status === 200) { 
-                        this.$router.push({ name: "dashboard"}) 
-                    }
+            this.$store.dispatch('register', this.credentials)
+                .then(() => {
+                        this.$router.push({ name: 'dashboard'})
                 })
-                .catch((error) => console.log(error))
         }
     }
 }

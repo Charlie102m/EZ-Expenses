@@ -11,7 +11,7 @@
             <router-link to="/claims"><i class="material-icons">attach_money</i></router-link>
         </div>
         <div class="nav-footer">
-            <router-link to="#"><i class="material-icons">settings</i></router-link>
+            <router-link to="/playgrounds"><i class="material-icons">settings</i></router-link>
         </div>
     </v-layout>
 </nav>
@@ -25,28 +25,28 @@ name: 'SideNav',
 
 <style>
 
-    nav {
+    .nav {
         background-color: #263238;
         width: 100px;
         height: 100%;
     }
 
-    nav .nav-body {
+    .nav .nav-body {
         flex: 1 1 400px;
         margin-top: 80px;
     }
 
-    nav .nav-head .material-icons {
+    .nav .nav-head .material-icons {
         color: #2F303C;
     }
 
-    nav .nav-head {
+    .nav .nav-head {
         margin-top: 30px;
         background: white;
         border-radius: 50%;
     }
 
-    nav .material-icons {
+    .nav .material-icons {
         color: white;
         font-size: 50px;
         margin: 15px;
@@ -54,7 +54,7 @@ name: 'SideNav',
         transition: all 0.3s ease-in;
     }
 
-    nav .material-icons:hover {
+    .nav .material-icons:hover {
         opacity: 1;
         transform: scale(1.1)
     }

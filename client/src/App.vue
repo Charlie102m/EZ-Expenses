@@ -3,10 +3,16 @@
     <v-app>
       <v-container fluid pa-0 fill-height :class="className">
         <v-layout>
-          <v-flex xs1 grow-shrink-0 v-show="showMenu">
+          <v-flex grow-shrink-0 v-show="showMenu">
             <SideNav v-show="showMenu"/>
           </v-flex>
           <v-flex mx-5 pa-5 shrink xs11>
+          <v-flex xs12>
+            <Messages v-if="messageExists"/>
+          </v-flex>
+          <v-flex xs12>
+            <TopNav v-show="showMenu"/>
+          </v-flex>
             <router-view/>
           </v-flex>
         </v-layout>
@@ -17,10 +23,14 @@
 
 <script>
 import SideNav from '@/components/SideNav.vue'
+import TopNav from '@/components/TopNav.vue'
+import Messages from '@/components/Messages.vue'
 export default {
   name: 'App',
   components: {
     SideNav,
+    TopNav,
+    Messages
   },
   computed: {
     showMenu () {
@@ -30,6 +40,9 @@ export default {
       let className = ''
       if(this.$route.name === 'login' || this.$route.name === 'register') className = 'body'
       return className
+    },
+    messageExists () {
+      return !!this.$store.state.message
     }
   }
 }
