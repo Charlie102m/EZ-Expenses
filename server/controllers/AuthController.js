@@ -2,7 +2,7 @@ const express = require('express'),
     bcrypt = require('bcrypt'),
     saltRounds = 10,
     jwt = require('jsonwebtoken'),
-    secretKey = 'I_Love_My_Son'
+    secretKey = 'I_Love_My_Son',
     connection = require('../config/config.js').connection
 
 const controller = {
@@ -26,10 +26,10 @@ const controller = {
         let query = `SELECT * FROM users WHERE email = '${req.body.email}' LIMIT 1`
         connection.query(query, (error, results) => {
             if (error) return res.status(401).send(error)
-            if (results.length == 0) return res.status(401).send('incorrect email')
+            if (results.length == 0) return res.status(401).send('Incorrect email or password used, please try again or reset your password using the link below.')
             bcrypt.compare(req.body.password, results[0].password, function(err, result) {
                 if (err) return res.status(401).send(err)
-                if (result === false) return res.status(401).send('access denied')
+                if (result === false) return res.status(401).send('Incorrect email or password used, please try again or reset your password using the link below.')
                 let credentials = {
                     email: results[0].email,
                     password: results[0].password

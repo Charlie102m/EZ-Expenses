@@ -4,6 +4,8 @@ const express = require('express'),
 
 const controller =  {
     loadDashboard: (req, res) => {
+        const bearerHeader = req.headers
+        console.log('bearerHeader: ', bearerHeader);
         let query =     `SELECT COUNT(*) AS totalTrips,
                                 SUM(distance) AS totalMiles,
                                 SUM(duration) AS totalTime
