@@ -37,6 +37,10 @@ export default new Vuex.Store({
       state.user = JSON.parse(user)
       localStorage.setItem('user', user)
     },
+    DESTROY_USER(state) {
+      state.user = null
+      localStorage.removeItem('user')
+    },
     UPDATE_MESSAGE(state, text) {
       state.message = text
     },
@@ -64,6 +68,7 @@ export default new Vuex.Store({
     logout({ commit }) {
       return new Promise((resolve) => {
         commit('DESTROY_TOKEN')
+        commit('DESTROY_USER')
         resolve()
       })
     }

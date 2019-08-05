@@ -2,7 +2,6 @@ const express = require('express'),
     mysql = require('mysql'),
     connection = require('../config/config.js').connection
     
-
 const controller =  {
     // get all claims
     getClaims: (req, res) => {
@@ -63,6 +62,32 @@ const controller =  {
                     res.status(200).send('Claim successfully added!')
                 })
             })
+        })
+    },
+    getClaim: (req, res) => {
+        let claimId = req.params.claimId
+        let type = ""
+        let claimTable = ""
+        let joinTable = ""
+        if (req.params.claimType === 'Milage') {
+            claimTable = "tripClaims"
+            joinTable = "tripClaimsJoin"
+            type = "trip"
+        } else {
+            claimTable = "expenseClaims"
+            joinTable = "expenseClaimsJoin"
+            type = "expense"
+        }
+        let query = `SELECT * FROM ${claimTable} WHERE id = ${claimId};
+                    SELECT * FROM ${joinTable} 
+                    RIGHT JOIN ${type}s 
+                        ON ${type}s.id = ${joinTable}.${type}Id 
+                        WHERE claimId = ${claimId};`
+        connection.query(query, [1,2], (error, results) => {
+            if (error) return res.status(403).send(error)
+            if (results[0].length === 0) return res.status(403).send('Claim not found')
+            if (results[1].length === 0) return res.status(403).send('Claim found but associated expenses/trips no longer exist')
+            res.status(200).send(results)
         })
     }
 }

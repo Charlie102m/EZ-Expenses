@@ -61,4 +61,7 @@ router.route('/claims')
     .get(Mid.authenticate, ClaimsController.getClaims)
     .post(Mid.authenticate, ClaimsController.addClaim)
 
+router.route('/claims/:claimType/:claimId')
+    .get(ClaimsController.getClaim)
+
 module.exports = router;

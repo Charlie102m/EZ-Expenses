@@ -104,7 +104,7 @@ CREATE TABLE `expenseClaims`
 (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `status` VARCHAR(255) NOT NULL DEFAULT 'submitted',
-  `count_expenses` INT NOT NULL,
+  `countExpenses` INT NOT NULL,
   `netValue` DECIMAL(10,2) NOT NULL,
   `vatValue` DECIMAL(10,2),
   `totalValue` DECIMAL(10,2) NOT NULL,

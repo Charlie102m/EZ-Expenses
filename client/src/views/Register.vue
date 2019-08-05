@@ -57,7 +57,12 @@ export default {
     methods: {
         register () {
             HttpService.register(this.credentials)
-                .then(response => console.log(response))
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.$router.push({name: 'login'})
+                    }
+                    console.log(response);
+                })
                 .catch(error => console.log(error))
         }
     }

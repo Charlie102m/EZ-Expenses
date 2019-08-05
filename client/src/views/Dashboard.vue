@@ -1,9 +1,27 @@
 <template>
   <div class="dashboard">
-    <h1>Dashboard</h1>
-    {{ data }}
-    {{ userId }}
-    {{ userEmail }}
+    <h1 class="page-title font-weight-light">
+      <i class="material-icons">home</i>
+      Dashboard
+    </h1>
+    <p>
+      {{ tripSummary }}
+    </p>
+    <p>
+      {{ tripClaimsSummary }}
+    </p>
+    <p>
+      {{ expenseSummary }}
+    </p>
+    <p>
+      {{ expenseClaimsSummary }}
+    </p>
+    <p>
+      userId: {{ userId }}
+    </p>
+    <p>
+      userEmail: {{ userEmail }}
+    </p>
   </div>
 </template>
 
@@ -13,14 +31,20 @@ export default {
   name: 'dasboard',
   data () {
     return {
-      data: null
+      tripSummary: null,
+      tripClaimsSummary: null,
+      expenseSummary: null,
+      expenseClaimsSummary: null
     }
   },
   created() {
     HttpService.loadDashboard()
       .then(response => {
-        this.data = response.data[0]
-        this.data["expense"] = (response.data[0].totalMiles * 0.13).toFixed(2)
+        this.tripSummary = response.data[0]
+        this.tripClaimsSummary = response.data[1]
+        this.expenseSummary = response.data[2]
+        this.expenseClaimsSummary = response.data[3]
+        console.log(response);
       })
       .catch(error => console.log(error))
   },
