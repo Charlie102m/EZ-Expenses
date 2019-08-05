@@ -1,5 +1,6 @@
 const express = require('express'),
     mysql = require('mysql'),
+    { json2excel } = require('js2excel'),
     connection = require('../config/config.js').connection
     
 const controller =  {
@@ -79,7 +80,18 @@ const controller =  {
             type = "expense"
         }
         let query = `SELECT * FROM ${claimTable} WHERE id = ${claimId};
-                    SELECT * FROM ${joinTable} 
+                    SELECT id,
+                        DATE_FORMAT(tripDate, '%d/%m/%Y') AS tripDate,
+                        originName,
+                        originAddress,
+                        destinationName,
+                        destinationAddress,
+                        reason,
+                        distance,
+                        duration,
+                        status,
+                        value
+                    FROM ${joinTable} 
                     RIGHT JOIN ${type}s 
                         ON ${type}s.id = ${joinTable}.${type}Id 
                         WHERE claimId = ${claimId};`

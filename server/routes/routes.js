@@ -10,14 +10,13 @@ const   express = require('express'),
         Mid = require('../middleware/auth.js')
     
 // AUTH - AuthController
-// Implement me for register, de-register, login & logout
 router.route('/register')
     .post(AuthController.register)
 
 router.route('/login')
     .post(AuthController.login)
+
 // INDEX - IndexController
-// Implement index API for dashboard data
 router.route('/') 
     .get(Mid.authenticate, IndexController.loadDashboard)
 
@@ -56,7 +55,6 @@ router.route('/expenses/:expenseId')
     .delete(Mid.authenticate, ExpensesController.deleteExpense)
 
 // CLAIMS - ClaimsController
-// Implement full CRUD for Claims
 router.route('/claims')
     .get(Mid.authenticate, ClaimsController.getClaims)
     .post(Mid.authenticate, ClaimsController.addClaim)

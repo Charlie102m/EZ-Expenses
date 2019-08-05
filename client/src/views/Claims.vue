@@ -26,13 +26,23 @@
                 <v-data-table
                 :headers="headers"
                 :items="claims"
+                hide-default-footer
                 loading-text="Loading... Please wait"
                 class="table"
                 no-data-text="There are no claims to display">
+                    <template v-slot:item.status="{ item }">
+                        <v-chip class="text-uppercase" color="green" dark>{{ item.status }}</v-chip>
+                    </template>
                     <template v-slot:item.totalValue="{ item }">
                         £{{item.totalValue.toFixed(2)}}
                     </template>
-                    <template v-slot:item.download="{ item }">
+                    <template v-slot:item.action="{ item }">
+                        <v-icon
+                            color="teal lighten-1"
+                            class="mr-2"
+                            @click="viewClaim(item)">
+                            remove_red_eye
+                        </v-icon>
                         <v-icon
                             color="teal lighten-1"
                             @click="downloadClaim(item)">
@@ -47,6 +57,7 @@
 
 <script>
 import HttpService from '@/services/HttpService.js'
+import {json2excel} from 'js2excel'
 export default {
     data () {
         return {
@@ -58,13 +69,28 @@ export default {
                 { text: 'Type', value: 'type' },
                 { text: 'Status', value: 'status' },
                 { text: 'Total', value: 'totalValue'},
-                { text: 'Download', value: 'download', sortable: false, align: 'center'}
+                { text: 'Actions', value: 'action', sortable: false, align: 'center'}
             ]
         }
     },
     methods: {
-        downloadClaim (item) {
-            console.log(item)
+        downloadClaim (claim) {
+            HttpService.viewClaim(claim)
+                .then((response) => {
+                    const data = JSON.parse(JSON.stringify(response.data[1]))
+                    try {
+                        json2excel({
+                            data,
+                            name: 'claim-data'
+                        });
+                    } catch (error) {
+                        console.error('export error: ', error);
+                    }
+                })
+                .catch(error => console.log(error))
+        },
+        viewClaim (claim) {
+            this.$router.push(`/claims/${claim.type}/${claim.id}`)
         }
     },
     created () {

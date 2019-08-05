@@ -190,6 +190,7 @@ export default {
                         this.trip.originAddress = newWaypoints.originAddress
                         this.trip.destinationName = newWaypoints.destinationName
                         this.trip.destinationAddress = newWaypoints.destinationAddress
+                        this.trip.reason = 'Return trip: ' + this.trip.reason
                         this.autoReturn = false
                         return this.addTrip()
                     }

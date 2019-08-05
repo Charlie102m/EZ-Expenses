@@ -3,15 +3,15 @@
     <v-app>
       <v-container fluid pa-0 fill-height :class="className">
         <v-layout>
-          <v-flex grow-shrink-0 v-show="showMenu">
-            <SideNav v-show="showMenu"/>
+          <v-flex grow-shrink-0 v-if="showMenu">
+            <SideNav v-if="showMenu"/>
           </v-flex>
           <v-flex mx-5 pa-5 shrink xs11>
           <v-flex >
             <Messages v-if="messageExists"/>
           </v-flex>
           <v-flex xs12>
-            <TopNav v-show="showMenu"/>
+            <TopNav v-if="showMenu"/>
           </v-flex>
             <router-view/>
           </v-flex>

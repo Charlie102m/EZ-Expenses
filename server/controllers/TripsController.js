@@ -10,13 +10,14 @@ const controller = {
                             originAddress,
                             destinationName,
                             destinationAddress,
+                            reason,
                             distance,
                             duration,
                             status,
                             value
                         FROM trips
                         WHERE createdBy = ${req.headers.user.id}
-                        ORDER BY tripDate DESC`
+                        ORDER BY createdAt DESC`
         connection.query(query, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results)
@@ -30,6 +31,7 @@ const controller = {
                             originAddress,
                             destinationName,
                             destinationAddress,
+                            reason,
                             distance,
                             duration,
                             status,

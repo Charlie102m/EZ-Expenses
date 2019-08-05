@@ -35,8 +35,14 @@
                     loading-text="Loading... Please wait"
                     v-model="claimTrips"
                     show-select
+                    single-expand
+                    show-expand
+                    hide-default-footer
                     class="table"
                     no-data-text="There are no trips to display">
+                        <template v-slot:expanded-item="{ headers, item }">
+                            <td :colspan="headers.length">{{ item.reason }}</td>
+                        </template>
                         <template v-slot:item.duration="{ item }">
                         {{ item.duration }} mins
                         </template>
@@ -72,7 +78,6 @@
                         <v-icon class="mr-2" dark>send</v-icon>Submit
                     </v-btn>
                 </v-flex>
-                <!-- table -->
             </v-layout>
         </v-form>
     </div>
@@ -108,7 +113,7 @@ export default {
                 {text: 'Destination', value: 'destinationName'},
                 {text: 'Duration', value: 'duration'},
                 {text: 'Distance', value: 'distance'},
-                {text: 'Value', value: 'value'},
+                {text: 'Value', value: 'value'}
             ]
         }
     },

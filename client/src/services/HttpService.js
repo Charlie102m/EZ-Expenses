@@ -53,5 +53,8 @@ export default {
   addClaim(payload) {
     return apiClient.post('/claims', payload)
   },
+  viewClaim(claim) {
+    return apiClient.get(`/claims/${claim.type}/${claim.id}`)
+  },
   apiClient
 }

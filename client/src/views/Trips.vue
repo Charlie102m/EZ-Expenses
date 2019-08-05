@@ -18,36 +18,41 @@
         </router-link>
       </v-flex>
     <v-flex xs12 class="table-container elevation-1 ">
-        <v-data-table
+      <v-data-table
         :headers="headers"
         :items="trips"
         loading-text="Loading... Please wait"
+        single-expand=true
+        show-expand
         hide-default-footer
         class="table"
         no-data-text="There are no trips to display">
-    <template v-slot:item.duration="{ item }">
-      {{ item.duration }} mins
-    </template>
-    <template v-slot:item.distance="{ item }">
-      {{ item.distance }} miles
-    </template>
-    <template v-slot:item.value="{ item }">
-      £{{ item.value.toFixed(2) }}
-    </template>
+        <template v-slot:expanded-item="{ headers, item }">
+            <td :colspan="headers.length">{{ item.reason }}</td>
+        </template>
+        <template v-slot:item.duration="{ item }">
+          {{ item.duration }} mins
+        </template>
+        <template v-slot:item.distance="{ item }">
+          {{ item.distance }} miles
+        </template>
+        <template v-slot:item.value="{ item }">
+          £{{ item.value.toFixed(2) }}
+        </template>
         <template v-slot:item.action="{ item }">
             <v-icon
-              small
+              color="teal lighten-1"
               class="mr-2"
               @click="editTrip(item)">
               edit
             </v-icon>
           <v-icon
-            small
+            color="teal lighten-1"
             @click="deleteTrip(item)">
             delete
           </v-icon>
         </template>
-        </v-data-table>
+      </v-data-table>
     </v-flex>
   </v-layout>
   <div class="message-container" v-show="message">{{ message ? message : ""}}</div>
@@ -105,18 +110,6 @@ export default {
 </script>
 
 <style scoped>
-  .table-actions:hover {
-    cursor: pointer;
-  }
-
-  .table-actions {
-    margin: 5px;
-    padding: 8px;
-    background-color: darkblue;
-    border-radius: 50%;
-    color: white
-  }
-
   .message-container {
       line-height: 30px;
       width: 25%;
@@ -124,10 +117,5 @@ export default {
       text-align: center;
       border-radius: 3px;
       box-shadow: 3px 3px 10px #ddd;
-  }
-
-  .table-container {
-    max-height: 400px;
-    overflow-y: scroll;
   }
 </style>
