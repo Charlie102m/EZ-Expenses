@@ -57,7 +57,7 @@ export default {
                 net: 0,
                 vat: 0.20,
                 total: 0,
-                createdBy: 1
+                createdBy: null
             },
             items: [
                 'Travel',
@@ -69,6 +69,7 @@ export default {
     },
     methods: {
         addExpense () {
+            this.expense.createdBy = this.$store.getters.userId
             HttpService.addExpense(this.expense)
                 .then(() => this.$router.push("/expenses"))
                 .catch(error => this.message = error)

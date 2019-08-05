@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 import HttpService from '@/services/HttpService.js'
 
 Vue.use(Vuex)
@@ -8,28 +7,35 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // the data
   state: {
+    token: null,
     user: null,
     message: null
   },
   // the computed properties of the state object, similar to computed & data (model) objects
   // within the vue components/views
   getters: {
-    loggedIn(state) {
-      return !!state.user
+    userId (state) {
+      return state.user.id
+    },
+    userEmail (state) {
+      return state.user.email
     }
   },
   // methods used to change data
   mutations: {
-    UPDATE_USER(state, userData) {
-      state.user = userData
-      localStorage.setItem('user', JSON.stringify(userData))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`
-      axios.defaults.headers['Authorization'] = `Bearer ${userData.token}`
+    SET_TOKEN(state, token) {
+      HttpService.apiClient.defaults.headers.common['authorization'] = token
+      state.token = token
+      localStorage.setItem('token', token)
     },
-    CLEAR_USER_STATE(state) {
-      state.user = null
-      localStorage.removeItem('user')
-      axios.defaults.headers.common['Authorization'] = null
+    DESTROY_TOKEN(state) {
+      HttpService.apiClient.defaults.headers.common['authorization'] = null
+      state.token = null,
+      localStorage.removeItem('token')
+    },
+    SET_USER(state, user) {
+      state.user = JSON.parse(user)
+      localStorage.setItem('user', user)
     },
     UPDATE_MESSAGE(state, text) {
       state.message = text
@@ -40,57 +46,26 @@ export default new Vuex.Store({
   },
   // methods used to decide when/how to invole the mutations to change the data
   actions: {
-    // updateState(context, newState) {
-    //   context.commit('updateState', newState)
-    // },
-    register({ commit }, credentials) {
-      HttpService.register(credentials)
+    login({ commit }, credentials) {
+      return new Promise((resolve, reject) => {
+        HttpService.login(credentials)
           .then((response) => {
-            if (response.status === 200) {
-              commit('UPDATE_USER', {
-                email: response.data.results[0].email,
-                id: response.data.results[0].id,
-                token: response.data.token
-              })
-              
-            }
-          })
-          .then(() => {
-            commit('CLEAR_MESSAGE')
+            const token = response.headers.authorization
+            const user = response.headers.user
+            commit('SET_TOKEN', token)
+            commit('SET_USER', user)
+            resolve(response)
           })
           .catch((error) => {
-            console.log(error.response);
-            commit('UPDATE_MESSAGE', {
-              status: error.response.status,
-              text: error.response.data
-            })
+            reject(error)
           })
+      })
     },
-    login({ commit }, credentials) {
-      HttpService.login(credentials)
-        .then((response) => {
-          if (response.status === 200) {
-            commit('UPDATE_USER', {
-              email: response.data.results[0].email,
-              id: response.data.results[0].id,
-              token: response.data.token
-            })
-            
-          }
-        })
-        .then(() => {
-          commit('CLEAR_MESSAGE')
-        })
-        .catch((error) => {
-          console.log(error.response);
-          commit('UPDATE_MESSAGE', {
-            status: error.response.status,
-            text: error.response.data
-          })
-        })
-    },
-    logout({commit}) {
-      commit('CLEAR_USER_STATE')
+    logout({ commit }) {
+      return new Promise((resolve) => {
+        commit('DESTROY_TOKEN')
+        resolve()
+      })
     }
   }
 })

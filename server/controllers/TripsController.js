@@ -14,8 +14,9 @@ const controller = {
                             duration,
                             status,
                             value
-                        FROM trips 
-                        ORDER BY createdAt DESC`
+                        FROM trips
+                        WHERE createdBy = ${req.headers.user.id}
+                        ORDER BY tripDate DESC`
         connection.query(query, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results)
@@ -34,7 +35,7 @@ const controller = {
                             status,
                             value
                         FROM trips
-                        WHERE status = '${status}'
+                        WHERE status = '${status}' AND createdBy = ${req.headers.user.id}
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results, fields) => {
             if (error) return res.status(403).send(error)
@@ -50,7 +51,7 @@ const controller = {
     },
     // READ trip
     getTrip: (req, res) => {
-        let query = `SELECT *, DATE_FORMAT(tripDate, '%Y-%m-%d') AS tripDate FROM trips WHERE id = ${req.params.tripId} LIMIT 1`
+        let query = `SELECT *, DATE_FORMAT(tripDate, '%Y-%m-%d') AS tripDate FROM trips WHERE id = ${req.params.tripId} AND createdBy = ${req.headers.user.id} LIMIT 1`
         connection.query(query, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results[0])
@@ -60,8 +61,8 @@ const controller = {
     updateTrip: (req, res) => {
         let query = `UPDATE trips
                         SET ?
-                        WHERE id = ?`
-        let data = [req.body, req.params.tripId]
+                        WHERE id = ? AND createdBy = ?`
+        let data = [req.body, req.params.tripId, req.headers.user.id]
         connection.query(query, data, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results)
@@ -69,7 +70,8 @@ const controller = {
     },
     // DELETE trip
     deleteTrip: (req, res) => {
-        connection.query('DELETE FROM trips WHERE id = ?', req.params.tripId, (error, results, fields) => {
+        let data = [req.params.tripId, req.headers.user.id]
+        connection.query('DELETE FROM trips WHERE id = ? AND createdBy = ?', data, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results)
         })

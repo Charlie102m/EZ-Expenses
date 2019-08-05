@@ -2,8 +2,8 @@
   <div class="dashboard">
     <h1>Dashboard</h1>
     {{ data }}
-    {{ userData }}
-    user is logged in: {{ loggedIn }}
+    {{ userId }}
+    {{ userEmail }}
   </div>
 </template>
 
@@ -11,9 +11,6 @@
 import HttpService from '@/services/HttpService.js'
 export default {
   name: 'dasboard',
-  components: {
-    
-  },
   data () {
     return {
       data: null
@@ -34,11 +31,8 @@ export default {
       }
       return false
     },
-    userData () {
-      return this.$store.state.user
-    },
-    loggedIn () {
-      return this.$store.getters.loggedIn
+    userId () {
+      return this.$store.getters.userId
     },
     userEmail () {
       return this.$store.getters.userEmail

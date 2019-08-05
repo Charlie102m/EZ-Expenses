@@ -4,13 +4,12 @@ const express = require('express'),
 
 const controller =  {
     loadDashboard: (req, res) => {
-        const bearerHeader = req.headers
-        console.log('bearerHeader: ', bearerHeader);
         let query =     `SELECT COUNT(*) AS totalTrips,
                                 SUM(distance) AS totalMiles,
                                 SUM(duration) AS totalTime
-                        FROM trips`
-        connection.query(query, (error, results, fields) => {
+                        FROM trips
+                        WHERE createdBy = ?`
+        connection.query(query, req.headers.user.id, (error, results, fields) => {
             if (error) return res.status(403).send(error)
             res.send(results)
         })

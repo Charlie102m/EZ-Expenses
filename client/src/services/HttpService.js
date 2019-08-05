@@ -1,14 +1,7 @@
 import axios from 'axios'
-// import store from '@/store.js'
 
 const apiClient = axios.create({
-  baseURL: `http://localhost:3000`,
-  withCredentials: false, // This is the default
-  // headers: {
-  //   'Accept': 'application/json',
-  //   'Content-Type': 'application/json',
-  //   'Authorization': ''
-  // }
+  baseURL: `http://localhost:3000`
 })
 
 export default {
@@ -34,7 +27,6 @@ export default {
     return apiClient.delete('/trips/' + trip.id)
   },
   loadDashboard() {
-    console.log(axios.defaults.headers);
     return apiClient.get('/')
   },
   register(credentials) {
@@ -60,5 +52,6 @@ export default {
   },
   addClaim(payload) {
     return apiClient.post('/claims', payload)
-  }
+  },
+  apiClient
 }

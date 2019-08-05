@@ -21,7 +21,8 @@ const controller =  {
                             status,
                             createdAt,
                             comment
-                        FROM expenses 
+                        FROM expenses
+                        WHERE createdBy = ${req.headers.user.id} 
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error)
@@ -41,7 +42,7 @@ const controller =  {
                             createdAt,
                             comment
                         FROM expenses
-                        WHERE status = '${req.params.status}'
+                        WHERE status = '${req.params.status} AND createdBy = ${req.headers.user.id}'
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error)
@@ -49,7 +50,7 @@ const controller =  {
         })
     },
     getExpense: (req, res) => {
-        let query = `SELECT * FROM expenses WHERE id = ${req.params.expenseId}`
+        let query = `SELECT * FROM expenses WHERE id = ${req.params.expenseId} AND createdBy = ${req.headers.user.id}`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error)
             return res.send(results)
@@ -58,15 +59,15 @@ const controller =  {
     updateExpense: (req, res) => {
         let query = `UPDATE expenses
                         SET ?
-                        WHERE id = ?`
-        let data = [req.body, req.params.expenseId]
+                        WHERE id = ? AND createdBy = ?`
+        let data = [req.body, req.params.expenseId, req.headers.user.id]
         connection.query(query, data, (error, results) => {
             if (error) return res.status(403).send(error)
             return res.send(results)
         })
     },
     deleteExpense: (req, res) => {
-        connection.query(`DELETE FROM expenses WHERE id = ?`, req.params.expenseId, (error, results) => {
+        connection.query(`DELETE FROM expenses WHERE id = ? AND createdBy = ${req.headers.user.id}`, req.params.expenseId, (error, results) => {
             if (error) return res.status(403).send(error)
             return res.send(results)
         })

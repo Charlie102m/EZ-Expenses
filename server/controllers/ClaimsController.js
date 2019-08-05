@@ -13,7 +13,8 @@ const controller =  {
                             CASE
                                 WHEN id > 0 THEN 'Milage'
                             END AS type
-                        FROM tripClaims;
+                        FROM tripClaims
+                        WHERE createdBy = ${req.headers.user.id};
                         SELECT id,
                             status,
                             totalValue,
@@ -21,7 +22,8 @@ const controller =  {
                             CASE
                                 WHEN id > 0 THEN 'Expenses'
                             END AS type
-                        FROM expenseClaims;`
+                        FROM expenseClaims
+                        WHERE createdBy = ${req.headers.user.id};`
 
         connection.query(query, [1,2], (error, claims) => {
             if (error) return res.status(403).send(error)
@@ -34,6 +36,7 @@ const controller =  {
         let claimQuery = ''
         let joinTableQuery = ''
         let updateQuery = ''
+        // Check whether claim is for milage or expenses
         if (typeof req.body[0].netValue !== 'undefined') {
             claimQuery = 'INSERT INTO expenseClaims SET ?',
             joinTableQuery = 'INSERT INTO expenseClaimsJoin (expenseId, claimId) VALUES ?',

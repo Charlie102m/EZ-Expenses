@@ -6,7 +6,8 @@ const   express = require('express'),
         TripsController = require('../controllers/TripsController.js'),
         ApiController = require('../controllers/ApiController.js'),
         ExpensesController = require('../controllers/ExpensesController.js'),
-        ClaimsController = require('../controllers/ClaimsController.js')
+        ClaimsController = require('../controllers/ClaimsController.js'),
+        Mid = require('../middleware/auth.js')
     
 // AUTH - AuthController
 // Implement me for register, de-register, login & logout
@@ -18,7 +19,7 @@ router.route('/login')
 // INDEX - IndexController
 // Implement index API for dashboard data
 router.route('/') 
-    .get(IndexController.loadDashboard)
+    .get(Mid.authenticate, IndexController.loadDashboard)
 
 // PROFILE/SETTINGS - ProfileController
 // Implement Profile & Settings
@@ -26,39 +27,38 @@ router.route('/')
 
 // TRIPS - TripsController
 router.route('/trips')
-    .get(TripsController.getTrips)
-    .post(TripsController.addTrip)
+    .get(Mid.authenticate, TripsController.getTrips)
+    .post(Mid.authenticate, TripsController.addTrip)
 
 router.route('/trips/status/:status')
-    .get(TripsController.getTripsByStatus)
+    .get(Mid.authenticate, TripsController.getTripsByStatus)
     
 router.route('/trips/:tripId')
-    .get(TripsController.getTrip)
-    .put(TripsController.updateTrip)
-    .delete(TripsController.deleteTrip)
+    .get(Mid.authenticate, TripsController.getTrip)
+    .put(Mid.authenticate, TripsController.updateTrip)
+    .delete(Mid.authenticate, TripsController.deleteTrip)
 
 // GOOGLE DIRECTIONS API - ApiController
 router.route('/api/directions')
-    .post(ApiController.getDirections)
+    .post(Mid.authenticate, ApiController.getDirections)
 
 // EXPENSES - ExpensesController
-// Implement full CRUD for Expenses
 router.route('/expenses')
-    .get(ExpensesController.getExpenses)
-    .post(ExpensesController.addExpense)
+    .get(Mid.authenticate, ExpensesController.getExpenses)
+    .post(Mid.authenticate, ExpensesController.addExpense)
 
 router.route('/expenses/status/:status')
-    .get(ExpensesController.getExpensesByStatus)
+    .get(Mid.authenticate, ExpensesController.getExpensesByStatus)
 
 router.route('/expenses/:expenseId')
-    .get(ExpensesController.getExpense)
-    .put(ExpensesController.updateExpense)
-    .delete(ExpensesController.deleteExpense)
+    .get(Mid.authenticate, ExpensesController.getExpense)
+    .put(Mid.authenticate, ExpensesController.updateExpense)
+    .delete(Mid.authenticate, ExpensesController.deleteExpense)
 
 // CLAIMS - ClaimsController
 // Implement full CRUD for Claims
 router.route('/claims')
-    .get(ClaimsController.getClaims)
-    .post(ClaimsController.addClaim)
+    .get(Mid.authenticate, ClaimsController.getClaims)
+    .post(Mid.authenticate, ClaimsController.addClaim)
 
 module.exports = router;

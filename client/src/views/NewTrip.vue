@@ -131,7 +131,7 @@ export default {
                 duration: null,
                 milageRate: 0.45,
                 value: null,
-                createdBy: 1,
+                createdBy: null,
             },
             message: null
         }
@@ -176,6 +176,7 @@ export default {
         },
         addTrip () {
             this.trip.value = this.trip.milageRate * this.trip.duration
+            this.trip.createdBy = this.$store.getters.userId
             HttpService.addTrip(this.trip)
                 .then(() => {
                     if (this.autoReturn === true) {

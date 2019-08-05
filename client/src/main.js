@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
+import HttpService from '@/services/HttpService.js'
 
 Vue.use(Vuetify)
 
@@ -13,10 +14,12 @@ new Vue({
   router,
   store,
   created () {
-    const userString = localStorage.getItem('user') // grab user data from local storage
-    if (userString) { // check to see if there is indeed a user
-      const userData = JSON.parse(userString) // parse user data into JSON
-      this.$store.commit('UPDATE_USER', userData) // restore user data with Vuex
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    if (token && user) {
+      HttpService.apiClient.defaults.headers.common['authorization'] = token
+      this.$store.commit('SET_TOKEN', token)
+      this.$store.commit('SET_USER', user)
     }
   },
   vuetify,

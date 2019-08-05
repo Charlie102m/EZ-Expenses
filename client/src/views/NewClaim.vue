@@ -93,14 +93,14 @@ export default {
                 totalMiles: null,
                 countTrips: null,
                 totalValue: null,
-                createdBy: 1
+                createdBy: null
             },
             expenseClaim: {
                 count_expenses: null,
                 netValue: null,
                 vatValue: null,
                 totalValue: null,
-                createdBy: 1
+                createdBy: null
             },
             tripHeaders: [
                 {text: 'Date', value: 'tripDate'},
@@ -117,11 +117,13 @@ export default {
             this.tripClaim.countTrips = this.claimTrips.length
             this.tripClaim.totalMiles = this.totalMilesForClaim
             this.tripClaim.totalValue = this.totalValueForClaim
+            this.tripClaim.createdBy = this.$store.getters.userId
             let payload = [this.tripClaim, this.claimTrips]
             HttpService.addClaim(payload)
                 .then(() => this.$router.push("/claims"))
                 .catch(error => console.log(error))
         },
+        // IMPLEMENT ME
         addExpenseClaim () {
             return console.log('expense claim submitted')
         }
@@ -148,7 +150,7 @@ export default {
                 sum += e.value;
             });
             return sum
-        },
+        }
     }
 }
 </script>
