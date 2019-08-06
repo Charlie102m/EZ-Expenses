@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 export default {
     props: ['tripId'],
     data (){
@@ -157,7 +157,6 @@ export default {
             }
             HttpService.getDirections(waypoints)
                 .then((response) => {
-                    console.log(waypoints)
                     this.trip.originAddress = response.data.routes[0].legs[0].start_address
                     this.trip.destinationAddress = response.data.routes[0].legs[0].end_address
                     this.trip.distance = response.data.routes[0].legs[0].distance.value / 1609.34
@@ -194,7 +193,6 @@ export default {
         // parse auto complete response for origin field
         this.autocomplete.addListener('place_changed', () => {
             let origin = this.autocomplete.getPlace()
-            console.log('origin: ', origin);
             this.trip.originName = origin.name
             this.temp.origin = origin.name + ' - ' + origin.formatted_address
             this.trip.originAddress = origin.formatted_address
@@ -202,7 +200,6 @@ export default {
         // parse auto complete response for destination field
         this.autocomplete2.addListener('place_changed', () => {
             let destination = this.autocomplete2.getPlace()
-            console.log('place: ', destination);
             this.trip.destinationName = destination.name
             this.temp.destination = destination.name + ' - ' + destination.formatted_address
             this.trip.destinationAddress = destination.formatted_address
@@ -226,7 +223,7 @@ export default {
                 this.trip.createdBy = response.data.createdBy
 
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
     }
 }
 </script>

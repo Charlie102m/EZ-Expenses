@@ -113,6 +113,8 @@ CREATE TABLE `expenseClaims`
   FOREIGN KEY (`createdBy`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
+ALTER TABLE expenseClaims AUTO_INCREMENT=10000;
+
 CREATE TABLE `expenseClaimsJoin`
 (
   `expenseId` INT,

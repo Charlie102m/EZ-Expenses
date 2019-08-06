@@ -15,7 +15,7 @@
       </v-flex>
       <v-flex md3 my-5 sm6 xs12 text-center class="teal--text text--lighten-1">
         <h3 class="display-3 mb-3">{{ tripSummary.totalMiles ? tripSummary.totalMiles : 0 }}</h3>
-        <p class="caption">TRAVEL MILES</p>
+        <p class="caption">MILES TRAVELLED</p>
       </v-flex>
       <v-flex md3 my-5 sm6 xs12 text-center class="teal--text text--lighten-1">
         <h3 class="display-3 mb-3">£{{ tripClaimsSummary.totalValue ? tripClaimsSummary.totalValue.toFixed(2) : 0 }}</h3>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 import BarChart from '@/components/BarChart.vue'
 export default {
   name: 'dasboard',

@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: `http://localhost:3000`
 })
 
-export default {
+export const HttpService = {
   getDirections(waypoints) {
     return apiClient.post('/api/directions', waypoints)
   },
@@ -56,5 +56,7 @@ export default {
   viewClaim(claim) {
     return apiClient.get(`/claims/${claim.type}/${claim.id}`)
   },
-  apiClient
+  getUserProfile() {
+    return apiClient.get('/profile')
+  }
 }

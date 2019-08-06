@@ -21,7 +21,8 @@ router.route('/')
     .get(Mid.authenticate, IndexController.loadDashboard)
 
 // PROFILE/SETTINGS - ProfileController
-// Implement Profile & Settings
+router.route('/profile')
+    .get(Mid.authenticate, ProfileController.getUserProfile)
 
 
 // TRIPS - TripsController

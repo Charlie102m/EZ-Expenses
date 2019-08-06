@@ -10,6 +10,7 @@ const controller =  {
                             status,
                             totalValue,
                             createdAt AS timeStamp,
+                            countTrips AS items,
                             DATE_FORMAT(createdAt, '%d/%m/%Y') AS createdAt,
                             CASE
                             WHEN id > 0 THEN 'Milage'
@@ -20,6 +21,7 @@ const controller =  {
                             status,
                             totalValue,
                             createdAt AS timeStamp,
+                            countExpenses AS items,
                             DATE_FORMAT(createdAt, '%d/%m/%Y') AS createdAt,
                             CASE
                                 WHEN id > 0 THEN 'Expenses'
@@ -39,6 +41,7 @@ const controller =  {
         let claimQuery = ''
         let joinTableQuery = ''
         let updateQuery = ''
+        if (req.body[1].length < 1) return res.status(403).send('Choose atleast one trip/expense before submiting claim')
         // Check whether claim is for milage or expenses
         if (typeof req.body[0].netValue !== 'undefined') {
             claimQuery = 'INSERT INTO expenseClaims SET ?',

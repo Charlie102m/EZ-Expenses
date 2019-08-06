@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import HttpService from '@/services/HttpService.js'
+import { HttpService, apiClient } from '@/services/HttpService.js'
 
 Vue.use(Vuex)
 
@@ -24,12 +24,12 @@ export default new Vuex.Store({
   // methods used to change data
   mutations: {
     SET_TOKEN(state, token) {
-      HttpService.apiClient.defaults.headers.common['authorization'] = token
+      apiClient.defaults.headers.common['authorization'] = token
       state.token = token
       localStorage.setItem('token', token)
     },
     DESTROY_TOKEN(state) {
-      HttpService.apiClient.defaults.headers.common['authorization'] = null
+      apiClient.defaults.headers.common['authorization'] = null
       state.token = null,
       localStorage.removeItem('token')
     },

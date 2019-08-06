@@ -30,9 +30,15 @@
                 :items="claims"
                 height="450"
                 hide-default-footer
+                disable-pagination
                 loading-text="Loading... Please wait"
                 class="table"
                 no-data-text="There are no claims to display">
+                    <template v-slot:item.type="{item}">
+                        <v-icon color="white" class="mr-1" v-if="item.type == 'Milage'">directions_car</v-icon>
+                        <v-icon color="white" class="mr-1" v-else>payment</v-icon>
+                        {{ item.type }}
+                    </template>
                     <template v-slot:item.status="{ item }">
                         <v-chip class="text-uppercase" color="green" dark>{{ item.status }}</v-chip>
                     </template>
@@ -59,7 +65,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 import {json2excel} from 'js2excel'
 export default {
     data () {
@@ -70,6 +76,7 @@ export default {
             headers: [
                 { text: 'Date', value: 'createdAt'},
                 { text: 'Type', value: 'type'},
+                { text: 'Trips/Expenses', value: 'items', align: 'center' },
                 { text: 'Status', value: 'status', align: 'center' },
                 { text: 'Total', value: 'totalValue'},
                 { text: 'Actions', value: 'action', sortable: false, align: 'center'}
@@ -100,15 +107,14 @@ export default {
         HttpService.getClaims()
             .then(response => {
                 this.claims = response.data
-                console.log(this.claims);
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
         HttpService.getTripsByStatus('unclaimed')
             .then(response => this.unclaimedTrips = response.data.length)
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
         HttpService.getExpensesByStatus('unclaimed')
             .then(response => this.unclaimedExpenses = response.data.length)
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
     }
 }
 </script>

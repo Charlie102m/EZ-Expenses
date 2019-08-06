@@ -11,6 +11,7 @@ import NewExpense from './views/NewExpense.vue'
 import Claims from './views/Claims.vue'
 import NewClaim from './views/NewClaim.vue'
 import ViewClaim from './views/ViewClaim.vue'
+import Profile from './views/Profile.vue'
 import Playgrounds from './views/Playgrounds.vue'
 
 Vue.use(Router)
@@ -84,6 +85,12 @@ const router = new Router({
       name: 'viewClaim',
       component: ViewClaim,
       props: true,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta: { requiresAuth: true }
     },
     {

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
 import vuetify from './plugins/vuetify'
-import HttpService from '@/services/HttpService.js'
+import { apiClient } from '@/services/HttpService.js'
 
 Vue.use(Vuetify)
 
@@ -17,7 +17,7 @@ new Vue({
     const token = localStorage.getItem('token')
     const user = localStorage.getItem('user')
     if (token && user) {
-      HttpService.apiClient.defaults.headers.common['authorization'] = token
+      apiClient.defaults.headers.common['authorization'] = token
       this.$store.commit('SET_TOKEN', token)
       this.$store.commit('SET_USER', user)
     }

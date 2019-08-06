@@ -39,6 +39,7 @@
                     height="450"
                     show-select
                     hide-default-footer
+                    disable-pagination
                     class="table"
                     no-data-text="There are no trips to display">
                         <template v-slot:expanded-item="{ headers, item }">
@@ -101,6 +102,7 @@
                     height="450"
                     show-select
                     hide-default-footer
+                    disable-pagination
                     class="table"
                     no-data-text="There are no expenses to display">
                         <template v-slot:expanded-item="{ headers, item }">
@@ -136,7 +138,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 export default {
     data () {
         return {
@@ -186,7 +188,7 @@ export default {
             let payload = [this.tripClaim, this.claimTrips]
             HttpService.addClaim(payload)
                 .then(() => this.$router.push("/claims"))
-                .catch(error => console.log(error))
+                .catch(error => console.log(error.response))
         },
         // IMPLEMENT ME
         addExpenseClaim () {
@@ -198,7 +200,7 @@ export default {
             let payload = [this.expenseClaim, this.claimExpenses]
             HttpService.addClaim(payload)
                 .then(() => this.$router.push("/claims"))
-                .catch(error => console.log(error))
+                .catch(error => console.log(error.response))
         }
     },
     created () {

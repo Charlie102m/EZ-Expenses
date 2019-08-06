@@ -7,7 +7,7 @@ const controller =  {
         let chartData = {
             labels: [],
             datasets: [{
-                label: 'Number of trips per month',
+                label: 'Trips made',
                 backgroundColor: '#26A69A',
                 data: []
             }]

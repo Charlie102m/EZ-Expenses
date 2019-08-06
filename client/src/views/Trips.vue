@@ -28,10 +28,13 @@
         height="450"
         show-expand
         hide-default-footer
+        disable-pagination
         class="table"
         no-data-text="There are no trips to display">
         <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length">{{ item.reason }}</td>
+            <td :colspan="headers.length" class="subtitle-1 teal lighten-1">
+            <span class="ml-5 pl-5">{{ item.reason }}</span>
+            </td>
         </template>
         <template v-slot:item.status="{ item }">
           <v-chip :color="getColor(item.status)" class="text-uppercase" dark>{{ item.status }}</v-chip>
@@ -43,13 +46,15 @@
           £{{ item.value.toFixed(2) }}
         </template>
         <template v-slot:item.action="{ item }">
-            <v-icon
-              color="teal lighten-1"
-              class="mr-2"
-              @click="editTrip(item)">
-              edit
-            </v-icon>
           <v-icon
+            v-show="item.status == 'unclaimed'"
+            color="teal lighten-1"
+            class="mr-2"
+            @click="editTrip(item)">
+            edit
+          </v-icon>
+          <v-icon
+            v-show="item.status == 'unclaimed'"
             color="teal lighten-1"
             @click="deleteTrip(item)">
             delete
@@ -63,7 +68,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 export default {
   data () {
     return {
@@ -87,11 +92,10 @@ export default {
       .then(() => {
         this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response))
   },
   methods: {
     deleteTrip (trip) {
-      console.log(trip);
       HttpService.deleteTrip(trip)
         .then(() => {
           this.message = 'Trip deleted successfully'
@@ -100,12 +104,11 @@ export default {
             .then(() => {
               this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.response))
     },
     editTrip (trip) {
-      console.log(trip);
       this.$router.push({name: "editTrip", params: { tripId: trip.id}})
     },
     getColor(status) {

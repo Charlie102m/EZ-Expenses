@@ -7,6 +7,10 @@ export default {
   data () {
       return {
           options: {
+              title: {
+                display: true,
+                text: 'TRIPS PER MONTH'
+              },
               responsive: false,
               maintainAspectRatio: false,
               layout: {
@@ -16,12 +20,23 @@ export default {
                     top: 0,
                     bottom: 0
                   }
+              },
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          min: 0,
+                          stepSize: 1,
+                          suggestedMax: 10
+                      }
+                  }]
               }
           }
       }
   },
   mounted () {
-    console.log(this.chartData);
     this.renderChart(this.chartData, this.options)
   }
 }

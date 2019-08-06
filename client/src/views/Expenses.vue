@@ -26,6 +26,7 @@
         height="450"
         loading-text="Loading... Please wait"
         hide-default-footer
+        disable-pagination
         class="table"
         no-data-text="There are no expenses to display">
         <template v-slot:item.total="{ item }">
@@ -37,12 +38,14 @@
           <!-- implement me -->
         <template v-slot:item.action="{ item }">
           <v-icon
+            v-show="item.status == 'unclaimed'"
             color="teal lighten-1"
             class="mr-2"
             @click="editExpense(item)">
             edit
           </v-icon>
           <v-icon
+            v-show="item.status == 'unclaimed'"
             color="teal lighten-1"
             @click="deleteExpense(item)">
             delete
@@ -56,7 +59,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 export default {
     data () {
         return {

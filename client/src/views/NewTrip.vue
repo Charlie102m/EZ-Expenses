@@ -111,7 +111,7 @@
 
 <script>
 // import $Scriptjs from 'scriptjs'
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 export default {
     data (){
         return {
@@ -168,7 +168,6 @@ export default {
             }
             HttpService.getDirections(waypoints)
                 .then((response) => {
-                    console.log(response)
                     this.trip.originAddress = response.data.routes[0].legs[0].start_address
                     this.trip.destinationAddress = response.data.routes[0].legs[0].end_address
                     this.trip.distance = response.data.routes[0].legs[0].distance.value / 1609.34

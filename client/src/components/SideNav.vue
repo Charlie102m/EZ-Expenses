@@ -2,7 +2,15 @@
 <nav class="nav">
     <v-layout align-center justify-space-between column fill-height text-center>
         <div class="nav-head">
-            <router-link to="/register"><i class="material-icons">person</i></router-link>
+            <router-link to="/profile">
+                <v-img
+                src="@/assets/66711277_10156148056800025_6782326558129389568_n.jpg"
+                lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                aspect-ratio="1"
+                max-width="80"
+                max-height="80"
+                ></v-img>
+            </router-link>
         </div>
         <div class="nav-body">
             <router-link to="/"><i class="material-icons">home</i></router-link>
@@ -44,13 +52,14 @@ name: 'SideNav',
         margin-top: 30px;
         background: white;
         border-radius: 50%;
+        overflow: hidden;
     }
 
     .nav .material-icons {
         color: white;
         font-size: 50px;
         margin: 15px;
-        opacity: 0.9;
+        opacity: 0.8;
         transition: all 0.3s ease-in;
     }
 

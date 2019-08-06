@@ -34,6 +34,7 @@
                     :headers="headers"
                     :items="claimData"
                     hide-default-footer
+                    disable-pagination
                     loading-text="Loading... Please wait"
                     v-model="claimData"
                     class="table"
@@ -41,7 +42,9 @@
                     :show-expand="showExpand"
                     no-data-text="There are no claim items to display">
                         <template v-slot:expanded-item="{ headers, item }">
-                            <td :colspan="headers.length">{{ item.reason }}</td>
+                            <td :colspan="headers.length" class="subtitle-1 teal lighten-1">
+                            <span class="ml-5 pl-5">{{ item.reason }}</span>
+                            </td>
                         </template>
                         <template v-slot:item.duration="{ item }">
                             {{ item.duration }} mins
@@ -59,7 +62,7 @@
 </template>
 
 <script>
-import HttpService from '@/services/HttpService.js'
+import { HttpService } from '@/services/HttpService.js'
 import {json2excel} from 'js2excel'
 export default {
     props: ['claimType', 'claimId'],
