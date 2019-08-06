@@ -1,9 +1,9 @@
 <template>
 <div>
-      <h1 class="page-title font-weight-light">
-        <i class="material-icons">directions_car</i>
-        Trips
-      </h1>
+    <h1 class="page-title font-weight-light">
+      <i class="material-icons">directions_car</i>
+      Trips
+    </h1>
     <v-layout align-center justify-space-around row>
       <v-flex ma-5>
         <h3 class="font-weight-light">
@@ -19,10 +19,13 @@
       </v-flex>
     <v-flex xs12 class="table-container elevation-1 ">
       <v-data-table
+        dark
+        fixed-header
         :headers="headers"
         :items="trips"
         loading-text="Loading... Please wait"
-        single-expand=true
+        single-expand
+        height="450"
         show-expand
         hide-default-footer
         class="table"
@@ -30,8 +33,8 @@
         <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length">{{ item.reason }}</td>
         </template>
-        <template v-slot:item.duration="{ item }">
-          {{ item.duration }} mins
+        <template v-slot:item.status="{ item }">
+          <v-chip :color="getColor(item.status)" class="text-uppercase" dark>{{ item.status }}</v-chip>
         </template>
         <template v-slot:item.distance="{ item }">
           {{ item.distance }} miles
@@ -68,7 +71,7 @@ export default {
         {text: 'Date', value: 'tripDate'},
         {text: 'Origin', value: 'originName'},
         {text: 'Destination', value: 'destinationName'},
-        {text: 'Duration', value: 'duration'},
+        {text: 'Status', value: 'status', align: 'center'},
         {text: 'Distance', value: 'distance'},
         {text: 'Value', value: 'value'},
         {text: 'Actions', value: 'action', sortable: false }
@@ -104,6 +107,10 @@ export default {
     editTrip (trip) {
       console.log(trip);
       this.$router.push({name: "editTrip", params: { tripId: trip.id}})
+    },
+    getColor(status) {
+      if (status == 'unclaimed') return 'red'
+      else return 'green'
     }
   }
 }

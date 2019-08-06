@@ -95,7 +95,7 @@ export default {
   .page-title {
     vertical-align: center;
     color: #2F303C;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     font-size: 70px;
   }
 </style>

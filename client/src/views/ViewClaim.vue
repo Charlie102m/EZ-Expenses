@@ -16,7 +16,7 @@
                 </h3>
             </v-flex>
             <v-flex ma-5 >
-                <h3 class="font-weight-light">
+                <h3 class="font-weight-light" v-if="claim.type == 'Milage'">
                     Miles Travelled: <strong class="green--text text--darken-1">{{ claimSummary ? claimSummary.totalMiles : 0 }}</strong>
                 </h3>
             </v-flex>
@@ -28,14 +28,17 @@
             <!-- table -->
             <v-flex xs12 class="table-container elevation-1" mt-3>
                 <v-data-table
+                    dark
+                    fixed-header
+                    height="450"
                     :headers="headers"
                     :items="claimData"
                     hide-default-footer
                     loading-text="Loading... Please wait"
                     v-model="claimData"
                     class="table"
-                    single-expand="true"
-                    show-expand
+                    :single-expand="showExpand"
+                    :show-expand="showExpand"
                     no-data-text="There are no claim items to display">
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length">{{ item.reason }}</td>
@@ -66,16 +69,9 @@ export default {
                 type: this.claimType,
                 id: this.claimId
             },
+            showExpand: false,
             claimSummary: null,
-            claimData: [],
-            headers: [
-                {text: 'Date', value: 'tripDate'},
-                {text: 'Origin', value: 'originName'},
-                {text: 'Destination', value: 'destinationName'},
-                {text: 'Duration', value: 'duration'},
-                {text: 'Distance', value: 'distance'},
-                {text: 'Value', value: 'value'}
-            ]
+            claimData: []
         }
     },
     methods: {
@@ -92,13 +88,37 @@ export default {
         }
     },
     mounted () {
+        if (this.claim.type == 'Milage') {
+            this.showExpand = true
+        }
         HttpService.viewClaim(this.claim)
             .then((response) => {
                 this.claimSummary = response.data[0][0]
                 this.claimData = response.data[1]
-                console.log('claimData: ', this.claimData);
             })
             .catch(error => console.log(error))
+    },
+    computed: {
+        headers: function () {
+            if (this.claimType == 'Milage') {
+                return [
+                    {text: 'Date', value: 'tripDate'},
+                    {text: 'Origin', value: 'originName'},
+                    {text: 'Destination', value: 'destinationName'},
+                    {text: 'Duration', value: 'duration'},
+                    {text: 'Distance', value: 'distance'},
+                    {text: 'Value', value: 'value'}
+                ]
+            } else {
+                return [
+                    { text: 'Date', value: 'expenseDate' },
+                    { text: 'Comment', value: 'comment'},
+                    { text: 'Type', value: 'expenseType' },
+                    { text: 'Status', value: 'status' },
+                    { text: 'Total', value: 'total' }
+                ]
+            }
+        }
     }
 }
 </script>

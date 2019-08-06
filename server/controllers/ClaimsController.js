@@ -9,15 +9,17 @@ const controller =  {
         let query = `SELECT id,
                             status,
                             totalValue,
+                            createdAt AS timeStamp,
                             DATE_FORMAT(createdAt, '%d/%m/%Y') AS createdAt,
                             CASE
-                                WHEN id > 0 THEN 'Milage'
+                            WHEN id > 0 THEN 'Milage'
                             END AS type
-                        FROM tripClaims
-                        WHERE createdBy = ${req.headers.user.id};
+                            FROM tripClaims
+                            WHERE createdBy = ${req.headers.user.id};
                         SELECT id,
                             status,
                             totalValue,
+                            createdAt AS timeStamp,
                             DATE_FORMAT(createdAt, '%d/%m/%Y') AS createdAt,
                             CASE
                                 WHEN id > 0 THEN 'Expenses'
@@ -28,6 +30,7 @@ const controller =  {
         connection.query(query, [1,2], (error, claims) => {
             if (error) return res.status(403).send(error)
             let allClaims = claims[0].concat(claims[1])
+            allClaims.sort(function(a,b){return b.timeStamp - a.timeStamp})
             res.send(allClaims)
         })
     },
@@ -70,6 +73,7 @@ const controller =  {
         let type = ""
         let claimTable = ""
         let joinTable = ""
+        let query = ""
         if (req.params.claimType === 'Milage') {
             claimTable = "tripClaims"
             joinTable = "tripClaimsJoin"
@@ -79,22 +83,42 @@ const controller =  {
             joinTable = "expenseClaimsJoin"
             type = "expense"
         }
-        let query = `SELECT * FROM ${claimTable} WHERE id = ${claimId};
-                    SELECT id,
-                        DATE_FORMAT(tripDate, '%d/%m/%Y') AS tripDate,
-                        originName,
-                        originAddress,
-                        destinationName,
-                        destinationAddress,
-                        reason,
-                        distance,
-                        duration,
-                        status,
-                        value
-                    FROM ${joinTable} 
-                    RIGHT JOIN ${type}s 
-                        ON ${type}s.id = ${joinTable}.${type}Id 
-                        WHERE claimId = ${claimId};`
+        let baseQuery = `SELECT * FROM ${claimTable} WHERE id = ${claimId};`
+        let tripsJoinQuery = `SELECT id,
+                                DATE_FORMAT(tripDate, '%d/%m/%Y') AS tripDate,
+                                originName,
+                                originAddress,
+                                destinationName,
+                                destinationAddress,
+                                reason,
+                                distance,
+                                duration,
+                                status,
+                                value
+                            FROM ${joinTable} 
+                            RIGHT JOIN ${type}s
+                                ON ${type}s.id = ${joinTable}.${type}Id 
+                                WHERE claimId = ${claimId};`
+        let expensesJoinQuery = `SELECT                             
+                                    DATE_FORMAT(expenseDate, '%d/%m/%Y') AS expenseDate,
+                                    expenseType,
+                                    status,
+                                    net,
+                                    vat,
+                                    total,
+                                    createdBy,
+                                    status,
+                                    createdAt,
+                                    comment
+                                    FROM ${joinTable} 
+                                    RIGHT JOIN ${type}s
+                                        ON ${type}s.id = ${joinTable}.${type}Id 
+                                        WHERE claimId = ${claimId};`
+        if (req.params.claimType === 'Milage') {
+            query = baseQuery + tripsJoinQuery
+        } else {
+            query = baseQuery + expensesJoinQuery
+        }
         connection.query(query, [1,2], (error, results) => {
             if (error) return res.status(403).send(error)
             if (results[0].length === 0) return res.status(403).send('Claim not found')

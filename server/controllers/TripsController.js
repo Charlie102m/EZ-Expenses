@@ -14,7 +14,8 @@ const controller = {
                             distance,
                             duration,
                             status,
-                            value
+                            value,
+                            createdAt
                         FROM trips
                         WHERE createdBy = ${req.headers.user.id}
                         ORDER BY createdAt DESC`

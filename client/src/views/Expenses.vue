@@ -19,8 +19,11 @@
       </v-flex>
     <v-flex xs12 class="table-container elevation-1 ">
         <v-data-table
+        dark
+        fixed-header
         :headers="headers"
         :items="expenses"
+        height="450"
         loading-text="Loading... Please wait"
         hide-default-footer
         class="table"
@@ -28,16 +31,19 @@
         <template v-slot:item.total="{ item }">
           £{{item.total.toFixed(2)}}
         </template>
-        <template v-slot:item.action="{ item }">
+        <template v-slot:item.status="{ item }">
+          <v-chip :color="getColor(item.status)" class="text-uppercase" dark>{{ item.status }}</v-chip>
+        </template>
           <!-- implement me -->
-            <!-- <v-icon
-              small
-              class="mr-2"
-              @click="editExpense(item)">
-              edit
-            </v-icon> -->
+        <template v-slot:item.action="{ item }">
           <v-icon
-            small
+            color="teal lighten-1"
+            class="mr-2"
+            @click="editExpense(item)">
+            edit
+          </v-icon>
+          <v-icon
+            color="teal lighten-1"
             @click="deleteExpense(item)">
             delete
           </v-icon>
@@ -58,7 +64,7 @@ export default {
                 { text: 'Date', value: 'expenseDate' },
                 { text: 'Comment', value: 'comment'},
                 { text: 'Type', value: 'expenseType' },
-                { text: 'Status', value: 'status' },
+                { text: 'Status', value: 'status', align: 'center' },
                 { text: 'Total', value: 'total' },
                 { text: 'Actions', value: 'action', sortable: false}
             ],
@@ -87,6 +93,10 @@ export default {
               .catch(error => console.log(error))
           })
           .catch(error => console.log(error))
+      },
+      getColor(status) {
+          if (status == 'unclaimed') return 'red'
+          else return 'green'
       }
     }
 }

@@ -24,8 +24,11 @@
             </v-flex>
             <v-flex xs12 class="table-container elevation-1 ">
                 <v-data-table
+                dark
+                fixed-header
                 :headers="headers"
                 :items="claims"
+                height="450"
                 hide-default-footer
                 loading-text="Loading... Please wait"
                 class="table"
@@ -65,9 +68,9 @@ export default {
             unclaimedTrips: 0,
             claims: [],
             headers: [
-                { text: 'Date', value: 'createdAt' },
-                { text: 'Type', value: 'type' },
-                { text: 'Status', value: 'status' },
+                { text: 'Date', value: 'createdAt'},
+                { text: 'Type', value: 'type'},
+                { text: 'Status', value: 'status', align: 'center' },
                 { text: 'Total', value: 'totalValue'},
                 { text: 'Actions', value: 'action', sortable: false, align: 'center'}
             ]
@@ -95,7 +98,10 @@ export default {
     },
     created () {
         HttpService.getClaims()
-            .then(response => this.claims = response.data)
+            .then(response => {
+                this.claims = response.data
+                console.log(this.claims);
+            })
             .catch(error => console.log(error))
         HttpService.getTripsByStatus('unclaimed')
             .then(response => this.unclaimedTrips = response.data.length)

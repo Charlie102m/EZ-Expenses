@@ -1,7 +1,11 @@
 <template>
     <v-form v-on:submit.prevent="addTrip">
+        <h1 class="page-title font-weight-light">
+        <i class="material-icons">directions_car</i>
+        New Trip
+        </h1>
         <v-layout align-top justify-space-around row wrap>
-            <v-flex lg5 class="get-directions-fields">
+            <v-flex lg5>
                 <input
                 v-on:keypress.enter.stop.prevent=""
                 ref="autocomplete" 
@@ -86,14 +90,14 @@
                     <v-flex xs4>
                         <v-switch v-model="autoReturn" label="Auto create return trip?" color="teal lighten-1"></v-switch>
                     </v-flex>
-                    <v-flex xs12>
+                    <v-flex xs10>
                         <input
                         type="text"
                         v-model="trip.reason"
                         placeholder="What is the reason for your trip?"
                         required/>
                     </v-flex>
-                    <v-flex text-right mt-3 v-show="trip.reason">
+                    <v-flex xs10 text-right mt-3 v-show="trip.reason">
                         <v-btn type="submit" rounded color="teal lighten-1" dark>
                             <v-icon class="mr-2" dark>send</v-icon>Submit
                         </v-btn>

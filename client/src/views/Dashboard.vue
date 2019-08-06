@@ -26,10 +26,10 @@
         <p class="caption">EXPENSES CLAIMED</p>
       </v-flex>
       <v-flex my-5 xs12></v-flex>
-      <v-flex xs6>
-        <div class="table-goes-here"></div>
+      <v-flex lg6 class="chart-container text-center">
+        <BarChart :chartData="chartData" :height="300" :width="600"/>
       </v-flex>
-      <v-flex my-5 xs6>
+      <v-flex my-5 lg6>
         <table>
           <tr class="row-1">
             <td class="column-1 green--text text--darken-1">
@@ -59,14 +59,19 @@
 
 <script>
 import HttpService from '@/services/HttpService.js'
+import BarChart from '@/components/BarChart.vue'
 export default {
   name: 'dasboard',
+  components: {
+    BarChart
+  },
   data () {
     return {
       tripSummary: null,
       tripClaimsSummary: null,
       expenseSummary: null,
-      expenseClaimsSummary: null
+      expenseClaimsSummary: null,
+      chartData: null
     }
   },
   created() {
@@ -76,6 +81,8 @@ export default {
         this.tripClaimsSummary = response.data[1][0]
         this.expenseSummary = response.data[2][0]
         this.expenseClaimsSummary = response.data[3][0]
+        this.chartData = response.data[4]
+        
       })
       .catch(error => console.log(error))
   },
@@ -132,4 +139,5 @@ export default {
     background-position: center;
     margin: 0 auto;
   }
+
 </style>

@@ -59,4 +59,9 @@ name: 'SideNav',
         transform: scale(1.1)
     }
 
+    .is-active .material-icons {
+        color: #26A69A !important;
+        transform: scale(1.1)
+    }
+
 </style>

@@ -42,7 +42,8 @@ const controller =  {
                             createdAt,
                             comment
                         FROM expenses
-                        WHERE status = '${req.params.status} AND createdBy = ${req.headers.user.id}'
+                        WHERE status = '${req.params.status}'
+                        AND createdBy = ${req.headers.user.id}
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error)

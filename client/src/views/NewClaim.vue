@@ -30,13 +30,14 @@
                 <!-- table -->
                 <v-flex xs12 class="table-container elevation-1" mt-3>
                     <v-data-table
+                    dark
+                    fixed-header
                     :headers="tripHeaders"
                     :items="trips"
                     loading-text="Loading... Please wait"
                     v-model="claimTrips"
+                    height="450"
                     show-select
-                    single-expand
-                    show-expand
                     hide-default-footer
                     class="table"
                     no-data-text="There are no trips to display">
@@ -72,11 +73,62 @@
         <!-- expense claim -->
         <v-form @submit.prevent="addExpenseClaim" v-else-if="this.claimType == 'expense'">
             <v-layout align-top justify-content-around row wrap>
+                <v-flex ma-5 v-if="claimTrips.length == 0">
+                    <h3 class="font-weight-light">
+                        You have <strong class="red--text text--lighten-1">{{ unclaimedExpenses ? unclaimedExpenses : 0 }}</strong> unclaimed expenses!
+                    </h3>
+                </v-flex>
+                <v-flex ma-5 v-else>
+                    <h3 class="font-weight-light">
+                        <strong class="green--text text--darken-1">{{ claimTrips.length }}</strong> expenses selected!
+                    </h3>
+                </v-flex>
                 <!-- submit -->
                 <v-flex text-right mt-3>
                     <v-btn type="submit" rounded color="teal lighten-1" dark>
                         <v-icon class="mr-2" dark>send</v-icon>Submit
                     </v-btn>
+                </v-flex>
+                <!-- table -->
+                <v-flex xs12 class="table-container elevation-1" mt-3>
+                    <v-data-table
+                    dark
+                    fixed-header
+                    :headers="expenseHeaders"
+                    :items="expenses"
+                    loading-text="Loading... Please wait"
+                    v-model="claimExpenses"
+                    height="450"
+                    show-select
+                    hide-default-footer
+                    class="table"
+                    no-data-text="There are no expenses to display">
+                        <template v-slot:expanded-item="{ headers, item }">
+                            <td :colspan="headers.length">{{ item.reason }}</td>
+                        </template>
+                        <template v-slot:item.duration="{ item }">
+                        {{ item.duration }} mins
+                        </template>
+                        <template v-slot:item.distance="{ item }">
+                        {{ item.distance }} miles
+                        </template>
+                        <template v-slot:item.value="{ item }">
+                        £{{ item.value.toFixed(2) }}
+                        </template>
+                        <template v-slot:item.action="{ item }">
+                            <v-icon
+                            small
+                            class="mr-2"
+                            @click="editTrip(item)">
+                            edit
+                            </v-icon>
+                            <v-icon
+                                small
+                                @click="deleteTrip(item)">
+                                delete
+                            </v-icon>
+                        </template>
+                    </v-data-table>
                 </v-flex>
             </v-layout>
         </v-form>
@@ -89,6 +141,7 @@ export default {
     data () {
         return {
             unclaimedTrips: 0,
+            unclaimedExpenses: 0,
             claimType: null,
             claimTrips: [],
             claimExpenses: [],
@@ -101,7 +154,7 @@ export default {
                 createdBy: null
             },
             expenseClaim: {
-                count_expenses: null,
+                countExpenses: null,
                 netValue: null,
                 vatValue: null,
                 totalValue: null,
@@ -114,6 +167,13 @@ export default {
                 {text: 'Duration', value: 'duration'},
                 {text: 'Distance', value: 'distance'},
                 {text: 'Value', value: 'value'}
+            ],
+            expenseHeaders: [
+                { text: 'Date', value: 'expenseDate' },
+                { text: 'Comment', value: 'comment'},
+                { text: 'Type', value: 'expenseType' },
+                { text: 'Status', value: 'status' },
+                { text: 'Total', value: 'total' }
             ]
         }
     },
@@ -130,7 +190,15 @@ export default {
         },
         // IMPLEMENT ME
         addExpenseClaim () {
-            return console.log('expense claim submitted')
+            this.expenseClaim.countExpenses = this.claimExpenses.length
+            this.expenseClaim.netValue = this.totalsForExpensesClaim.net
+            this.expenseClaim.vatValue = this.totalsForExpensesClaim.vat
+            this.expenseClaim.totalValue = this.totalsForExpensesClaim.total
+            this.expenseClaim.createdBy = this.$store.getters.userId
+            let payload = [this.expenseClaim, this.claimExpenses]
+            HttpService.addClaim(payload)
+                .then(() => this.$router.push("/claims"))
+                .catch(error => console.log(error))
         }
     },
     created () {
@@ -138,6 +206,12 @@ export default {
             .then(response => this.trips = response.data)
             .then(() => {
                 this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
+            })
+            .catch(error => console.log(error))
+        HttpService.getExpensesByStatus('unclaimed')
+            .then(response => this.expenses = response.data)
+            .then(() => {
+                this.unclaimedExpenses = this.expenses.filter((obj) => obj.status === 'unclaimed').length;
             })
             .catch(error => console.log(error))
     },
@@ -155,6 +229,19 @@ export default {
                 sum += e.value;
             });
             return sum
+        },
+        totalsForExpensesClaim: function () {
+            let sums = {
+                net: 0,
+                vat: 0,
+                total: 0
+            }
+            this.claimExpenses.forEach(e => {
+                sums.net += e.net
+                sums.vat += e.vat
+                sums.total += e.total
+            })
+            return sums
         }
     }
 }
