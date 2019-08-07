@@ -11,4 +11,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(routes)
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(__dirname + '/public/'))
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
+
 app.listen(port, () => console.log('SERVER LISTENING ON PORT : ', port))

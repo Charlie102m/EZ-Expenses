@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 export const apiClient = axios.create({
-  baseURL: `http://localhost:3000`
+  baseURL: `api`
 })
 
 export const HttpService = {
   getDirections(waypoints) {
-    return apiClient.post('/api/directions', waypoints)
+    return apiClient.post('/directions', waypoints)
   },
   getTrips() {
     return apiClient.get('/trips')

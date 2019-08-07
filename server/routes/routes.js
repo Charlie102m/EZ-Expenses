@@ -10,30 +10,30 @@ const   express = require('express'),
         Mid = require('../middleware/auth.js')
     
 // AUTH - AuthController
-router.route('/register')
+router.route('/api/register')
     .post(AuthController.register)
 
-router.route('/login')
+router.route('/api/login')
     .post(AuthController.login)
 
 // INDEX - IndexController
-router.route('/') 
+router.route('/api/') 
     .get(Mid.authenticate, IndexController.loadDashboard)
 
 // PROFILE/SETTINGS - ProfileController
-router.route('/profile')
+router.route('/api/profile')
     .get(Mid.authenticate, ProfileController.getUserProfile)
 
 
 // TRIPS - TripsController
-router.route('/trips')
+router.route('/api/trips')
     .get(Mid.authenticate, TripsController.getTrips)
     .post(Mid.authenticate, TripsController.addTrip)
 
-router.route('/trips/status/:status')
+router.route('/api/trips/status/:status')
     .get(Mid.authenticate, TripsController.getTripsByStatus)
     
-router.route('/trips/:tripId')
+router.route('/api/trips/:tripId')
     .get(Mid.authenticate, TripsController.getTrip)
     .put(Mid.authenticate, TripsController.updateTrip)
     .delete(Mid.authenticate, TripsController.deleteTrip)
@@ -43,24 +43,24 @@ router.route('/api/directions')
     .post(Mid.authenticate, ApiController.getDirections)
 
 // EXPENSES - ExpensesController
-router.route('/expenses')
+router.route('/api/expenses')
     .get(Mid.authenticate, ExpensesController.getExpenses)
     .post(Mid.authenticate, ExpensesController.addExpense)
 
-router.route('/expenses/status/:status')
+router.route('/api/expenses/status/:status')
     .get(Mid.authenticate, ExpensesController.getExpensesByStatus)
 
-router.route('/expenses/:expenseId')
+router.route('/api/expenses/:expenseId')
     .get(Mid.authenticate, ExpensesController.getExpense)
     .put(Mid.authenticate, ExpensesController.updateExpense)
     .delete(Mid.authenticate, ExpensesController.deleteExpense)
 
 // CLAIMS - ClaimsController
-router.route('/claims')
+router.route('/api/claims')
     .get(Mid.authenticate, ClaimsController.getClaims)
     .post(Mid.authenticate, ClaimsController.addClaim)
 
-router.route('/claims/:claimType/:claimId')
+router.route('/api/claims/:claimType/:claimId')
     .get(Mid.authenticate, ClaimsController.getClaim)
 
 module.exports = router;

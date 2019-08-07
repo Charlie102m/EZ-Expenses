@@ -7,11 +7,12 @@ const express = require('express'),
 const controller = {
     register: (req, res) => {
         bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-            let credentials = {
-                email: req.body.email,
-                password: hash
-            }
-            connection.query('INSERT INTO users SET ?', credentials, (error, results) => {
+            // let credentials = {
+            //     email: req.body.email,
+            //     password: hash
+            // }
+            req.body.password = hash
+            connection.query('INSERT INTO users SET ?', req.body, (error, results) => {
                 if (error) {
                     if (error.code === 'ER_DUP_ENTRY') return res.status(403).send('User already exists with that email')
                     if (error.code === 'ER_NO_DEFAULT_FOR_FIELD') return res.status(403).send('You must register with a valid email AND password')

@@ -24,6 +24,14 @@
                 <v-form v-on:submit.prevent="register">
                     <v-layout align-center justify-center row ma-5>
                         <input 
+                        v-model="credentials.firstName"
+                        placeholder="Enter your first name"
+                        type="text">
+                        <input 
+                        v-model="credentials.lastName"
+                        placeholder="Enter your last name"
+                        type="text">
+                        <input 
                         v-model="credentials.email"
                         placeholder="Enter your email"
                         type="email">
@@ -49,6 +57,8 @@ export default {
     data () {
         return {
             credentials: {
+                firstName: null,
+                lastName: null,
                 email: null,
                 password: null
             }
