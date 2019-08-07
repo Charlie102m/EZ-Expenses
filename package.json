@@ -2,13 +2,13 @@
   "name": "the-expenses-app",
   "version": "1.0.0",
   "description": "Prototype API for an expense & milage tracking app for field based business users.",
-  "main": "app.js",
+  "main": "server/app.js",
   "private": true,
   "repository": "github:Charlie102m/The-Expenses-App",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js"
   },
   "author": "Charlie McCabe",
   "license": "ISC",
