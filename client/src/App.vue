@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-container fluid pa-0 fill-height :class="className">
+      <v-container fluid pa-0 fill-height :class="includeBackground">
         <v-layout>
           <v-flex grow-shrink-0 v-if="showMenu">
             <SideNav v-if="showMenu"/>
@@ -36,9 +36,9 @@ export default {
     showMenu () {
       return this.$route.name !== 'login' && this.$route.name !== 'register';
     },
-    className () {
+    includeBackground () {
       let className = ''
-      if(this.$route.name === 'login' || this.$route.name === 'register') className = 'body'
+      if(this.$route.name === 'login' || this.$route.name === 'register') className = 'include_background'
       return className
     },
     messageExists () {
@@ -53,7 +53,7 @@ export default {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
   }
 
-  .body {
+  .include_background {
     background-image: url('./assets/dark-background.png');
     background-position: left top;
     background-repeat: no-repeat;
