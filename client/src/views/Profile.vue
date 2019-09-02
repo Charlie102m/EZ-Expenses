@@ -81,7 +81,9 @@ export default {
             .then((response) => {
                 this.user = response.data[0]
             })
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     },
     methods: {
         updateHome () {

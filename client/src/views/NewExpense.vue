@@ -72,7 +72,9 @@ export default {
             this.expense.createdBy = this.$store.getters.userId
             HttpService.addExpense(this.expense)
                 .then(() => this.$router.push("/expenses"))
-                .catch(error => this.message = error)
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     },
     watch: {

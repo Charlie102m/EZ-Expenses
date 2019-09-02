@@ -1,6 +1,6 @@
 <template>
     <v-alert type="error">
-        <strong>{{ message.status }}:</strong> {{ message.text }}
+        <strong>{{ message.status }}:</strong> {{ message.data }}
     </v-alert>
 </template>
 
@@ -17,7 +17,6 @@ export default {
             return this.$store.state.message
         }
     }
-
 }
 </script>
 

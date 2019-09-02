@@ -4,8 +4,8 @@
         <div class="nav-head">
             <router-link to="/profile">
                 <v-img
-                src="@/assets/66711277_10156148056800025_6782326558129389568_n.jpg"
                 lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                src="@/assets/66711277_10156148056800025_6782326558129389568_n.jpg"
                 aspect-ratio="1"
                 max-width="80"
                 max-height="80"
@@ -19,7 +19,7 @@
             <router-link to="/claims"><i class="material-icons">attach_money</i></router-link>
         </div>
         <div class="nav-footer">
-            <router-link to="/playgrounds"><i class="material-icons">settings</i></router-link>
+            <router-link to="/profile"><i class="material-icons">settings</i></router-link>
         </div>
     </v-layout>
 </nav>

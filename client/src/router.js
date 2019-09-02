@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 import Dashboard from './views/Dashboard.vue'
 import Trips from './views/Trips.vue'
 import NewTrip from './views/NewTrip.vue'
@@ -107,6 +108,12 @@ router.beforeEach((to, from, next) => {
     next('/login')
   }
   next()
+})
+
+router.afterEach(() => {
+  if (store.getters.message !== null) {
+    store.dispatch('clearMessage')
+  }
 })
 
 export default router

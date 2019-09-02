@@ -188,7 +188,9 @@ export default {
             let payload = [this.tripClaim, this.claimTrips]
             HttpService.addClaim(payload)
                 .then(() => this.$router.push("/claims"))
-                .catch(error => console.log(error.response))
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
         // IMPLEMENT ME
         addExpenseClaim () {
@@ -200,7 +202,9 @@ export default {
             let payload = [this.expenseClaim, this.claimExpenses]
             HttpService.addClaim(payload)
                 .then(() => this.$router.push("/claims"))
-                .catch(error => console.log(error.response))
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     },
     created () {
@@ -209,13 +213,17 @@ export default {
             .then(() => {
                 this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
             })
-            .catch(error => console.log(error))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
         HttpService.getExpensesByStatus('unclaimed')
             .then(response => this.expenses = response.data)
             .then(() => {
                 this.unclaimedExpenses = this.expenses.filter((obj) => obj.status === 'unclaimed').length;
             })
-            .catch(error => console.log(error))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     },
     computed: {
         totalMilesForClaim: function () {

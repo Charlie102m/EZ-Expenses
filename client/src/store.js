@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     userEmail (state) {
       return state.user.email
+    },
+    message (state) {
+      return state.message
     }
   },
   // methods used to change data
@@ -41,7 +44,7 @@ export default new Vuex.Store({
       state.user = null
       localStorage.removeItem('user')
     },
-    UPDATE_MESSAGE(state, text) {
+    SET_MESSAGE(state, text) {
       state.message = text
     },
     CLEAR_MESSAGE(state) {
@@ -71,6 +74,12 @@ export default new Vuex.Store({
         commit('DESTROY_USER')
         resolve()
       })
+    },
+    setMessage({ commit }, message) {
+      commit('SET_MESSAGE', message)
+    },
+    clearMessage({ commit }) {
+      commit('CLEAR_MESSAGE')
     }
   }
 })

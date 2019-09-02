@@ -86,7 +86,7 @@ export default {
                     name: 'claim-data'
                 });
             } catch (error) {
-                console.error('export error: ', error);
+                this.$store.dispatch('setMessage', error.response)
             }
         }
     },
@@ -99,7 +99,9 @@ export default {
                 this.claimSummary = response.data[0][0]
                 this.claimData = response.data[1]
             })
-            .catch(error => console.log(error))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     },
     computed: {
         headers: function () {

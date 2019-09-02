@@ -164,7 +164,9 @@ export default {
                     this.summary = response.data.routes[0].summary
                     this.message = null
                 })
-                .catch(error => this.message = error)
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
         closeResults () {
             this.trip.distance = null
@@ -174,7 +176,9 @@ export default {
             this.trip.value = this.trip.milageRate * this.trip.duration
             HttpService.updateTrip(this.trip)
                 .then(() => this.$router.push("/trips"))
-                .catch(error => this.message = error)
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     },
     computed :{
@@ -223,7 +227,9 @@ export default {
                 this.trip.createdBy = response.data.createdBy
 
             })
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     }
 }
 </script>

@@ -92,7 +92,9 @@ export default {
       .then(() => {
         this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
       })
-      .catch(error => console.log(error.response))
+      .catch((error) => {
+          this.$store.dispatch('setMessage', error.response)
+      })
   },
   methods: {
     deleteTrip (trip) {
@@ -104,9 +106,13 @@ export default {
             .then(() => {
               this.unclaimedTrips = this.trips.filter((obj) => obj.status === 'unclaimed').length;
             })
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
         })
-        .catch(error => console.log(error.response))
+        .catch((error) => {
+            this.$store.dispatch('setMessage', error.response)
+        })
     },
     editTrip (trip) {
       this.$router.push({name: "editTrip", params: { tripId: trip.id}})

@@ -82,7 +82,9 @@ export default {
             .then(() => {
                 this.unclaimedExpenses = this.expenses.filter((obj) => obj.status === 'unclaimed').length;
             })
-            .catch(error => console.log(error))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     },
     methods: {
       deleteExpense(expense) {
@@ -93,9 +95,13 @@ export default {
               .then(() => {
                   this.unclaimedExpenses = this.expenses.filter((obj) => obj.status === 'unclaimed').length;
               })
-              .catch(error => console.log(error))
+              .catch((error) => {
+                  this.$store.dispatch('setMessage', error.response)
+              })
           })
-          .catch(error => console.log(error))
+          .catch((error) => {
+              this.$store.dispatch('setMessage', error.response)
+          })
       },
       getColor(status) {
           if (status == 'unclaimed') return 'red'

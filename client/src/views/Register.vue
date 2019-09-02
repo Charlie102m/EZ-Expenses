@@ -73,7 +73,9 @@ export default {
                     }
                     console.log(response);
                 })
-                .catch(error => console.log(error))
+                                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     }
 }

@@ -175,7 +175,11 @@ export default {
                     this.summary = response.data.routes[0].summary
                     this.message = null
                 })
-                .catch(error => this.message = error)
+                .catch((error) => {
+                    error.status = 400
+                    error.data = 'Cannot calculate route, please check your origin/destination and try again'
+                    this.$store.dispatch('setMessage', error)
+                })
         },
         addTrip () {
             this.trip.value = this.trip.milageRate * this.trip.duration
@@ -199,7 +203,9 @@ export default {
                     }
                 })
                 .then(() => this.$router.push("/trips"))
-                .catch(error => this.message = error)
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
         closeResults () {
             this.trip.distance = null

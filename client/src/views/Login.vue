@@ -60,6 +60,9 @@ export default {
                 .then(() => {
                     this.$router.push({ name: 'dashboard'})
                 })
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     }
 }

@@ -1,14 +1,31 @@
 <template>
   <div class="dashboard">
-    <v-layout align-center row wrap v-if="tripSummary">
+    <!-- <v-layout align-center row wrap v-if="tripSummary">
       <v-flex>
         <v-btn text color="text--blue-grey text--darken-4" class="ma-5" small disabled>
           THIS YEAR
           <v-icon class="ml-2">filter_list</v-icon>
         </v-btn>
       </v-flex>
+    </v-layout> -->
+    <v-layout align-center justify-center my-5 row v-if="tripSummary">
+      <v-flex xs8>
+        <v-alert
+          prominent
+          type="info"
+          color="teal"
+        >
+          <h3 class="display-1">Welcome to The Expenses App!</h3>
+          <div class="subtitle-2">To get started, use the side menu to navigate to <i class="material-icons">directions_car</i> to log a work trip for milage claims, or <i class="material-icons">payment</i> to log a purchase made for your business.</div>
+          <v-divider
+            class="my-4 white"
+            style="opacity: 0.5"
+          ></v-divider>
+          <div class="subtitle-2">Once you have created a few trips or expenses, go to <i class="material-icons">attach_money</i> to create clean and concise claims to submit to your employer at the click of a button. </div>
+        </v-alert>
+      </v-flex>
     </v-layout>
-    <v-layout align-center row wrap v-if="tripSummary">
+    <v-layout align-center my-5 row wrap v-if="tripSummary">
       <v-flex md3 my-5 sm6 xs12 text-center class="teal--text text--lighten-1">
         <h3 class="display-3 mb-3">{{ tripSummary ? travelTime : 0 }}</h3>
         <p class="caption">TRAVEL TIME</p>
@@ -84,7 +101,9 @@ export default {
         this.chartData = response.data[4]
         
       })
-      .catch(error => console.log(error))
+      .catch((error) => {
+          this.$store.dispatch('setMessage', error.response)
+      })
   },
   computed: {
     message () {

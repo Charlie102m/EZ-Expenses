@@ -94,10 +94,12 @@ export default {
                             name: 'claim-data'
                         });
                     } catch (error) {
-                        console.error('export error: ', error);
+                        this.$store.dispatch('setMessage', error.response)
                     }
                 })
-                .catch(error => console.log(error))
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
         viewClaim (claim) {
             this.$router.push(`/claims/${claim.type}/${claim.id}`)
@@ -108,13 +110,21 @@ export default {
             .then(response => {
                 this.claims = response.data
             })
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
+            
         HttpService.getTripsByStatus('unclaimed')
             .then(response => this.unclaimedTrips = response.data.length)
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
+
         HttpService.getExpensesByStatus('unclaimed')
             .then(response => this.unclaimedExpenses = response.data.length)
-            .catch(error => console.log(error.response))
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
     }
 }
 </script>
