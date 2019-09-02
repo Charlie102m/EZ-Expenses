@@ -7,11 +7,11 @@
             <SideNav v-if="showMenu"/>
           </v-flex>
           <v-flex mx-5 pa-5 shrink xs11>
-          <v-flex >
-            <Messages v-if="messageExists"/>
-          </v-flex>
           <v-flex xs12>
             <TopNav v-if="showMenu"/>
+          </v-flex>
+          <v-flex xs6 mx-auto>
+            <Messages v-if="messageExists"/>
           </v-flex>
             <router-view/>
           </v-flex>

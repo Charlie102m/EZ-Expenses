@@ -8,8 +8,8 @@
         </v-btn>
       </v-flex>
     </v-layout> -->
-    <v-layout align-center justify-center my-5 row v-if="tripSummary">
-      <v-flex xs8>
+    <v-layout align-center justify-center mt-5 row v-if="tripSummary">
+      <v-flex xs10>
         <v-alert
           prominent
           type="info"
@@ -25,7 +25,7 @@
         </v-alert>
       </v-flex>
     </v-layout>
-    <v-layout align-center my-5 row wrap v-if="tripSummary">
+    <v-layout align-center row wrap v-if="tripSummary">
       <v-flex md3 my-5 sm6 xs12 text-center class="teal--text text--lighten-1">
         <h3 class="display-3 mb-3">{{ tripSummary ? travelTime : 0 }}</h3>
         <p class="caption">TRAVEL TIME</p>
