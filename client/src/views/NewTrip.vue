@@ -168,6 +168,7 @@ export default {
             }
             HttpService.getDirections(waypoints)
                 .then((response) => {
+                    this.$store.dispatch('clearMessage')
                     this.trip.originAddress = response.data.routes[0].legs[0].start_address
                     this.trip.destinationAddress = response.data.routes[0].legs[0].end_address
                     this.trip.distance = response.data.routes[0].legs[0].distance.value / 1609.34
@@ -176,9 +177,7 @@ export default {
                     this.message = null
                 })
                 .catch((error) => {
-                    error.status = 400
-                    error.data = 'Cannot calculate route, please check your origin/destination and try again'
-                    this.$store.dispatch('setMessage', error)
+                    this.$store.dispatch('setMessage', error.response)
                 })
         },
         addTrip () {
