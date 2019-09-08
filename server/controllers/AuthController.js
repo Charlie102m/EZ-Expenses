@@ -31,7 +31,9 @@ const controller = {
             // define user object for jwt.sign
             const user = {
                 id: results[0].id,
-                email: results[0].email
+                email: results[0].email,
+                firstName: results[0].firstName,
+                lastName: results[0].lastName
             }
             // verify passwords match
             bcrypt.compare(req.body.password, results[0].password, function(err, result) {

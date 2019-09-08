@@ -38,11 +38,17 @@ export const HttpService = {
   getExpenses() {
     return apiClient.get('/expenses')
   },
+  getExpense(expenseId) {
+    return apiClient.get('/expenses/' + expenseId)
+  },
   getExpensesByStatus(status) {
     return apiClient.get('/expenses/status/' + status)
   },
   addExpense(expense) {
     return apiClient.post('/expenses', expense)
+  },
+  updateExpense(expense) {
+    return apiClient.put('/expenses/' + expense.id, expense)
   },
   deleteExpense(expense) {
     return apiClient.delete('/expenses/' + expense.id)

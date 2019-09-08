@@ -61,8 +61,8 @@ export default {
     data () {
         return {
             user: {
-                fisrtName: 'John',
-                lastName: 'Smith'
+                fisrtName: null,
+                lastName: null
             },
             home: {
                 temp: null,
@@ -79,6 +79,7 @@ export default {
     mounted () {
         HttpService.getUserProfile()
             .then((response) => {
+                console.log('response: ', response);
                 this.user = response.data[0]
             })
             .catch((error) => {

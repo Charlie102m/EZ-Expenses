@@ -106,7 +106,10 @@ export default {
       getColor(status) {
           if (status == 'unclaimed') return 'red'
           else return 'green'
-      }
+      },
+      editExpense (expense) {
+        this.$router.push({name: "editExpense", params: { expenseId: expense.id}})
+      },
     }
 }
 </script>

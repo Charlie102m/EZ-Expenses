@@ -14,6 +14,9 @@ export default new Vuex.Store({
   // the computed properties of the state object, similar to computed & data (model) objects
   // within the vue components/views
   getters: {
+    user (state) {
+      return state.user
+    },
     userId (state) {
       return state.user.id
     },

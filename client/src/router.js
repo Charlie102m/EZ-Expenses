@@ -9,6 +9,7 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import Expenses from './views/Expenses.vue'
 import NewExpense from './views/NewExpense.vue'
+import EditExpense from './views/EditExpense.vue'
 import Claims from './views/Claims.vue'
 import NewClaim from './views/NewClaim.vue'
 import ViewClaim from './views/ViewClaim.vue'
@@ -68,6 +69,13 @@ const router = new Router({
       name: 'newExpense',
       component: NewExpense,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/expenses/edit/:expenseId',
+      name: 'editExpense',
+      component: EditExpense,
+      meta: { requiresAuth: true },
+      props: true
     },
     {
       path: '/claims',

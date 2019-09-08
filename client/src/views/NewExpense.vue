@@ -70,6 +70,7 @@ export default {
     methods: {
         addExpense () {
             this.expense.createdBy = this.$store.getters.userId
+            console.log(this.expense);
             HttpService.addExpense(this.expense)
                 .then(() => this.$router.push("/expenses"))
                 .catch((error) => {
