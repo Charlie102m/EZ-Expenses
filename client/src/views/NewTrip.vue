@@ -181,7 +181,7 @@ export default {
                 })
         },
         addTrip () {
-            this.trip.value = this.trip.milageRate * this.trip.duration
+            this.trip.value = this.trip.milageRate * this.trip.distance
             this.trip.createdBy = this.$store.getters.userId
             HttpService.addTrip(this.trip)
                 .then(() => {
