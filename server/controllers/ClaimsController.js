@@ -130,13 +130,16 @@ const controller = {
         })
     },
     deleteClaim: (req, res) => {
+        console.log(req.params);
         if (req.params.claimType === 'Milage') {
             claimTable = "tripClaims"
             joinTable = "tripClaimsJoin"
+            idType = "tripId"
             type = "trips"
         } else {
             claimTable = "expenseClaims"
             joinTable = "expenseClaimsJoin"
+            idType = "expenseId"
             type = "expenses"
         }
         let getItemsQuery = `SELECT * FROM ${joinTable} WHERE claimId = ${req.params.claimId};`
@@ -145,7 +148,7 @@ const controller = {
             let updateQuery = `UPDATE ${type} SET status = 'unclaimed' WHERE id = ?;`
             let updates = ''
             results.forEach(item => {
-                updates += mysql.format(updateQuery, item.tripId)
+                updates += mysql.format(updateQuery, item[idType])
             })
             connection.query(updates, (error) => {
                 if (error) return res.status(403).send(error.sqlMessage)
