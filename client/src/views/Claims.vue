@@ -57,6 +57,11 @@
                             @click="downloadClaim(item)">
                             cloud_download
                         </v-icon>
+                        <v-icon
+                            color="red"
+                            @click="deleteClaim(item)">
+                            delete
+                        </v-icon>
                     </template>
                 </v-data-table>
             </v-flex>
@@ -103,9 +108,19 @@ export default {
         },
         viewClaim (claim) {
             this.$router.push(`/claims/${claim.type}/${claim.id}`)
+        },
+        deleteClaim (claim) {
+            HttpService.deleteClaim(claim)
+                .then(() => {
+                    this.$router.go(0);
+                })
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         }
     },
     created () {
+
         HttpService.getClaims()
             .then(response => {
                 this.claims = response.data

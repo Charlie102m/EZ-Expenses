@@ -173,7 +173,7 @@ export default {
             return;
         },
         updateTrip () {
-            this.trip.value = this.trip.milageRate * this.trip.duration
+            this.trip.value = this.trip.milageRate * this.trip.distance
             HttpService.updateTrip(this.trip)
                 .then(() => this.$router.push("/trips"))
                 .catch((error) => {

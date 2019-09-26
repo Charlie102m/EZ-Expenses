@@ -100,7 +100,6 @@ export default {
     deleteTrip (trip) {
       HttpService.deleteTrip(trip)
         .then(() => {
-          this.message = 'Trip deleted successfully'
           HttpService.getTrips()
             .then(response => this.trips = response.data)
             .then(() => {

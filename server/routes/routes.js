@@ -59,8 +59,9 @@ router.route('/api/expenses/:expenseId')
 router.route('/api/claims')
     .get(Mid.authenticate, ClaimsController.getClaims)
     .post(Mid.authenticate, ClaimsController.addClaim)
-
+    
 router.route('/api/claims/:claimType/:claimId')
     .get(Mid.authenticate, ClaimsController.getClaim)
+    .delete(Mid.authenticate, ClaimsController.deleteClaim)
 
 module.exports = router;

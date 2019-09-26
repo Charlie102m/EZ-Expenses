@@ -62,6 +62,9 @@ export const HttpService = {
   viewClaim(claim) {
     return apiClient.get(`/claims/${claim.type}/${claim.id}`)
   },
+  deleteClaim(claim) {
+    return apiClient.delete(`/claims/${claim.type}/${claim.id}`)
+  },
   getUserProfile() {
     return apiClient.get('/profile')
   }

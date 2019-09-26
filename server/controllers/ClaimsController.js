@@ -128,6 +128,33 @@ const controller = {
             if (results[1].length === 0) return res.status(403).send('Claim found but associated expenses/trips no longer exist')
             res.status(200).send(results)
         })
+    },
+    deleteClaim: (req, res) => {
+        if (req.params.claimType === 'Milage') {
+            claimTable = "tripClaims"
+            joinTable = "tripClaimsJoin"
+            type = "trips"
+        } else {
+            claimTable = "expenseClaims"
+            joinTable = "expenseClaimsJoin"
+            type = "expenses"
+        }
+        let getItemsQuery = `SELECT * FROM ${joinTable} WHERE claimId = ${req.params.claimId};`
+        connection.query(getItemsQuery, req.body.claimId, (error, results) => {
+            if (error) return res.status(403).send(error.sqlMessage)
+            let updateQuery = `UPDATE ${type} SET status = 'unclaimed' WHERE id = ?;`
+            let updates = ''
+            results.forEach(item => {
+                updates += mysql.format(updateQuery, item.tripId)
+            })
+            connection.query(updates, (error) => {
+                if (error) return res.status(403).send(error.sqlMessage)
+                connection.query(`DELETE FROM ${claimTable} WHERE id = ${req.params.claimId}`, (error) => {
+                    if (error) return res.status(403).send(error.sqlMessage)
+                    res.status(200).send('Claim successfully deleted')
+                })
+            })
+        })
     }
 }
 
