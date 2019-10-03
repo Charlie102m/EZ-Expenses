@@ -141,6 +141,14 @@ export default {
         }
     },
     mounted () {
+        HttpService.getDefualtMilageRate()
+            .then(results => {
+                this.trip.milageRate = results.data[0].milageValueDefualt
+            })
+            .catch((error) => {
+                this.$store.dispatch('setMessage', error.response)
+            })
+
         // eslint-disable-next-line
         this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete));
         // eslint-disable-next-line

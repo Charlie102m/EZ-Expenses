@@ -130,7 +130,6 @@ const controller = {
         })
     },
     deleteClaim: (req, res) => {
-        console.log(req.params);
         if (req.params.claimType === 'Milage') {
             claimTable = "tripClaims"
             joinTable = "tripClaimsJoin"

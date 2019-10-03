@@ -13,16 +13,32 @@
             <v-btn rounded color="blue-grey darken-4" dark>Change Picture</v-btn>
             <p class="caption mt-5 grey--text text--darken-2">Member Since: {{ user.createdAt}}</p>
         </v-flex>
-        <v-flex mt-5>
+        <v-flex mt-5 shrink>
             <h3 class="display-2 ma-5">{{user.firstName ? user.firstName : 'John' }} {{user.lastName ? user.lastName : 'Smith' }}</h3>
             <h5 class="display-1 teal--text text--darken-1 ma-5">{{user.email}}</h5>
             <p class="headline font-weight-light ma-5 grey--text text--darken-2">Personal License</p>
+            <p class="headline font-weight-light ma-5 grey--text text--darken-2">Defualt Milage Rate: £{{ user.milageValueDefualt}}</p>
         </v-flex>
         <v-flex ma-5>
+            <form v-on:submit.prevent="updateMilageRate" class="mt-5">
+                <p class="caption">Defualt Milage Rate</p>
+                <input
+                    type="number"
+                    v-on:keypress.enter.stop.prevent="updateMilageRate"
+                    v-model="user.milageValueDefualt"
+                    step="any"
+                    />
+                    <v-flex text-right mt-5>
+                        <v-btn type="submit" rounded small color="teal darken-1" dark>
+                            Update Milage Rate
+                            <v-icon class="ml-1" small>save</v-icon>
+                        </v-btn>
+                    </v-flex>
+            </form>
             <form v-on:submit.prevent="updateHome" class="mt-5">
                 <p class="caption">Home</p>
                 <input
-                    v-on:keypress.enter.stop.prevent=""
+                    v-on:keypress.enter.stop.prevent="updateHome"
                     ref="autocomplete3"
                     placeholder="Search for your home address" 
                     v-model="home.temp"
@@ -38,7 +54,7 @@
             <form v-on:submit.prevent="updateWork" class="mt-5">
                 <p class="caption">Work</p>
                 <input
-                    v-on:keypress.enter.stop.prevent=""
+                    v-on:keypress.enter.stop.prevent="updateWork"
                     ref="autocomplete4" 
                     placeholder="Your place of work/head office" 
                     v-model="work.temp"
@@ -62,7 +78,12 @@ export default {
         return {
             user: {
                 fisrtName: null,
-                lastName: null
+                lastName: null,
+                email: null,
+                milageValueDefualt: null,
+                homeAddressId: null,
+                workAddressId: null,
+                createdAt: null
             },
             home: {
                 temp: null,
@@ -79,7 +100,6 @@ export default {
     mounted () {
         HttpService.getUserProfile()
             .then((response) => {
-                console.log('response: ', response);
                 this.user = response.data[0]
             })
             .catch((error) => {
@@ -87,6 +107,16 @@ export default {
             })
     },
     methods: {
+        async updateMilageRate () {
+            this.user.milageValueDefualt = await Number(this.user.milageValueDefualt)
+            HttpService.updateProfile('milageValueDefualt', this.user)
+                .then(result => {
+                    console.log('result: ', result);
+                })
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
+        },
         updateHome () {
             console.log(this.home);
             return false

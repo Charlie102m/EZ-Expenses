@@ -14,6 +14,9 @@ export const HttpService = {
   getTripsByStatus(status) {
     return apiClient.get('/trips/status/' + status)
   },
+  getDefualtMilageRate() {
+    return apiClient.get('/milageRate')
+  },
   addTrip(trip) {
     return apiClient.post('/trips', trip)
   },
@@ -67,5 +70,8 @@ export const HttpService = {
   },
   getUserProfile() {
     return apiClient.get('/profile')
+  },
+  updateProfile(prop, data) {
+    return apiClient.post(`/profile/update/${prop}`, data)
   }
 }

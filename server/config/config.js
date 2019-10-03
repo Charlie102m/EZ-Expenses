@@ -16,10 +16,9 @@ if (process.env.NODE_ENV === 'production') {
         connection: mysql.createConnection({
             host: 'localhost',
             user: 'nodeuser',
-            password: 'nodeuser',
+            password: 'nodeuser123',
             database: 'the_expenses_app',
             multipleStatements: true
         })
     }
 }
-

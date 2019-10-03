@@ -24,6 +24,11 @@ router.route('/api/')
 router.route('/api/profile')
     .get(Mid.authenticate, ProfileController.getUserProfile)
 
+router.route('/api/profile/update/:prop')
+    .post(Mid.authenticate, ProfileController.updateProfile)
+
+router.route('/api/milageRate')
+    .get(Mid.authenticate, ProfileController.getDefualtMilageRate)
 
 // TRIPS - TripsController
 router.route('/api/trips')
