@@ -54,7 +54,7 @@
                         </v-icon>
                         <v-icon
                             color="teal lighten-1"
-                            class="mr-4"
+                            class="mr-2"
                             @click="downloadClaim(item)">
                             cloud_download
                         </v-icon>

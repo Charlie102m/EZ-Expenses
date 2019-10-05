@@ -29,7 +29,7 @@
             </form>
         </v-flex>
         <v-flex mt-5 shrink>
-            <h3 class="display-2 ma-5">{{user.firstName ? user.firstName : 'John' }} {{user.lastName ? user.lastName : 'Smith' }}</h3>
+            <h3 class="display-2 ma-5">{{ user.firstName }} {{ user.lastName }}</h3>
             <h5 class="display-1 teal--text text--darken-1 ma-5">{{user.email}}</h5>
             <p class="headline font-weight-light ma-5 grey--text text--darken-2">Personal License</p>
             <p class="headline font-weight-light ma-5 grey--text text--darken-2">Defualt Milage Rate: £{{ user.milageValueDefualt}}</p>
