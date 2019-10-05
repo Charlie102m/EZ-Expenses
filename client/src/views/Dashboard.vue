@@ -44,7 +44,7 @@
       </v-flex>
       <v-flex my-5 xs12></v-flex>
       <v-flex lg6 class="chart-container text-center">
-        <BarChart :chartData="chartData" :height="300" :width="600"/>
+        <BarChart :chartData="chartData" height="300" width="600"/>
       </v-flex>
       <v-flex my-5 lg6>
         <table>

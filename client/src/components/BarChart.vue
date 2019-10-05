@@ -28,8 +28,8 @@ export default {
                   yAxes: [{
                       ticks: {
                           min: 0,
-                          stepSize: 1,
-                          suggestedMax: 10
+                          stepSize: 5,
+                          suggestedMax: 40
                       }
                   }]
               }
