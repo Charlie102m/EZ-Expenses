@@ -7,9 +7,7 @@ const   express = require('express'),
         ApiController = require('../controllers/ApiController.js'),
         ExpensesController = require('../controllers/ExpensesController.js'),
         ClaimsController = require('../controllers/ClaimsController.js'),
-        Mid = require('../middleware/auth.js'),
-        multer = require('multer'),
-        upload = multer({ dest: '../temp/'}).single('image')
+        Mid = require('../middleware/auth.js')
     
 // AUTH - AuthController
 router.route('/api/register')
