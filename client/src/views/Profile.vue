@@ -3,15 +3,30 @@
         <v-flex text-center shrink>
             <div class="image-container ma-5">
                 <v-img
-                src="@/assets/66711277_10156148056800025_6782326558129389568_n.jpg"
+                :src="profileImage"
                 lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
                 aspect-ratio="1"
                 max-width="500"
                 max-height="500"
+                shadow
                 ></v-img>
             </div>
-            <v-btn rounded color="blue-grey darken-4" dark>Change Picture</v-btn>
             <p class="caption mt-5 grey--text text--darken-2">Member Since: {{ user.createdAt}}</p>
+            <form v-on:submit.prevent="uploadImage" enctype="multipart/form-data">
+                <v-file-input
+                    :loading=loading
+                    :rules="rules"
+                    color="teal darken-1"
+                    v-model="image"
+                    ref="image"
+                    accept="image/png, image/jpeg, image/bmp"
+                    placeholder="Pick a new profile image"
+                    prepend-icon="mdi-camera"
+                    label="Profile Image"
+                ></v-file-input>
+                <v-btn type="submit" rounded small color="teal darken-1" dark :disabled="image ? false : true">Update Avatar</v-btn>
+            </form>
         </v-flex>
         <v-flex mt-5 shrink>
             <h3 class="display-2 ma-5">{{user.firstName ? user.firstName : 'John' }} {{user.lastName ? user.lastName : 'Smith' }}</h3>
@@ -45,7 +60,7 @@
                     @focus="initHomeSearch"
                     type="text"/>
                     <v-flex text-right mt-5>
-                        <v-btn type="submit" rounded small color="teal darken-1" dark>
+                        <v-btn type="submit" rounded small color="teal darken-1" :dark="home.temp ? true : false" :disabled="home.temp ? false : true">
                             Update Home
                             <v-icon class="ml-1" small>save</v-icon>
                         </v-btn>
@@ -61,7 +76,7 @@
                     @focus="initWorkSearch"
                     type="text"/>
                     <v-flex text-right mt-5>
-                        <v-btn type="submit" rounded small color="teal darken-1" dark>
+                        <v-btn type="submit" rounded small color="teal darken-1" :dark="work.temp ? true : false" :disabled="work.temp ? false : true">
                             Update Work
                             <v-icon class="ml-1" small>save</v-icon>
                         </v-btn>
@@ -76,6 +91,11 @@ import { HttpService } from '@/services/HttpService.js'
 export default {
     data () {
         return {
+            rules: [
+                value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
+            ],
+            loading: false,
+            image: null,
             user: {
                 fisrtName: null,
                 lastName: null,
@@ -83,8 +103,9 @@ export default {
                 milageValueDefualt: null,
                 homeAddressId: null,
                 workAddressId: null,
-                createdAt: null
+                createdAt: null,
             },
+            profileImage: "https://where-inc.com/wpradmin/template/enfold/images/no_agent.png",
             home: {
                 temp: null,
                 name: null,
@@ -101,6 +122,7 @@ export default {
         HttpService.getUserProfile()
             .then((response) => {
                 this.user = response.data[0]
+                this.profileImage = response.data[0].profileImageUrl
             })
             .catch((error) => {
                 this.$store.dispatch('setMessage', error.response)
@@ -112,6 +134,18 @@ export default {
             HttpService.updateProfile('milageValueDefualt', this.user)
                 .then(result => {
                     console.log('result: ', result);
+                })
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
+        },
+        async uploadImage () {
+            this.loading = true
+            let formData = new FormData();
+            formData.append('image', this.image)
+            HttpService.uploadImage(formData)
+                .then(() => {
+                    this.$router.go(0);
                 })
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
@@ -154,6 +188,8 @@ export default {
 
 <style>
 .image-container {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border: 3px solid white;
     width: 250px;
     border-radius: 100%;
     overflow: hidden;

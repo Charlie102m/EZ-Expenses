@@ -22,6 +22,7 @@ CREATE TABLE `users`
   `email` VARCHAR(255) UNIQUE NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `permission` VARCHAR(255),
+  `profileImageUrl` VARCHAR(255),
   `milageValueDefualt` DECIMAL(4,2) DEFAULT 0.45,
   `homeAddressId` INT,
   `workAddressId` INT,

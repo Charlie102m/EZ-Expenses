@@ -7,7 +7,9 @@ const   express = require('express'),
         ApiController = require('../controllers/ApiController.js'),
         ExpensesController = require('../controllers/ExpensesController.js'),
         ClaimsController = require('../controllers/ClaimsController.js'),
-        Mid = require('../middleware/auth.js')
+        Mid = require('../middleware/auth.js'),
+        multer = require('multer'),
+        upload = multer({ dest: '../temp/'}).single('image')
     
 // AUTH - AuthController
 router.route('/api/register')
@@ -26,6 +28,9 @@ router.route('/api/profile')
 
 router.route('/api/profile/update/:prop')
     .post(Mid.authenticate, ProfileController.updateProfile)
+
+router.route('/api/profile/uploadImage')
+    .post(Mid.authenticate, ProfileController.uploadImage)
 
 router.route('/api/milageRate')
     .get(Mid.authenticate, ProfileController.getDefualtMilageRate)

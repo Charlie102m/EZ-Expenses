@@ -1,28 +1,4 @@
 <template>
-<!-- <nav class="nav">
-    <v-layout align-center justify-space-between column fill-height text-center>
-        <div class="nav-head">
-            <router-link to="/profile">
-                <v-img
-                lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
-                src="@/assets/66711277_10156148056800025_6782326558129389568_n.jpg"
-                aspect-ratio="1"
-                max-width="80"
-                max-height="80"
-                ></v-img>
-            </router-link>
-        </div>
-        <div class="nav-body">
-            <router-link to="/"><i class="material-icons">home</i></router-link>
-            <router-link to="/trips"><i class="material-icons">directions_car</i></router-link>
-            <router-link to="/expenses"><i class="material-icons">payment</i></router-link>
-            <router-link to="/claims"><i class="material-icons">attach_money</i></router-link>
-        </div>
-        <div class="nav-footer">
-            <router-link to="/profile"><i class="material-icons">settings</i></router-link>
-        </div>
-    </v-layout>
-</nav> -->
 <v-card>
     <v-navigation-drawer
       v-model="drawer"
@@ -36,7 +12,9 @@
         <v-list class="mt-5">
           <v-list-item>
             <v-list-item-avatar class="mx-auto">
-              <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+              <v-img :src="profileImage"
+                lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"></v-img>
             </v-list-item-avatar>
           </v-list-item>
 
@@ -100,23 +78,28 @@
 </template>
 
 <script>
+import { HttpService } from '@/services/HttpService.js'
 export default {
 name: 'SideNav',
     data() {
         return {
             drawer: true,
-        // items: [
-        //   { title: 'Home', icon: 'mdi-home-city' },
-        //   { title: 'My Account', icon: 'mdi-account' },
-        //   { title: 'Users', icon: 'mdi-account-group-outline' },
-        // ],
-        // mini: true,
+            profileImage: 'https://where-inc.com/wpradmin/template/enfold/images/no_agent.png'
         }
     },
     computed: {
         user() {
             return this.$store.getters.user
         }
+    },
+    mounted () {
+    HttpService.getUserProfile()
+        .then((response) => {
+            this.profileImage = response.data[0].profileImageUrl
+        })
+        .catch((error) => {
+            this.$store.dispatch('setMessage', error.response)
+        })
     }
 }
 </script>
