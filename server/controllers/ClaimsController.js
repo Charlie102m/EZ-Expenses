@@ -46,11 +46,11 @@ const controller = {
         if (typeof req.body[0].netValue !== 'undefined') {
             claimQuery = 'INSERT INTO expenseClaims SET ?',
                 joinTableQuery = 'INSERT INTO expenseClaimsJoin (expenseId, claimId) VALUES ?',
-                updateQuery = "UPDATE expenses SET status = 'claimed' WHERE id = ?; "
+                updateQuery = "UPDATE expenses SET status = 'created' WHERE id = ?; "
         } else {
             claimQuery = 'INSERT INTO tripClaims SET ?'
             joinTableQuery = 'INSERT INTO tripClaimsJoin (tripId, claimId) VALUES ?'
-            updateQuery = "UPDATE trips SET status = 'claimed' WHERE id = ?; "
+            updateQuery = "UPDATE trips SET status = 'created' WHERE id = ?; "
         }
         connection.query(claimQuery, req.body, (error, results, fields) => {
             if (error) return res.status(403).send(error.sqlMessage)
