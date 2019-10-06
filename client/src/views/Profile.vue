@@ -161,7 +161,6 @@ export default {
             .then((response) => {
                 this.user = response.data[0]
                 this.profileImage = response.data[0].profileImageUrl
-                console.log('this.user: ', this.user);
             })
             .catch((error) => {
                 this.$store.dispatch('setMessage', error.response)
@@ -177,12 +176,14 @@ export default {
                     this.$store.dispatch('setMessage', error.response)
                 })
         },
-        async uploadImage () {
+        uploadImage () {
             this.loading = true
             let formData = new FormData();
             formData.append('image', this.image)
             HttpService.uploadImage(formData)
-                .then(this.$router.go(0))
+                .then(() => {
+                    this.$router.go(0)
+                })
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
