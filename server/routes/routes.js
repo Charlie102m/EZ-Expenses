@@ -24,6 +24,9 @@ router.route('/api/')
 router.route('/api/profile')
     .get(Mid.authenticate, ProfileController.getUserProfile)
 
+router.route('/api/profile/update/address')
+    .post(Mid.authenticate, ProfileController.updateAddress)
+
 router.route('/api/profile/update/:prop')
     .post(Mid.authenticate, ProfileController.updateProfile)
 

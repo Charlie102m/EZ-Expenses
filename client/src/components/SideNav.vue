@@ -1,5 +1,5 @@
 <template>
-<v-card>
+  <v-card>
     <v-navigation-drawer
       v-model="drawer"
       style="border-radius: 0;"
@@ -17,7 +17,6 @@
                 alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"></v-img>
             </v-list-item-avatar>
           </v-list-item>
-
           <v-list-item
             two-line
           >

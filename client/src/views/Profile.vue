@@ -1,89 +1,123 @@
 <template>
-    <v-layout align-start justify-center row wrap mt-5>
-        <v-flex text-center shrink>
-            <div class="image-container ma-5">
-                <v-img
-                :src="profileImage"
-                lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
-                alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
-                aspect-ratio="1"
-                max-width="500"
-                max-height="500"
-                shadow
-                ></v-img>
-            </div>
-            <p class="caption mt-5 grey--text text--darken-2">Member Since: {{ user.createdAt}}</p>
-            <form v-on:submit.prevent="uploadImage" enctype="multipart/form-data">
-                <v-file-input
-                    :loading=loading
-                    :rules="rules"
-                    color="teal darken-1"
-                    v-model="image"
-                    ref="image"
-                    accept="image/png, image/jpeg, image/bmp"
-                    placeholder="Pick a new profile image"
-                    prepend-icon="mdi-camera"
-                    label="Profile Image"
-                ></v-file-input>
-                <v-btn type="submit" rounded small color="teal darken-1" dark :disabled="image ? false : true">Update Avatar</v-btn>
-            </form>
-        </v-flex>
-        <v-flex mt-5 shrink>
-            <h3 class="display-2 ma-5">{{ user.firstName }} {{ user.lastName }}</h3>
-            <h5 class="display-1 teal--text text--darken-1 ma-5">{{user.email}}</h5>
-            <p class="headline font-weight-light ma-5 grey--text text--darken-2">Personal License</p>
-            <p class="headline font-weight-light ma-5 grey--text text--darken-2">Defualt Milage Rate: £{{ user.milageValueDefualt}}</p>
-        </v-flex>
-        <v-flex ma-5>
-            <form v-on:submit.prevent="updateMilageRate" class="mt-5">
-                <p class="caption">Defualt Milage Rate</p>
-                <input
-                    type="number"
-                    v-on:keypress.enter.stop.prevent="updateMilageRate"
-                    v-model="user.milageValueDefualt"
-                    step="any"
-                    />
-                    <v-flex text-right mt-5>
-                        <v-btn type="submit" rounded small color="teal darken-1" dark>
-                            Update Milage Rate
-                            <v-icon class="ml-1" small>save</v-icon>
-                        </v-btn>
+    <v-container :key="componentKey">
+        <v-row justify="center" class="">
+            <v-col md="4" class="mt-5 text-center">
+                <div class="image-container mx-auto">
+                    <v-img
+                    :src="profileImage"
+                    lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                    alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                    aspect-ratio="1"
+                    max-width="500"
+                    max-height="500"
+                    shadow
+                    ></v-img>
+                </div>
+                <p class="caption mt-5 grey--text text--darken-2">Member Since: {{ user.createdAt}}</p>
+                <form v-on:submit.prevent="uploadImage" enctype="multipart/form-data">
+                    <v-file-input
+                        :loading=loading
+                        :rules="rules"
+                        messages="After uploading a new profile image, you may need to hard refresh your page for it to appear. If this doesn't work, try clearing your browser cache."
+                        color="teal darken-1"
+                        v-model="image"
+                        ref="image"
+                        chips
+                        accept="image/png, image/jpeg, image/bmp"
+                        placeholder="Pick a new profile image"
+                        prepend-icon="mdi-camera"
+                        label="Profile Image"
+                    ></v-file-input>
+                    <v-flex text-right>
+                        <v-btn type="submit" rounded small color="teal darken-1" :dark="image ? true : false" :disabled="image ? false : true">Update Avatar</v-btn>
                     </v-flex>
-            </form>
-            <form v-on:submit.prevent="updateHome" class="mt-5">
-                <p class="caption">Home</p>
-                <input
-                    v-on:keypress.enter.stop.prevent="updateHome"
-                    ref="autocomplete3"
-                    placeholder="Search for your home address" 
-                    v-model="home.temp"
-                    @focus="initHomeSearch"
-                    type="text"/>
-                    <v-flex text-right mt-5>
-                        <v-btn type="submit" rounded small color="teal darken-1" :dark="home.temp ? true : false" :disabled="home.temp ? false : true">
-                            Update Home
-                            <v-icon class="ml-1" small>save</v-icon>
-                        </v-btn>
-                    </v-flex>
-            </form>
-            <form v-on:submit.prevent="updateWork" class="mt-5">
-                <p class="caption">Work</p>
-                <input
-                    v-on:keypress.enter.stop.prevent="updateWork"
-                    ref="autocomplete4" 
-                    placeholder="Your place of work/head office" 
-                    v-model="work.temp"
-                    @focus="initWorkSearch"
-                    type="text"/>
-                    <v-flex text-right mt-5>
-                        <v-btn type="submit" rounded small color="teal darken-1" :dark="work.temp ? true : false" :disabled="work.temp ? false : true">
-                            Update Work
-                            <v-icon class="ml-1" small>save</v-icon>
-                        </v-btn>
-                    </v-flex>
-            </form>
-        </v-flex>
-    </v-layout>
+                </form>
+            </v-col>
+            <v-col>
+                <v-col sm="12">
+                    <h3 class="display-2 my-3">{{ user.firstName }} {{ user.lastName }}</h3>
+                    <h5 class="headline teal--text text--darken-1 my-3">{{user.email}}</h5>
+                    <p class="body-1 font-weight-light my-3 grey--text text--darken-2">Personal License</p>
+                    <hr class="my-5 teal elevation-2">
+                </v-col>
+                <v-row>
+                    <v-col lg="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-5 mb-5">Defualt Milage Rate:</p>
+                        <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">£{{ user.milageValueDefualt}}</p>
+                    </v-col>
+                    <v-col lg="6">
+                        <form v-on:submit.prevent="updateMilageRate">
+                            <p class="caption mb-0">Update Defualt Milage Rate (£0.00)</p>
+                            <input
+                                type="number"
+                                v-on:keypress.enter.stop.prevent="updateMilageRate"
+                                class="mb-5"
+                                placeholder="0.00"
+                                v-model="newMilageValue"
+                                step="any"
+                                />
+                                <v-flex text-right>
+                                    <v-btn type="submit" rounded small color="teal darken-1" :dark="newMilageValue ? true : false" :disabled="newMilageValue ? false : true">
+                                        Update Milage Rate
+                                        <v-icon class="ml-1" small>save</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                        </form>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col lg="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-5">Home Address:</p>
+                        <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">{{ user.homeAddress}}</p>
+                    </v-col>
+                    <v-col lg-6>
+                        <form v-on:submit.prevent="updateHome" class="">
+                            <p class="caption mb-1">Update Home Address</p>
+                            <input
+                                v-on:keypress.enter.stop.prevent="updateHome"
+                                class="mb-5"
+                                ref="autocomplete3"
+                                placeholder="Search for your home address" 
+                                v-model="home.temp"
+                                @focus="initHomeSearch"
+                                type="text"/>
+                                <v-flex text-right>
+                                    <v-btn type="submit" rounded small color="teal darken-1" :dark="home.temp ? true : false" :disabled="home.temp ? false : true">
+                                        Update Home
+                                        <v-icon class="ml-1" small>save</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                        </form>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col lg="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-5">Work Address:</p>
+                        <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">{{ user.workAddress}}</p>
+                    </v-col>
+                    <v-col lg-6>
+                        <form v-on:submit.prevent="updateWork" class="">
+                            <p class="caption">Update Work Address</p>
+                            <input
+                                v-on:keypress.enter.stop.prevent="updateWork"
+                                class="mb-5"
+                                ref="autocomplete4" 
+                                placeholder="Your place of work/head office" 
+                                v-model="work.temp"
+                                @focus="initWorkSearch"
+                                type="text"/>
+                                <v-flex text-right>
+                                    <v-btn type="submit" rounded small color="teal darken-1" :dark="work.temp ? true : false" :disabled="work.temp ? false : true">
+                                        Update Work
+                                        <v-icon class="ml-1" small>save</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                        </form>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -91,6 +125,7 @@ import { HttpService } from '@/services/HttpService.js'
 export default {
     data () {
         return {
+            componentKey: 0,
             rules: [
                 value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
             ],
@@ -106,12 +141,15 @@ export default {
                 createdAt: null,
             },
             profileImage: "https://where-inc.com/wpradmin/template/enfold/images/no_agent.png",
+            newMilageValue: null,
             home: {
+                type: 'home',
                 temp: null,
                 name: null,
                 address: null
             },
             work: {
+                type: 'work',
                 temp: null,
                 name: null,
                 address: null
@@ -123,6 +161,7 @@ export default {
             .then((response) => {
                 this.user = response.data[0]
                 this.profileImage = response.data[0].profileImageUrl
+                console.log('this.user: ', this.user);
             })
             .catch((error) => {
                 this.$store.dispatch('setMessage', error.response)
@@ -130,11 +169,10 @@ export default {
     },
     methods: {
         async updateMilageRate () {
-            this.user.milageValueDefualt = await Number(this.user.milageValueDefualt)
-            HttpService.updateProfile('milageValueDefualt', this.user)
-                .then(result => {
-                    console.log('result: ', result);
-                })
+            this.newMilageValue= await Number(this.newMilageValue)
+            let payload = {milageValueDefualt: this.newMilageValue}
+            HttpService.updateProfile('milageValueDefualt', payload)
+                .then(this.$router.go(0))
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
@@ -144,20 +182,24 @@ export default {
             let formData = new FormData();
             formData.append('image', this.image)
             HttpService.uploadImage(formData)
-                .then(() => {
-                    this.$router.go(0);
-                })
+                .then(this.$router.go(0))
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
         },
-        updateHome () {
-            console.log(this.home);
-            return false
+        async updateHome () {
+            HttpService.updateAddress(this.home)
+                .then(this.$router.go(0))
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
-        updateWork () {
-            console.log(this.work);
-            return false
+        async updateWork () {
+            HttpService.updateAddress(this.work)
+                .then(this.$router.go(0))
+                .catch((error) => {
+                    this.$store.dispatch('setMessage', error.response)
+                })
         },
         initHomeSearch () {
             // eslint-disable-next-line            

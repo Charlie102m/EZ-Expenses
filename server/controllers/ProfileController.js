@@ -31,10 +31,18 @@ const controller =  {
                         milageValueDefualt,
                         profileImageUrl,
                         homeAddressId,
+                        H.locationName AS homeName,
+                        H.locationAddress AS homeAddress,
                         workAddressId,
-                        DATE_FORMAT(createdAt, '%d/%m/%Y') AS createdAt
-                        FROM users
-                        WHERE id = ?`
+                        W.locationName AS workName,
+                        W.locationAddress AS workAddress,
+                        DATE_FORMAT(users.createdAt, '%d/%m/%Y') AS createdAt
+                    FROM users 
+                    LEFT JOIN savedLocations H
+                    ON users.homeAddressId = H.id
+                    LEFT JOIN savedLocations W
+                    ON users.workAddressId = W.id
+                    WHERE users.id = ?;`
         connection.query(query, req.headers.user.id, (error, results) => {
             if (error) res.status(403).send(error)
             res.status(200).send(results)
@@ -47,8 +55,10 @@ const controller =  {
         })
     },
     updateProfile: (req, res) => {
+        // instead of directly accessing req.body object, below implementation is more flexible as req.body may or may not be a nested object
         let updateProperty = {};
         updateProperty[req.params.prop] = req.body[req.params.prop];
+
         connection.query(`UPDATE users SET ? WHERE id = ?`, [updateProperty, req.headers.user.id], (error, results) => {
             if (error) res.status(403).send(error)
             res.status(200).send(results)
@@ -60,6 +70,23 @@ const controller =  {
             const imageUrl = `https://ez-expenses.s3.eu-west-2.amazonaws.com/${req.headers.user.id}profile`
             const query = 'UPDATE users SET profileImageUrl = ? WHERE id = ?'
             connection.query(query, [imageUrl, req.headers.user.id], (error, results) => {
+                if (error) res.status(403).send(error)
+                res.status(200).send('success')
+            })
+        })
+    },
+    updateAddress: (req, res) => {
+        const address = {
+            locationName: req.body.name,
+            locationAddress: req.body.address,
+            createdBy: req.headers.user.id
+        }
+        let addressTypeId = 'homeAddressId'
+        if (req.body.type === 'work') addressTypeId = 'workAddressId';
+        connection.query('INSERT INTO savedLocations SET ?', address, (error, results, fields) => {
+            if (error) res.status(403).send(error)
+            const joinQuery = `UPDATE users SET ${addressTypeId} = ? WHERE id = ?`
+            connection.query(joinQuery, [results.insertId, req.headers.user.id], (error, results) => {
                 if (error) res.status(403).send(error)
                 res.status(200).send('success')
             })

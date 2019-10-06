@@ -8,7 +8,7 @@ USE the_expenses_app;
 CREATE TABLE `savedLocations`
 (
   `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  `locationType` VARCHAR(255) NOT NULL,
+  `locationName` VARCHAR(255) NOT NULL,
   `locationAddress` VARCHAR(255) NOT NULL,
   `createdBy` INT NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT NOW()

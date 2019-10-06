@@ -76,5 +76,8 @@ export const HttpService = {
   },
   uploadImage(file) {
     return apiClient.post('/profile/uploadImage', file, { headers: { 'Content-Type': 'multipart/form-data' } })
+  },
+  updateAddress(data) {
+    return apiClient.post('/profile/update/address', data)
   }
 }

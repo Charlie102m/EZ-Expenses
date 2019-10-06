@@ -1,8 +1,16 @@
 <template>
-    <v-layout align-center justify-center row fill-height>
+    <v-layout align-top justify-center row fill-height>
+        <div>
+        <v-img
+            src="../assets/logo.png"
+            aspect-ratio="1"
+            class="image-container white"
+            max-width="200"
+            max-height="200"
+            ></v-img>
         <v-card
             width="600"
-            class="mx-auto"
+            class="mx-auto pt-5"
             color="blue-grey lighten-5"
             elevation="3">
             <v-card-title>
@@ -48,6 +56,7 @@
                 </v-form>
             </v-card-text>
         </v-card>
+        </div>
     </v-layout>
 </template>
 
@@ -81,6 +90,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.image-container {
+    position: relative;
+    top: 60px;
+    z-index: 100;
+    margin: 0 auto;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border: 3px solid white;
+    border-radius: 100%;
+    overflow: hidden;
+}
 </style>

@@ -6,7 +6,7 @@
           <v-flex grow-shrink-0 v-if="showMenu">
             <SideNav v-if="showMenu"/>
           </v-flex>
-          <v-flex mx-5 pa-5 shrink xs11>
+          <v-flex ml-5 pa-5 shrink xs11 class="max-height">
           <v-flex xs12>
             <TopNav v-if="showMenu"/>
           </v-flex>
@@ -51,6 +51,11 @@ export default {
 <style lang="scss">
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  }
+
+  .max-height {
+    overflow: auto;
+    max-height: 100vh !important;
   }
 
   .include_background {
