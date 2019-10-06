@@ -5,7 +5,7 @@
                 <div class="image-container mx-auto">
                     <v-img
                     :src="profileImage"
-                    alt="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
+                    lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"
                     aspect-ratio="1"
                     max-width="500"
                     max-height="500"
