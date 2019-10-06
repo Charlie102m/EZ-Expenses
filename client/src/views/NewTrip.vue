@@ -76,7 +76,7 @@
             </v-flex>
             <v-flex lg5>
                 <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
-                    <v-date-picker v-show="trip.distance" v-model="trip.tripDate" :landscape="landscape" color="teal lighten-1"></v-date-picker>
+                    <v-date-picker v-show="trip.distance" class="ma-3" v-model="trip.tripDate" full-width :landscape="$vuetify.breakpoint.smAndUp" color="teal lighten-1"></v-date-picker>
                 </v-layout>
                 <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
                     <v-flex xs4>
@@ -115,7 +115,6 @@ import { HttpService } from '@/services/HttpService.js'
 export default {
     data (){
         return {
-            landscape: true,
             directionsResponse: null,
             summary: null,
             defualtMilageToggle: true,

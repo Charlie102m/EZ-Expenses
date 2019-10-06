@@ -84,10 +84,10 @@
             </v-flex>
             <v-flex lg5>
                 <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
-                    <v-date-picker v-show="trip.distance" v-model="trip.tripDate" :landscape="landscape" color="teal lighten-1"></v-date-picker>
+                    <v-date-picker v-show="trip.distance" class="ma-3" v-model="trip.tripDate" full-width :landscape="$vuetify.breakpoint.smAndUp" color="teal lighten-1"></v-date-picker>
                 </v-layout>
                 <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
-                    <v-flex xs10 mr-2>
+                    <v-flex sm10 mr-2>
                         <input
                         type="number"
                         v-show="!defualtMilageToggle"
@@ -100,7 +100,7 @@
                         label="Click toggle to change milage rate"
                         color="teal lighten-1"></v-switch>
                     </v-flex>
-                    <v-flex xs10>
+                    <v-flex sm10>
                         <input
                         type="text"
                         v-model="trip.reason"
@@ -125,7 +125,6 @@ export default {
     props: ['tripId'],
     data (){
         return {
-            landscape: true,
             directionsResponse: null,
             summary: null,
             defualtMilageToggle: true,
