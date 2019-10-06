@@ -1,6 +1,6 @@
 {
-    "name": "Expenses",
-    "short_name": "Expenses",
+    "name": "EZExpenses",
+    "short_name": "EZExpenses",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
