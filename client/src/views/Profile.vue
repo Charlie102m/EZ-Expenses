@@ -9,15 +9,6 @@
                     max-width="500"
                     max-height="500"
                     shadow>
-                        <template v-slot:placeholder>
-                            <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                            >
-                                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                            </v-row>
-                        </template>
                     </v-img>
                 </div>
                 <p class="caption mt-5 grey--text text--darken-2">Member Since: {{ user.createdAt}}</p>

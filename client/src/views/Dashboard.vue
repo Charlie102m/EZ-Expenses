@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard">
-    <v-layout align-center justify-center mt-5 row v-if="tripSummary">
-      <v-flex xs10>
+    <v-layout align-center justify-center row v-if="tripSummary">
+      <v-flex mx-5 mt-3 px-5>
         <v-alert
-          prominent
-          type="info"
+          text
+          type="success"
           color="teal"
         >
           <h3 class="display-1">Welcome to The Expenses App!</h3>
@@ -36,7 +36,7 @@
       </v-flex>
       <v-flex my-5 xs12></v-flex>
       <v-flex lg6 class="chart-container text-center d-none d-sm-flex ">
-        <BarChart :chartData="chartData" height="300" width="600"/>
+        <BarChart :chartData="chartData" :height="chartHeight" :width="chartWidth"/>
       </v-flex>
       <v-flex my-5 lg6>
         <table>
@@ -76,6 +76,8 @@ export default {
   },
   data () {
     return {
+      chartWidth: 600,
+      chartHeight: 300,
       tripSummary: null,
       tripClaimsSummary: null,
       expenseSummary: null,
