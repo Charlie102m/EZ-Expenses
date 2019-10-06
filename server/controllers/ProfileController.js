@@ -65,15 +65,16 @@ const controller =  {
         })
     },
     async uploadImage (req, res) {
-        upload(req, res, (error) => {
+        await upload(req, res, (error) => {
             if (error) res.status(403).send(error)
+            console.log('upload done');
+        })
             const imageUrl = `https://ez-expenses.s3.eu-west-2.amazonaws.com/${req.headers.user.id}profile`
             const query = 'UPDATE users SET profileImageUrl = ? WHERE id = ?'
             connection.query(query, [imageUrl, req.headers.user.id], (error, results) => {
                 if (error) res.status(403).send(error)
                 res.status(200).send('success')
             })
-        })
     },
     updateAddress: (req, res) => {
         const address = {
