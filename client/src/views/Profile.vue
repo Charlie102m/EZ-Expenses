@@ -171,7 +171,9 @@ export default {
             this.newMilageValue= await Number(this.newMilageValue)
             let payload = {milageValueDefualt: this.newMilageValue}
             HttpService.updateProfile('milageValueDefualt', payload)
-                .then(this.$router.go(0))
+                .then(() => {
+                    this.$router.go(0)
+                })
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
@@ -190,14 +192,18 @@ export default {
         },
         async updateHome () {
             HttpService.updateAddress(this.home)
-                .then(this.$router.go(0))
+                .then(() => {
+                    this.$router.go(0)
+                })
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
         },
         async updateWork () {
             HttpService.updateAddress(this.work)
-                .then(this.$router.go(0))
+                .then(() => {
+                    this.$router.go(0)
+                })
                 .catch((error) => {
                     this.$store.dispatch('setMessage', error.response)
                 })
