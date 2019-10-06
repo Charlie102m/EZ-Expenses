@@ -3,17 +3,18 @@
     <v-app>
       <v-container fluid pa-0 fill-height :class="includeBackground">
         <v-layout>
-          <v-flex grow-shrink-0 v-if="showMenu">
+          <v-flex shrink d-none d-md-flex v-if="showMenu">
             <SideNav v-if="showMenu"/>
           </v-flex>
-          <v-flex ml-5 pa-5 shrink xs11 class="max-height">
-          <v-flex xs12>
-            <TopNav v-if="showMenu"/>
-          </v-flex>
-          <v-flex xs6 mx-auto>
-            <Messages v-if="messageExists"/>
-          </v-flex>
-            <router-view/>
+          <v-flex class="max-height">
+            <v-flex xs-12 d-flex d-md-none v-if="showMenu"><MobileNav v-if="showMenu"/></v-flex>
+            <v-flex xs12 ml-5 pa-5 v-if="showMenu">
+              <TopNav class="d-none d-md-flex" v-if="showMenu"/>
+            </v-flex>
+            <v-flex xs6 mx-auto>
+              <Messages v-if="messageExists"/>
+            </v-flex>
+            <router-view class="pa-5"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -22,12 +23,14 @@
 </template>
 
 <script>
+import MobileNav from '@/components/MobileNav.vue'
 import SideNav from '@/components/SideNav.vue'
 import TopNav from '@/components/TopNav.vue'
 import Messages from '@/components/Messages.vue'
 export default {
   name: 'App',
   components: {
+    MobileNav,
     SideNav,
     TopNav,
     Messages

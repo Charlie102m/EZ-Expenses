@@ -46,7 +46,7 @@
           </v-icon>
           <v-icon
             v-show="item.status == 'unclaimed'"
-            color="teal lighten-1"
+            color="red"
             @click="deleteExpense(item)">
             delete
           </v-icon>

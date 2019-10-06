@@ -5,20 +5,20 @@
             src="../assets/logo.png"
             aspect-ratio="1"
             class="image-container white"
-            max-width="200"
-            max-height="200"
+            max-width="130"
+            max-height="130"
             ></v-img>
         <v-card
-            width="600"
+            max-width="442"
             class="mx-auto pt-5"
             color="blue-grey lighten-5"
             elevation="3">
             <v-card-title>
-                <v-layout align-center justify-space-between ma-5>
+                <v-layout align-center justify-space-between row wrap ma-3>
                     <v-flex>
                         <h3 class="display-1">Login</h3>
                     </v-flex>
-                    <v-flex text-right>
+                    <v-flex grow-shrink-0 text-right>
                         <span class="caption mr-5">Dont have an account?</span>
                             <router-link to="/register">
                                 <v-btn rounded small color="blue-grey darken-4" dark>
@@ -30,7 +30,7 @@
             </v-card-title>
             <v-card-text>
                 <v-form v-on:submit.prevent="login">
-                    <v-layout align-center justify-center row ma-5>
+                    <v-layout align-center justify-center row ma-3>
                         <input 
                         v-model="credentials.email"
                         placeholder="Enter your email"
@@ -81,7 +81,7 @@ export default {
 <style scoped>
 .image-container {
     position: relative;
-    top: 60px;
+    top: 50px;
     z-index: 100;
     margin: 0 auto;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

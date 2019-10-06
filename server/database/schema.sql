@@ -83,7 +83,7 @@ CREATE TABLE `reciepts`
 CREATE TABLE `tripClaims`
 (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `status` VARCHAR(255) NOT NULL DEFAULT 'submitted',
+  `status` VARCHAR(255) NOT NULL DEFAULT 'created',
   `totalMiles` DECIMAL(11,1) NOT NULL,
   `countTrips` INT NOT NULL,
   `totalValue` DECIMAL(10,2) NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE `tripClaimsJoin`
 CREATE TABLE `expenseClaims`
 (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `status` VARCHAR(255) NOT NULL DEFAULT 'submitted',
+  `status` VARCHAR(255) NOT NULL DEFAULT 'created',
   `countExpenses` INT NOT NULL,
   `netValue` DECIMAL(10,2) NOT NULL,
   `vatValue` DECIMAL(10,2),

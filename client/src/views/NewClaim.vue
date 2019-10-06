@@ -192,7 +192,6 @@ export default {
                     this.$store.dispatch('setMessage', error.response)
                 })
         },
-        // IMPLEMENT ME
         addExpenseClaim () {
             this.expenseClaim.countExpenses = this.claimExpenses.length
             this.expenseClaim.netValue = this.totalsForExpensesClaim.net

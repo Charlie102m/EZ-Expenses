@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         userEmail () {
-        return this.$store.getters.userEmail
+            return this.$store.getters.userEmail
         }
     }
 }

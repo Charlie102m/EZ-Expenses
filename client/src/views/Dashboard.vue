@@ -1,13 +1,5 @@
 <template>
   <div class="dashboard">
-    <!-- <v-layout align-center row wrap v-if="tripSummary">
-      <v-flex>
-        <v-btn text color="text--blue-grey text--darken-4" class="ma-5" small disabled>
-          THIS YEAR
-          <v-icon class="ml-2">filter_list</v-icon>
-        </v-btn>
-      </v-flex>
-    </v-layout> -->
     <v-layout align-center justify-center mt-5 row v-if="tripSummary">
       <v-flex xs10>
         <v-alert
@@ -43,7 +35,7 @@
         <p class="caption">EXPENSES CLAIMED</p>
       </v-flex>
       <v-flex my-5 xs12></v-flex>
-      <v-flex lg6 class="chart-container text-center">
+      <v-flex lg6 class="chart-container text-center d-none d-sm-flex ">
         <BarChart :chartData="chartData" height="300" width="600"/>
       </v-flex>
       <v-flex my-5 lg6>
@@ -149,14 +141,4 @@ export default {
     width: 50%;
     padding: 10px;
   }
-  .table-goes-here {
-    width: 80%;
-    height: 250px;;
-    background-image: url('https://images.unsplash.com/photo-1555952494-efd681c7e3f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: 0 auto;
-  }
-
 </style>
