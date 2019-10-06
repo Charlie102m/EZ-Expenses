@@ -2,10 +2,7 @@
  
 Todo: 
 
-Mobile Menu
-
-Home & work address
-Defualt milage
-Profile picture
+Home & work address quick options on trip creation
+Profile picture - fix loading issues
 
 Landing Page
