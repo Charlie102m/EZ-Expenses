@@ -1,6 +1,6 @@
 <template>
     <v-container :key="componentKey">
-        <v-row justify="center" class="">
+        <v-row justify="center">
             <v-col md="4" class="mt-5 text-center">
                 <div class="image-container mx-auto">
                     <v-img
@@ -33,20 +33,20 @@
                     </v-flex>
                 </form>
             </v-col>
-            <v-col>
-                <v-col sm="12">
+            <v-col md="8">
+                <!-- <v-col> -->
                     <h3 class="display-2 my-3">{{ user.firstName }} {{ user.lastName }}</h3>
                     <h5 class="headline teal--text text--darken-1 my-3">{{user.email}}</h5>
                     <p class="body-1 font-weight-light my-3 grey--text text--darken-2">Personal License</p>
                     <hr class="my-5 teal elevation-2">
-                </v-col>
+                <!-- </v-col> -->
                 <v-row>
-                    <v-col lg="6">
-                        <p class="subtitle-2 teal--text text--darken-1 mx-5 mb-5">Defualt Milage Rate:</p>
+                    <v-col cols="12" sm="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-3 mb-5">Defualt Milage Rate:</p>
                         <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">£{{ user.milageValueDefualt}}</p>
                     </v-col>
-                    <v-col lg="6">
-                        <form v-on:submit.prevent="updateMilageRate">
+                    <v-col cols="12" sm="6">
+                        <form v-on:submit.prevent="updateMilageRate" class="mx-3">
                             <p class="caption mb-0">Update Defualt Milage Rate (£0.00)</p>
                             <input
                                 type="number"
@@ -66,12 +66,12 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col lg="6">
-                        <p class="subtitle-2 teal--text text--darken-1 mx-5">Home Address:</p>
+                    <v-col cols="12" sm="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-3">Home Address:</p>
                         <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">{{ user.homeAddress}}</p>
                     </v-col>
-                    <v-col lg-6>
-                        <form v-on:submit.prevent="updateHome" class="">
+                    <v-col cols="12" sm="6">
+                        <form v-on:submit.prevent="updateHome" class="mx-3">
                             <p class="caption mb-1">Update Home Address</p>
                             <input
                                 v-on:keypress.enter.stop.prevent="updateHome"
@@ -91,12 +91,12 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col lg="6">
-                        <p class="subtitle-2 teal--text text--darken-1 mx-5">Work Address:</p>
+                    <v-col cols="12" sm="6">
+                        <p class="subtitle-2 teal--text text--darken-1 mx-3">Work Address:</p>
                         <p class="subtitle-1 font-weight-light ma-5 grey--text text--darken-2">{{ user.workAddress}}</p>
                     </v-col>
-                    <v-col lg-6>
-                        <form v-on:submit.prevent="updateWork" class="">
+                    <v-col cols="12" sm="6">
+                        <form v-on:submit.prevent="updateWork" class="mx-3">
                             <p class="caption">Update Work Address</p>
                             <input
                                 v-on:keypress.enter.stop.prevent="updateWork"

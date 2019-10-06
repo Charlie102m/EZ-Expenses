@@ -28,10 +28,7 @@
         </v-list>
       </template>
        <v-divider class="mb-5"></v-divider>
-
-      <v-list
-        nav
-      >
+      <v-list shaped>
         <v-list-item link to="/">
           <v-list-item-icon>
             <v-icon large>home</v-icon>
@@ -59,10 +56,9 @@
           </v-list-item-icon>
           <v-list-item-title>Claims</v-list-item-title>
         </v-list-item>
-
       </v-list>
       <template v-slot:append>
-          <v-list>
+          <v-list shaped>
               <v-list-item link to="/profile">
                   <v-list-item-icon>
                       <v-icon large>settings</v-icon>
@@ -71,7 +67,6 @@
               </v-list-item>
           </v-list>
       </template>
-
     </v-navigation-drawer>
   </v-card>
 </template>
