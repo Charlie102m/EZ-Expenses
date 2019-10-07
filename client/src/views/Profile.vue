@@ -72,7 +72,7 @@
                         <form v-on:submit.prevent="updateHome" class="mx-3">
                             <p class="caption mb-1">Update Home Address</p>
                             <input
-                                v-on:keypress.enter.stop.prevent="updateHome"
+                                v-on:keypress.enter.stop.prevent=""
                                 class="mb-5"
                                 ref="autocomplete3"
                                 placeholder="Search for your home address" 
@@ -97,7 +97,7 @@
                         <form v-on:submit.prevent="updateWork" class="mx-3">
                             <p class="caption">Update Work Address</p>
                             <input
-                                v-on:keypress.enter.stop.prevent="updateWork"
+                                v-on:keypress.enter.stop.prevent=""
                                 class="mb-5"
                                 ref="autocomplete4" 
                                 placeholder="Your place of work/head office" 

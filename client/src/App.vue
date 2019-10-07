@@ -7,8 +7,10 @@
             <SideNav v-if="showMenu"/>
           </v-flex>
           <v-flex class="max-height">
-            <v-flex xs-12 d-flex d-md-none v-if="showMenu"><MobileNav v-if="showMenu"/></v-flex>
-            <v-flex xs12 ml-5 pa-5 v-if="showMenu">
+            <v-flex xs-12 d-flex d-md-none mb-5 v-if="showMenu">
+              <MobileNav v-if="showMenu"/>
+            </v-flex>
+            <v-flex xs12 ml-5 pt-5 px-5 v-if="showMenu">
               <TopNav class="d-none d-md-flex" v-if="showMenu"/>
             </v-flex>
             <v-flex xs6 mx-auto>
@@ -97,13 +99,13 @@ export default {
   }
   
   .page-title i {
-    font-size: 50px;
+    font-size: 40px;
   }
 
   .page-title {
     vertical-align: center;
     color: #2F303C;
-    margin-bottom: 30px;
-    font-size: 70px;
+    margin-bottom: 20px;
+    font-size: 55px;
   }
 </style>

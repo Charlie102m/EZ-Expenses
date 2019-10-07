@@ -1,30 +1,48 @@
 <template>
     <v-form v-on:submit.prevent="updateTrip">
-        <h1 class="page-title font-weight-light">
+        <h1 class="page-title font-weight-light text-no-wrap">
         <i class="material-icons">directions_car</i>
         Edit Trip
         </h1>
+        <v-flex md8>
         <v-alert
-            class=""
-            border="bottom"
-            colored-border
-            type="warning"
-            elevation="2">
-            Before editing your origin or destination, you must clear the trip summary for your existing trip by clicking the white X icon.
+          text
+          type="warning"
+        >
+        Before editing your origin or destination, you must clear the trip summary for your existing trip by clicking the white X icon.
         </v-alert>
-        <v-layout align-top justify-space-around row wrap>
-            <v-flex lg5>
+        </v-flex>
+        <v-layout align-top justify-space-around row wrap mx-1>
+                        <v-flex lg5>
+                <p class="body-2 grey--text text--darken-2">Where was this trip from?</p>
+                <v-flex mb-2 v-show="!trip.distance">
+                        <v-btn rounded color="teal lighten-1" :dark="user.homeAddress ? true : false" :disabled="user.homeAddress ? false : true" @click="setDefualtAddress('origin', 'home')" class="mx-5">
+                            <v-icon class="mr-2" dark>home</v-icon>Home
+                        </v-btn>
+                        <v-btn rounded color="teal lighten-1" :dark="user.workAddress ? true : false" :disabled="user.workAddress ? false : true && !trip.distance" @click="setDefualtAddress('origin', 'work')">
+                            <v-icon class="mr-2" dark>work</v-icon>Work
+                        </v-btn>
+                </v-flex>
                 <input
                 v-on:keypress.enter.stop.prevent=""
                 ref="autocomplete" 
-                placeholder="Where was this trip from?" 
-                class="search-location" 
+                placeholder="Start typing to search for an address" 
+                class="search-location mb-4" 
                 v-model="temp.origin"
                 type="text"/>
+                <p class="body-2 grey--text text--darken-2">Where was this trip to?</p>
+                <v-flex mb-2 v-show="!trip.distance">
+                    <v-btn rounded color="teal lighten-1" :dark="user.homeAddress ? true : false" :disabled="user.homeAddress ? false : true" @click="setDefualtAddress('destination', 'home')" class="mx-5">
+                        <v-icon class="mr-2" dark>home</v-icon>Home
+                    </v-btn>
+                    <v-btn rounded color="teal lighten-1" :dark="user.workAddress ? true : false" :disabled="user.workAddress ? false : true" @click="setDefualtAddress('destination', 'work')">
+                        <v-icon class="mr-2" dark>work</v-icon>Work
+                    </v-btn>
+                </v-flex>
                 <input
                 v-on:keypress.enter.stop.prevent=""
                 ref="autocomplete2" 
-                placeholder="Where was this trip to?" 
+                placeholder="Start typing to search for an address" 
                 class="search-location" 
                 v-model="temp.destination"
                 type="text"/>
@@ -33,7 +51,7 @@
                     rounded color="teal lighten-1" 
                     dark 
                     v-on:click.prevent="getDirections" 
-                    v-show="!trip.distance">
+                    v-show="!trip.distance && temp.origin && temp.destination">
                         <v-icon class="mr-2" dark>directions</v-icon><span>Calculate Route</span>
                     </v-btn>
                 </v-flex>
@@ -128,6 +146,7 @@ export default {
             directionsResponse: null,
             summary: null,
             defualtMilageToggle: true,
+            user: {},
             temp: {
                 origin: null,
                 destination: null
@@ -149,6 +168,15 @@ export default {
         }
     },
     methods: {
+        setDefualtAddress (waypoint, savedLocation) {
+            const argWaypointName = waypoint + 'Name'
+            const argWaypointAddress = waypoint + 'Address'
+            const argName = savedLocation + 'Name'
+            const argAddress = savedLocation + 'Address'
+            this.trip[argWaypointName] = this.user[argName]
+            this.trip[argWaypointAddress] = this.user[argAddress]
+            this.temp[waypoint] = this.user[argName] + ' - ' + this.user[argAddress]
+        },
         getDirections () {
             let waypoints = {
                 origin: this.trip.originAddress,
@@ -189,6 +217,14 @@ export default {
         }
     },
     mounted () {
+        HttpService.getUserProfile()
+            .then(results => {
+                this.user = results.data[0]
+                this.trip.milageRate = results.data[0].milageValueDefualt
+            })
+            .catch(error => {
+                this.$store.dispatch('setMessage', error.response)
+            })
         // eslint-disable-next-line
         this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete));
         // eslint-disable-next-line

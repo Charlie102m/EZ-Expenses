@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <v-layout align-center justify-center row v-if="tripSummary">
-      <v-flex mx-5 mt-3 px-5>
+      <v-flex mx-5 mt-5>
         <v-alert
           text
           type="success"
@@ -143,4 +143,9 @@ export default {
     width: 50%;
     padding: 10px;
   }
+@media screen and (max-width: 600px) {
+  table {
+    width: 95%;
+  }
+}
 </style>
