@@ -5,6 +5,7 @@
                 <div class="image-container mx-auto">
                     <v-img
                     :src="profileImage"
+                    lazy-src="../assets/logo.png"
                     aspect-ratio="1"
                     max-width="500"
                     max-height="500"

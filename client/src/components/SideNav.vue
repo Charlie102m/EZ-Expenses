@@ -13,7 +13,7 @@
           <v-list-item>
             <v-list-item-avatar class="mx-auto">
               <v-img :src="profileImage"
-              lazy-src="https://where-inc.com/wpradmin/template/enfold/images/no_agent.png"></v-img>
+              lazy-src="../assets/logo.png"></v-img>
             </v-list-item-avatar>
           </v-list-item>
           <v-list-item
