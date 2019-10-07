@@ -159,7 +159,7 @@ export default {
         HttpService.getUserProfile()
             .then((response) => {
                 this.user = response.data[0]
-                this.profileImageUrl = response.data[0].profileImageUrl
+                this.profileImageUrl = response.data[0].profileImageUrl + '?' + Math.random()
             })
             .catch((error) => {
                 this.$store.dispatch('setMessage', error.response)

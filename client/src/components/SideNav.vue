@@ -88,7 +88,7 @@ name: 'SideNav',
     mounted () {
     HttpService.getUserProfile()
         .then((response) => {
-            this.profileImage = response.data[0].profileImageUrl
+            this.profileImage = response.data[0].profileImageUrl + '?' + Math.random()
         })
         .catch((error) => {
             this.$store.dispatch('setMessage', error.response)
