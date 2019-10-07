@@ -7,13 +7,13 @@
           type="success"
           color="teal"
         >
-          <h3 class="display-1">Welcome to The Expenses App!</h3>
-          <div class="subtitle-2">To get started, use the side menu to navigate to <i class="material-icons">directions_car</i> to log a work trip for milage claims, or <i class="material-icons">payment</i> to log a purchase made for your business.</div>
+          <h3 class="display-1 mb-2">Welcome to EZ Expenses!</h3>
+          <div class="subtitle-2">To get started, use the menu to navigate to <i class="material-icons">directions_car</i> to log a work trip, or <i class="material-icons">payment</i> to log a business expense.</div>
           <v-divider
             class="my-4 white"
             style="opacity: 0.5"
           ></v-divider>
-          <div class="subtitle-2">Once you have created a few trips or expenses, go to <i class="material-icons">attach_money</i> to create clean and concise claims to submit to your employer at the click of a button. </div>
+          <div class="subtitle-2">When you are ready to claim for your trips or expenses, go to <i class="material-icons">attach_money</i> to create a claim which can then be downloaded at the click of a button to submit to your employer. </div>
         </v-alert>
       </v-flex>
     </v-layout>
@@ -127,6 +127,11 @@ export default {
 </script>
 
 <style scoped>
+.material-icons {
+  line-height: inherit;
+  display:inline-block;
+  vertical-align: middle;
+}
   table {
     width: 80%;
     text-align: center;
