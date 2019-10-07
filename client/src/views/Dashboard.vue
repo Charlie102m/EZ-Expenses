@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard">
     <v-layout align-center justify-center row v-if="tripSummary">
-      <v-flex mx-5 mt-5>
+      <div class="my-5 d-flex d-md-none"></div>
+      <v-flex mx-5>
         <v-alert
           text
           type="success"
@@ -13,7 +14,8 @@
             class="my-4 white"
             style="opacity: 0.5"
           ></v-divider>
-          <div class="subtitle-2">When you are ready to claim for your trips or expenses, go to <i class="material-icons">attach_money</i> to create a claim which can then be downloaded at the click of a button to submit to your employer. </div>
+          <div class="subtitle-2 mb-2">When you are ready to claim for your trips or expenses, go to <i class="material-icons">attach_money</i> to create a claim which can then be downloaded at the click of a button to submit to your employer. </div>
+          <div class="caption">Make sure you check out the <i class="material-icons">settings</i> page to set your <strong>Defualt Milage Rate</strong>, <strong>Home</strong> & <strong>Work</strong> addresses and even upload your own <strong>Profile Picture</strong>, giving your EZ Expenses account a personal touch! </div>
         </v-alert>
       </v-flex>
     </v-layout>
