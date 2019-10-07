@@ -4,7 +4,7 @@
             <v-col md="4" class="mt-5 text-center">
                 <div class="image-container mx-auto">
                     <v-img
-                    :src="profileImage"
+                    :src="profileImageUrl"
                     lazy-src="../assets/logo.png"
                     aspect-ratio="1"
                     max-width="500"
@@ -130,6 +130,7 @@ export default {
             ],
             loading: false,
             image: null,
+            profileImageUrl: '',
             user: {
                 fisrtName: null,
                 lastName: null,
@@ -139,7 +140,6 @@ export default {
                 workAddressId: null,
                 createdAt: null,
             },
-            profileImage: "https://where-inc.com/wpradmin/template/enfold/images/no_agent.png",
             newMilageValue: null,
             home: {
                 type: 'home',
@@ -159,7 +159,7 @@ export default {
         HttpService.getUserProfile()
             .then((response) => {
                 this.user = response.data[0]
-                this.profileImage = response.data[0].profileImageUrl
+                this.profileImageUrl = response.data[0].profileImageUrl
             })
             .catch((error) => {
                 this.$store.dispatch('setMessage', error.response)

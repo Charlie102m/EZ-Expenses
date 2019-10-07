@@ -77,7 +77,7 @@ name: 'SideNav',
     data() {
         return {
             drawer: true,
-            profileImage: 'https://where-inc.com/wpradmin/template/enfold/images/no_agent.png'
+            profileImage: ''
         }
     },
     computed: {
