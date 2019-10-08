@@ -3,7 +3,6 @@ const   express = require('express'),
         cors = require('cors'),
         routes = require('./routes/routes.js'),
         bodyParser = require('body-parser'),
-        APP_SECRET = require('./config/credentials.js').APP_SECRET(),
         port = process.env.PORT || 3000
 
 app.use(cors({exposedHeaders: 'authorization,user'}))
