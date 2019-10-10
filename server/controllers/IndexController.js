@@ -1,8 +1,8 @@
 const express = require('express'),
-    connection = require('../config/config.js').connection
-    
+    { connection } = require('../config/config.js')
 
-const controller =  {
+
+const controller = {
     loadDashboard: (req, res) => {
         let chartData = {
             labels: [],
@@ -12,7 +12,7 @@ const controller =  {
                 data: []
             }]
         }
-        let query =     `SELECT COUNT(*) AS totalTrips,
+        let query = `SELECT COUNT(*) AS totalTrips,
                                 SUM(distance) AS totalMiles,
                                 SUM(duration) AS totalTime,
                                 SUM(value) AS totalValue 
@@ -40,8 +40,8 @@ const controller =  {
                             GROUP BY Month
                             ORDER BY FIELD(Month, 'January','February','March','April','May','June','July','August','September','October','November','December');
                             `
-        connection.query(query, [1,2,3,4,5], (error, results, fields) => {
-            if (error) return res.status(403).send(error)
+        connection.query(query, [1, 2, 3, 4, 5], (error, results, fields) => {
+            if (error) return res.status(403).send(error.sqlMessage)
             results[4].forEach(e => {
                 chartData.labels.push(e.Month)
                 chartData.datasets[0].data.push(e.Trips)

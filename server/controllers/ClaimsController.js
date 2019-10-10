@@ -1,7 +1,7 @@
 const express = require('express'),
     mysql = require('mysql'),
     { json2excel } = require('js2excel'),
-    connection = require('../config/config.js').connection
+    { connection } = require('../config/config.js')
 
 const controller = {
     // get all claims

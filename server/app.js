@@ -7,7 +7,7 @@ const   express = require('express'),
 
 app.use(cors({exposedHeaders: 'authorization,user'}))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 app.use(routes)
 
 if (process.env.NODE_ENV === 'production') {

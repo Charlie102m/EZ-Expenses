@@ -16,14 +16,10 @@ const controller = {
         }
         request(options, (error, response, body) => {
             if (error) {
-                console.log('error: ', error);
                 return res.status(403).send(error)
             }
-            // necessary as response from google is JSON
             let result = JSON.parse(body)
-            // check for errors in response
             if (result.status === "ZERO_RESULTS" || result.status === "INVALID_REQUEST") return res.status(400).send('Unable to calulate route, please check your origin and destination before trying again')
-
             res.status(200).send(body)
         })
     }

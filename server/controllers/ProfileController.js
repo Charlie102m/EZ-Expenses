@@ -1,5 +1,5 @@
 const express = require('express'),
-    connection = require('../config/config.js').connection,
+    { connection } = require('../config/config.js'),
     aws = require('aws-sdk'),
     multer = require('multer'),
     multerS3 = require('multer-s3')
@@ -21,9 +21,9 @@ const s3 = new aws.S3(),
             }
         })
     }).single('image');
-    
 
-const controller =  {
+
+const controller = {
     getUserProfile: (req, res) => {
         let query = `SELECT firstName,
                         lastName,
@@ -44,13 +44,13 @@ const controller =  {
                     ON users.workAddressId = W.id
                     WHERE users.id = ?;`
         connection.query(query, req.headers.user.id, (error, results) => {
-            if (error) res.status(403).send(error)
+            if (error) res.status(403).send(error.sqlMessage)
             res.status(200).send(results)
         })
     },
     getDefualtMilageRate: (req, res) => {
         connection.query(`SELECT milageValueDefualt FROM users WHERE id = ?`, req.headers.user.id, (error, results) => {
-            if (error) res.status(403).send(error)
+            if (error) res.status(403).send(error.sqlMessage)
             res.status(200).send(results)
         })
     },
@@ -60,17 +60,17 @@ const controller =  {
         updateProperty[req.params.prop] = req.body[req.params.prop];
 
         connection.query(`UPDATE users SET ? WHERE id = ?`, [updateProperty, req.headers.user.id], (error, results) => {
-            if (error) res.status(403).send(error)
+            if (error) res.status(403).send(error.sqlMessage)
             res.status(200).send(results)
         })
     },
-    async uploadImage (req, res) {
+    async uploadImage(req, res) {
         upload(req, res, (error) => {
             if (error) res.status(403).send(error)
             const imageUrl = `https://ez-expenses.s3.eu-west-2.amazonaws.com/${req.headers.user.id}profile`
             const query = 'UPDATE users SET profileImageUrl = ? WHERE id = ?'
-            connection.query(query, [imageUrl, req.headers.user.id], (error, results) => {
-                if (error) res.status(403).send(error)
+            connection.query(query, [imageUrl, req.headers.user.id], (error) => {
+                if (error) res.status(403).send(error.sqlMessage)
                 res.status(200).send('success')
             })
         })
@@ -84,10 +84,10 @@ const controller =  {
         let addressTypeId = 'homeAddressId'
         if (req.body.type === 'work') addressTypeId = 'workAddressId';
         connection.query('INSERT INTO savedLocations SET ?', address, (error, results, fields) => {
-            if (error) res.status(403).send(error)
+            if (error) res.status(403).send(error.sqlMessage)
             const joinQuery = `UPDATE users SET ${addressTypeId} = ? WHERE id = ?`
-            connection.query(joinQuery, [results.insertId, req.headers.user.id], (error, results) => {
-                if (error) res.status(403).send(error)
+            connection.query(joinQuery, [results.insertId, req.headers.user.id], (error) => {
+                if (error) res.status(403).send(error.sqlMessage)
                 res.status(200).send('success')
             })
         })

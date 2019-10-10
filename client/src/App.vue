@@ -14,7 +14,7 @@
               <TopNav class="d-none d-md-flex" v-if="showMenu"/>
             </v-flex>
             <v-flex xs6 mx-auto>
-              <Messages v-if="messageExists"/>
+              <Messages mt-5 v-if="messageExists"/>
             </v-flex>
             <router-view class="pa-5"/>
           </v-flex>

@@ -13,9 +13,9 @@
         </v-alert>
         </v-flex>
         <v-layout align-top justify-space-around row wrap mx-1>
-                        <v-flex lg5>
+            <v-flex lg5>
                 <p class="body-2 grey--text text--darken-2">Where was this trip from?</p>
-                <v-flex mb-2 v-show="!trip.distance">
+                <v-flex mb-2 v-show="trip.distance === null">
                         <v-btn rounded color="teal lighten-1" :dark="user.homeAddress ? true : false" :disabled="user.homeAddress ? false : true" @click="setDefualtAddress('origin', 'home')" class="mx-5">
                             <v-icon class="mr-2" dark>home</v-icon>Home
                         </v-btn>
@@ -31,7 +31,7 @@
                 v-model="temp.origin"
                 type="text"/>
                 <p class="body-2 grey--text text--darken-2">Where was this trip to?</p>
-                <v-flex mb-2 v-show="!trip.distance">
+                <v-flex mb-2 v-show="trip.distance === null">
                     <v-btn rounded color="teal lighten-1" :dark="user.homeAddress ? true : false" :disabled="user.homeAddress ? false : true" @click="setDefualtAddress('destination', 'home')" class="mx-5">
                         <v-icon class="mr-2" dark>home</v-icon>Home
                     </v-btn>
@@ -51,11 +51,11 @@
                     rounded color="teal lighten-1" 
                     dark 
                     v-on:click.prevent="getDirections" 
-                    v-show="!trip.distance && temp.origin && temp.destination">
+                    v-show="trip.distance === null && temp.origin && temp.destination">
                         <v-icon class="mr-2" dark>directions</v-icon><span>Calculate Route</span>
                     </v-btn>
                 </v-flex>
-                <v-flex grow v-show="trip.distance">
+                <v-flex grow v-show="trip.distance !== null">
                     <v-card 
                     color="teal lighten-1"
                     class="pa-3">
@@ -101,10 +101,10 @@
                 </v-flex>
             </v-flex>
             <v-flex lg5>
-                <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
-                    <v-date-picker v-show="trip.distance" class="ma-3" v-model="trip.tripDate" full-width :landscape="$vuetify.breakpoint.smAndUp" color="teal lighten-1"></v-date-picker>
+                <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance !== null">
+                    <v-date-picker v-show="trip.distance !== null" class="ma-3" v-model="trip.tripDate" full-width :landscape="$vuetify.breakpoint.smAndUp" color="teal lighten-1"></v-date-picker>
                 </v-layout>
-                <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance">
+                <v-layout align-top justify-space-around row wrap mt-3 v-show="trip.distance !== null">
                     <v-flex sm10 mr-2>
                         <input
                         type="number"
