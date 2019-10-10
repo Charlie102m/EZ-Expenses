@@ -14,7 +14,6 @@ import Claims from './views/Claims.vue'
 import NewClaim from './views/NewClaim.vue'
 import ViewClaim from './views/ViewClaim.vue'
 import Profile from './views/Profile.vue'
-import Playgrounds from './views/Playgrounds.vue'
 
 Vue.use(Router)
 
@@ -101,11 +100,6 @@ const router = new Router({
       name: 'profile',
       component: Profile,
       meta: { requiresAuth: true }
-    },
-    {
-      path: '/playgrounds',
-      name: 'playgrounds',
-      component: Playgrounds
     }
   ]
 })
