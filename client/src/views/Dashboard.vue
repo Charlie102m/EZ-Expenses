@@ -47,7 +47,7 @@
               <h4 class="display-2">{{ tripClaimsSummary.tripClaims }}</h4>
               <p class="caption">MILAGE CLAIMS</p>
             </td>
-            <td class="red--text text--lighten-1">
+            <td class="red--text text--darken-3">
               <h4 class="display-2">{{ unclaimedTrips }}</h4>
               <p class="caption">UNCLAIMED TRIPS</p>
             </td>
@@ -57,7 +57,7 @@
               <h4 class="display-2">{{ expenseClaimsSummary.expenseClaims }}</h4>
               <p class="caption">EXPENSE CLAIMS</p>
             </td>
-            <td class="red--text text--lighten-1">
+            <td class="red--text text--darken-3">
               <h4 class="display-2">{{ unclaimedExpenses }}</h4>
               <p class="caption">UNCLAIMED EXPENSES</p>
             </td>
