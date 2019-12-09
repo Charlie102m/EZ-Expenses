@@ -294,7 +294,7 @@ export default {
           }
           return res;
         })
-        .then(res => {
+        .then(() => {
           if (this.autoReturn === true) {
             let newWaypoints = {
               originName: this.trip.destinationName,
