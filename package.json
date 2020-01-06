@@ -6,8 +6,8 @@
   "private": true,
   "repository": "github:Charlie102m/The-Expenses-App",
   "scripts": {
-    "start": "node server/app.js",
-    "dev": "nodemon -r dotenv/config server/app.js"
+    "start": "NODE_ENV='production' node server/app.js",
+    "dev": "NODE_ENV='development' nodemon -r dotenv/config server/app.js"
   },
   "author": "Charlie McCabe",
   "license": "ISC",
