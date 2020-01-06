@@ -17,8 +17,12 @@
           </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title v-if="user" class="title">{{ user.firstName }} {{ user.lastName }}</v-list-item-title>
-              <v-list-item-subtitle v-if="user">{{ user.email }}</v-list-item-subtitle>
+              <v-list-item-title v-if="user" class="title"
+                >{{ user.firstName }} {{ user.lastName }}</v-list-item-title
+              >
+              <v-list-item-subtitle v-if="user">{{
+                user.email
+              }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>

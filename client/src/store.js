@@ -79,7 +79,6 @@ export default new Vuex.Store({
       })
     },
     setMessage({ commit }, message) {
-      console.log(message);
       commit('SET_MESSAGE', message)
     },
     clearMessage({ commit }) {
