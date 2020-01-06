@@ -12,8 +12,6 @@ const express = require('express'),
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'))
     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
-} else {
-    app.use(cors({ exposedHeaders: 'authorization,user' }))
 }
 
 // config
@@ -23,6 +21,7 @@ app.use(bodyParser.json())
 app.use(helmet())
 app.use(hpp())
 app.use(xss())
+app.use(cors({ exposedHeaders: 'authorization,user' }))
 
 // routers
 app.use(routes)
