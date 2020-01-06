@@ -8,12 +8,6 @@ const express = require('express'),
     xss = require('xss-clean'),
     hpp = require('hpp')
 
-// production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(__dirname + '/public/'))
-    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
-}
-
 // config
 app.use(bodyParser.json())
 
@@ -21,10 +15,18 @@ app.use(bodyParser.json())
 app.use(helmet())
 app.use(hpp())
 app.use(xss())
-app.use(cors({ exposedHeaders: 'authorization,user' }))
 
-// routers
+
+// router
 app.use(routes)
+
+// production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(__dirname + '/public/'))
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+} else {
+    app.use(cors({ exposedHeaders: 'authorization,user' }))
+}
 
 // server
 app.listen(port, () => console.log('SERVER LISTENING ON PORT : ', port))
