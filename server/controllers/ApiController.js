@@ -1,7 +1,6 @@
 const express = require('express'),
-    request = require('request'),
-    api_key = 'AIzaSyDnJgJ47aAzdam5S4F5X6PNhQt_MW5MJvM'
-    
+    request = require('request')
+
 const controller = {
     getDirections: (req, res) => {
         // If missing parametes, return error
@@ -11,7 +10,7 @@ const controller = {
             destination: req.body.destination
         }
         const options = {
-            uri: `https://maps.googleapis.com/maps/api/directions/json?origin=${waypoints.origin}&destination=${waypoints.destination}&units=imperial&key=${api_key}&alternatives=true`,
+            uri: `https://maps.googleapis.com/maps/api/directions/json?origin=${waypoints.origin}&destination=${waypoints.destination}&units=imperial&key=${process.env.GOOGLE_API_KEY}&alternatives=true`,
             method: 'GET'
         }
         request(options, (error, response, body) => {
