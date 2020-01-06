@@ -17,26 +17,26 @@ const controller = {
                                 SUM(duration) AS totalTime,
                                 SUM(value) AS totalValue 
                             FROM trips
-                            WHERE createdBy = ${req.headers.user.id};
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)};
                         SELECT COUNT(*) AS tripClaims,
                             SUM(totalMiles) AS totalMiles,
                             SUM(countTrips) AS totalTripsClaimed,
                             SUM(totalValue) AS totalValue
                             FROM tripClaims 
-                            WHERE createdBy = ${req.headers.user.id};
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)};
                         SELECT COUNT(*) AS totalExpenses,
                                 SUM(total) AS totalValue 
                             FROM expenses 
-                            WHERE createdBy = ${req.headers.user.id};
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)};
                         SELECT COUNT(*) AS expenseClaims,
                                 SUM(countExpenses) AS totalExpensesClaimed,
                                 SUM(netValue) AS totalNetValue,
                                 SUM(totalValue) AS totalValue
                             FROM expenseClaims 
-                            WHERE createdBy = ${req.headers.user.id};
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)};
                         SELECT MONTHNAME(tripDate) AS 'Month', COUNT(*) AS 'Trips' 
                             FROM trips
-                            WHERE createdBy = ${req.headers.user.id}
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)}
                             GROUP BY Month
                             ORDER BY FIELD(Month, 'January','February','March','April','May','June','July','August','September','October','November','December');
                             `

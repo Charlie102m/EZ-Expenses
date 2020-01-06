@@ -14,16 +14,16 @@ export default new Vuex.Store({
   // the computed properties of the state object, similar to computed & data (model) objects
   // within the vue components/views
   getters: {
-    user (state) {
+    user(state) {
       return state.user
     },
-    userId (state) {
+    userId(state) {
       return state.user.id
     },
-    userEmail (state) {
+    userEmail(state) {
       return state.user.email
     },
-    message (state) {
+    message(state) {
       return state.message
     }
   },
@@ -37,7 +37,7 @@ export default new Vuex.Store({
     DESTROY_TOKEN(state) {
       apiClient.defaults.headers.common['authorization'] = null
       state.token = null,
-      localStorage.removeItem('token')
+        localStorage.removeItem('token')
     },
     SET_USER(state, user) {
       state.user = JSON.parse(user)

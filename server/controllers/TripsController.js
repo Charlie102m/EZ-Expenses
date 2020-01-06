@@ -17,7 +17,7 @@ const controller = {
                             value,
                             createdAt
                         FROM trips
-                        WHERE createdBy = ${req.headers.user.id}
+                        WHERE createdBy = ${connection.escape(req.headers.user.id)}
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results, fields) => {
             if (error) return res.status(403).send(error)
@@ -38,7 +38,7 @@ const controller = {
                             status,
                             value
                         FROM trips
-                        WHERE status = '${status}' AND createdBy = ${req.headers.user.id}
+                        WHERE status = ${connection.escape(status)} AND createdBy = ${connection.escape(req.headers.user.id)}
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
@@ -54,7 +54,7 @@ const controller = {
     },
     // READ trip
     getTrip: (req, res) => {
-        let query = `SELECT *, DATE_FORMAT(tripDate, '%Y-%m-%d') AS tripDate FROM trips WHERE id = ${req.params.tripId} AND createdBy = ${req.headers.user.id} LIMIT 1`
+        let query = `SELECT *, DATE_FORMAT(tripDate, '%Y-%m-%d') AS tripDate FROM trips WHERE id = ${connection.escape(req.params.tripId)} AND createdBy = ${connection.escape(req.headers.user.id)} LIMIT 1`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
             res.send(results[0])

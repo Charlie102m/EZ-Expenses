@@ -22,7 +22,7 @@ const controller = {
                             createdAt,
                             comment
                         FROM expenses
-                        WHERE createdBy = ${req.headers.user.id} 
+                        WHERE createdBy = ${connection.escape(req.headers.user.id)} 
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
@@ -42,8 +42,8 @@ const controller = {
                             createdAt,
                             comment
                         FROM expenses
-                        WHERE status = '${req.params.status}'
-                        AND createdBy = ${req.headers.user.id}
+                        WHERE status = ${connection.escape(req.params.status)}
+                        AND createdBy = ${connection.escape(req.headers.user.id)}
                         ORDER BY createdAt DESC`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
@@ -51,7 +51,7 @@ const controller = {
         })
     },
     getExpense: (req, res) => {
-        let query = `SELECT *, DATE_FORMAT(expenseDate, '%Y-%m-%d') AS expenseDate FROM expenses WHERE id = ${req.params.expenseId} AND createdBy = ${req.headers.user.id}`
+        let query = `SELECT *, DATE_FORMAT(expenseDate, '%Y-%m-%d') AS expenseDate FROM expenses WHERE id = ${connection.escape(req.params.expenseId)} AND createdBy = ${connection.escape(req.headers.user.id)}`
         connection.query(query, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
             return res.send(results)
@@ -68,7 +68,7 @@ const controller = {
         })
     },
     deleteExpense: (req, res) => {
-        connection.query(`DELETE FROM expenses WHERE id = ? AND createdBy = ${req.headers.user.id}`, req.params.expenseId, (error, results) => {
+        connection.query(`DELETE FROM expenses WHERE id = ? AND createdBy = ${connection.escape(req.headers.user.id)}`, req.params.expenseId, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
             return res.send(results)
         })

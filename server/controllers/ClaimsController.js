@@ -16,7 +16,7 @@ const controller = {
                             WHEN id > 0 THEN 'Milage'
                             END AS type
                             FROM tripClaims
-                            WHERE createdBy = ${req.headers.user.id};
+                            WHERE createdBy = ${connection.escape(req.headers.user.id)};
                         SELECT id,
                             status,
                             totalValue,
@@ -27,7 +27,7 @@ const controller = {
                                 WHEN id > 0 THEN 'Expenses'
                             END AS type
                         FROM expenseClaims
-                        WHERE createdBy = ${req.headers.user.id};`
+                        WHERE createdBy = ${connection.escape(req.headers.user.id)};`
 
         connection.query(query, [1, 2], (error, claims) => {
             if (error) return res.status(403).send(error.sqlMessage)
@@ -101,7 +101,7 @@ const controller = {
                             FROM ${joinTable} 
                             RIGHT JOIN ${type}s
                                 ON ${type}s.id = ${joinTable}.${type}Id 
-                                WHERE claimId = ${claimId};`
+                                WHERE claimId = ${connection.escape(claimId)};`
         let expensesJoinQuery = `SELECT                             
                                     DATE_FORMAT(expenseDate, '%d/%m/%Y') AS expenseDate,
                                     expenseType,
@@ -116,7 +116,7 @@ const controller = {
                                     FROM ${joinTable} 
                                     RIGHT JOIN ${type}s
                                         ON ${type}s.id = ${joinTable}.${type}Id 
-                                        WHERE claimId = ${claimId};`
+                                        WHERE claimId = ${connection.escape(claimId)};`
         if (req.params.claimType === 'Milage') {
             query = baseQuery + tripsJoinQuery
         } else {
@@ -141,8 +141,8 @@ const controller = {
             idType = "expenseId"
             type = "expenses"
         }
-        let getItemsQuery = `SELECT * FROM ${joinTable} WHERE claimId = ${req.params.claimId};`
-        connection.query(getItemsQuery, req.body.claimId, (error, results) => {
+        let getItemsQuery = `SELECT * FROM ${joinTable} WHERE claimId = ?`
+        connection.query(getItemsQuery, req.params.claimId, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
             let updateQuery = `UPDATE ${type} SET status = 'unclaimed' WHERE id = ?;`
             let updates = ''
@@ -151,7 +151,7 @@ const controller = {
             })
             connection.query(updates, (error) => {
                 if (error) return res.status(403).send(error.sqlMessage)
-                connection.query(`DELETE FROM ${claimTable} WHERE id = ${req.params.claimId}`, (error) => {
+                connection.query(`DELETE FROM ${claimTable} WHERE id = ?`, req.params.claimId, (error) => {
                     if (error) return res.status(403).send(error.sqlMessage)
                     res.status(200).send('Claim successfully deleted')
                 })

@@ -100,13 +100,17 @@ const router = new Router({
       name: 'profile',
       component: Profile,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('token')
-  if(to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
     next('/login')
   }
   next()

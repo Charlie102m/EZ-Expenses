@@ -21,7 +21,7 @@ const controller = {
         })
     },
     login: (req, res) => {
-        let query = `SELECT * FROM users WHERE email = '${req.body.email}' LIMIT 1`
+        let query = `SELECT * FROM users WHERE email = ${connection.escape(req.body.email)} LIMIT 1`
         connection.query(query, (error, results) => {
             // if form not correctly completed
             if (!req.body.email || !req.body.password) return res.status(400).send('You must complete all fields in the form')
