@@ -72,12 +72,12 @@ export const HttpService = {
     return apiClient.get('/profile')
   },
   updateProfile(prop, data) {
-    return apiClient.post(`/profile/update/${prop}`, data)
+    return apiClient.put(`/profile/update/${prop}`, data)
   },
   uploadImage(file) {
-    return apiClient.post('/profile/uploadImage', file, { headers: { 'Content-Type': 'multipart/form-data' } })
+    return apiClient.put('/profile/uploadImage', file, { headers: { 'Content-Type': 'multipart/form-data' } })
   },
   updateAddress(data) {
-    return apiClient.post('/profile/update/address', data)
+    return apiClient.put('/profile/update/address', data)
   }
 }

@@ -1,14 +1,14 @@
-const   express = require('express'),
-        router = express.Router(),
-        AuthController = require('../controllers/AuthController.js'),
-        IndexController = require('../controllers/IndexController.js'),
-        ProfileController = require('../controllers/ProfileController.js'),
-        TripsController = require('../controllers/TripsController.js'),
-        ApiController = require('../controllers/ApiController.js'),
-        ExpensesController = require('../controllers/ExpensesController.js'),
-        ClaimsController = require('../controllers/ClaimsController.js'),
-        Mid = require('../middleware/auth.js')
-    
+const express = require('express'),
+    router = express.Router(),
+    AuthController = require('../controllers/AuthController.js'),
+    IndexController = require('../controllers/IndexController.js'),
+    ProfileController = require('../controllers/ProfileController.js'),
+    TripsController = require('../controllers/TripsController.js'),
+    ApiController = require('../controllers/ApiController.js'),
+    ExpensesController = require('../controllers/ExpensesController.js'),
+    ClaimsController = require('../controllers/ClaimsController.js'),
+    Mid = require('../middleware/auth.js')
+
 // AUTH - AuthController
 router.route('/api/register')
     .post(AuthController.register)
@@ -17,7 +17,7 @@ router.route('/api/login')
     .post(AuthController.login)
 
 // INDEX - IndexController
-router.route('/api/') 
+router.route('/api/')
     .get(Mid.authenticate, IndexController.loadDashboard)
 
 // PROFILE/SETTINGS - ProfileController
@@ -25,13 +25,13 @@ router.route('/api/profile')
     .get(Mid.authenticate, ProfileController.getUserProfile)
 
 router.route('/api/profile/update/address')
-    .post(Mid.authenticate, ProfileController.updateAddress)
+    .put(Mid.authenticate, ProfileController.updateAddress)
 
 router.route('/api/profile/update/:prop')
-    .post(Mid.authenticate, ProfileController.updateProfile)
+    .put(Mid.authenticate, ProfileController.updateProfile)
 
 router.route('/api/profile/uploadImage')
-    .post(Mid.authenticate, ProfileController.uploadImage)
+    .put(Mid.authenticate, ProfileController.uploadImage)
 
 router.route('/api/milageRate')
     .get(Mid.authenticate, ProfileController.getDefualtMilageRate)
@@ -43,7 +43,7 @@ router.route('/api/trips')
 
 router.route('/api/trips/status/:status')
     .get(Mid.authenticate, TripsController.getTripsByStatus)
-    
+
 router.route('/api/trips/:tripId')
     .get(Mid.authenticate, TripsController.getTrip)
     .put(Mid.authenticate, TripsController.updateTrip)
@@ -70,7 +70,7 @@ router.route('/api/expenses/:expenseId')
 router.route('/api/claims')
     .get(Mid.authenticate, ClaimsController.getClaims)
     .post(Mid.authenticate, ClaimsController.addClaim)
-    
+
 router.route('/api/claims/:claimType/:claimId')
     .get(Mid.authenticate, ClaimsController.getClaim)
     .delete(Mid.authenticate, ClaimsController.deleteClaim)
