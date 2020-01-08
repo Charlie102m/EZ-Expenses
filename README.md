@@ -1,4 +1,4 @@
-# The Expenses App
+# EZ Expenses
 
 Mobile friendly web app for logging & claiming for business milage and expenses.
 
