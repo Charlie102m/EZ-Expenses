@@ -61,7 +61,7 @@ const controller = {
         let query = `UPDATE expenses
                         SET ?
                         WHERE id = ? AND createdBy = ?`
-        let data = [req.body, req.body.id, req.headers.user.id]
+        let data = [req.body, req.params.expenseId, req.headers.user.id]
         connection.query(query, data, (error, results) => {
             if (error) return res.status(403).send(error.sqlMessage)
             return res.send(results)
