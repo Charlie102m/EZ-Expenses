@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@google/maps": "^0.5.5",
-    "aws-sdk": "^2.543.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
